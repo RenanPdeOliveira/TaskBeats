@@ -9,11 +9,13 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import com.google.android.material.snackbar.Snackbar
 import java.io.Serializable
 
 class MainActivity : AppCompatActivity() {
 
-    private val list = arrayListOf(
+    private var list = arrayListOf(
         taskItem(0, "Mercado", "Comprar leite, maça e pão"),
         taskItem(1, "Festa", "Convidar os amigos para festa"),
         taskItem(2, "DevSpace", "Estudar RecyclerView"),
@@ -34,14 +36,22 @@ class MainActivity : AppCompatActivity() {
             val taskAction = data?.getSerializableExtra(TASK_ACTION_RESULT) as TaskAction
             val task: taskItem = taskAction.task
 
-            // Removendo item da lista
-            list.remove(task)
+            val newList = arrayListOf<taskItem>()
+                .apply {
+                    addAll(list)
+                }
 
-            if (list.size == 0) {
+            newList.remove(task)
+
+            showMessage(linearLOEmpty, "You deleted the task: ${task.title}")
+
+            if (newList.size == 0) {
                 linearLOEmpty.visibility = View.VISIBLE
             }
 
-            adapter.submit(list)
+            adapter.submitList(newList)
+
+            list = newList
         }
     }
 
@@ -54,7 +64,7 @@ class MainActivity : AppCompatActivity() {
 
         list.sortBy { it.title }
 
-        adapter.submit(list)
+        adapter.submitList(list)
 
         taskRecyclerView.adapter = adapter
     }
@@ -63,6 +73,12 @@ class MainActivity : AppCompatActivity() {
     private fun openTaskView(task: taskItem) {
         val intent = TaskActivity.start(this, task)
         startForResult.launch(intent)
+    }
+
+    private fun showMessage(view: View, message: String) {
+        Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+            .setAction("Action", null)
+            .show()
     }
 }
 

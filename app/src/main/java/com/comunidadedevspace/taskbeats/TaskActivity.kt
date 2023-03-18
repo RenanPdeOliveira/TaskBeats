@@ -7,8 +7,10 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.TextView
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 
 class TaskActivity : AppCompatActivity() {
 
@@ -60,7 +62,6 @@ class TaskActivity : AppCompatActivity() {
                     }
                 setResult(Activity.RESULT_OK, intent)
                 finish()
-                Toast.makeText(this, "You deleted this item", Toast.LENGTH_SHORT).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)

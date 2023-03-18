@@ -4,20 +4,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.ListAdapter
 
 // Criando um adapter para o recyclerview
 class taskListAdapter(
     private val openTaskView: (task: taskItem) -> Unit
-) :
-    RecyclerView.Adapter<taskListViewHolder>() {
-
-    private lateinit var tasks: List<taskItem>
-
-    fun submit(task: List<taskItem>) {
-        tasks = task
-        notifyDataSetChanged()
-    }
+) : ListAdapter<taskItem, taskListViewHolder>(taskListAdapter) {
 
     // Criando um view no recyclerview
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): taskListViewHolder {
@@ -28,15 +22,20 @@ class taskListAdapter(
 
     // Agrupando as views
     override fun onBindViewHolder(holder: taskListViewHolder, position: Int) {
-        val item = tasks[position]
+        val item = getItem(position)
         holder.bind(item, openTaskView)
     }
 
-    // Quantidade de views que queremos criar
-    override fun getItemCount(): Int {
-        return tasks.size
-    }
+    private companion object : DiffUtil.ItemCallback<taskItem>() {
+        override fun areItemsTheSame(oldItem: taskItem, newItem: taskItem): Boolean {
+            return oldItem == newItem
+        }
 
+        override fun areContentsTheSame(oldItem: taskItem, newItem: taskItem): Boolean {
+            return oldItem.title == newItem.title && oldItem.desc == newItem.desc
+        }
+
+    }
 }
 
 // Criando um viewholder no recyclerview
