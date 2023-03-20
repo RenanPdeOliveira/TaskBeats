@@ -4,9 +4,7 @@ import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.ImageView
 import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -24,7 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var linearLOEmpty: LinearLayout
 
-    private var adapter = taskListAdapter(::openTaskView)
+    private var adapter = taskListAdapter(::openListItemClicked)
 
     // Certificando qual item excluir
     private val startForResult = registerForActivityResult(
@@ -36,22 +34,37 @@ class MainActivity : AppCompatActivity() {
             val taskAction = data?.getSerializableExtra(TASK_ACTION_RESULT) as TaskAction
             val task: taskItem = taskAction.task
 
-            val newList = arrayListOf<taskItem>()
-                .apply {
-                    addAll(list)
+            if (taskAction.actionType == ActionType.DELETE.name) {
+                val newList = arrayListOf<taskItem>()
+                    .apply {
+                        addAll(list)
+                    }
+
+                newList.remove(task)
+
+                showMessage(linearLOEmpty, "You deleted the task: ${task.title}")
+
+                if (newList.size == 0) {
+                    linearLOEmpty.visibility = View.VISIBLE
                 }
 
-            newList.remove(task)
+                adapter.submitList(newList)
 
-            showMessage(linearLOEmpty, "You deleted the task: ${task.title}")
+                list = newList
+            } else if (taskAction.actionType == ActionType.CREATE.name) {
+                val newList = arrayListOf<taskItem>()
+                    .apply {
+                        addAll(list)
+                    }
 
-            if (newList.size == 0) {
-                linearLOEmpty.visibility = View.VISIBLE
+                newList.add(task)
+
+                showMessage(linearLOEmpty, "You added the task: ${task.title}")
+
+                adapter.submitList(newList)
+
+                list = newList
             }
-
-            adapter.submitList(newList)
-
-            list = newList
         }
     }
 
@@ -60,6 +73,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         val taskRecyclerView: RecyclerView = findViewById(R.id.recyclerViewTask)
+        val btnAdd: FloatingActionButton = findViewById(R.id.btnAdd)
+
         linearLOEmpty = findViewById(R.id.linearLayoutEmpty)
 
         list.sortBy { it.title }
@@ -67,10 +82,19 @@ class MainActivity : AppCompatActivity() {
         adapter.submitList(list)
 
         taskRecyclerView.adapter = adapter
+
+        btnAdd.setOnClickListener {
+            openTaskList()
+        }
     }
 
-    // Abrindo pagina unica de cada item da lista
-    private fun openTaskView(task: taskItem) {
+    // Abre TaskActivity após clicar em algum item da lista
+    private fun openListItemClicked(task: taskItem) {
+        openTaskList(task)
+    }
+
+    //Abre TaskActivity após clicar no botão ADD. Pode ou não existir um item
+    private fun openTaskList(task: taskItem? = null) {
         val intent = TaskActivity.start(this, task)
         startForResult.launch(intent)
     }
@@ -83,15 +107,15 @@ class MainActivity : AppCompatActivity() {
 }
 
 // Ações
-sealed class ActionType : Serializable {
-    object DELETE : ActionType()
-    object EDIT : ActionType()
-    object CREATE : ActionType()
+enum class ActionType {
+    DELETE,
+    EDIT,
+    CREATE
 }
 
 data class TaskAction(
     val task: taskItem,
-    val actionType: ActionType
+    val actionType: String
 ) : Serializable
 
 const val TASK_ACTION_RESULT = "TASK_ACTION_RESULT"

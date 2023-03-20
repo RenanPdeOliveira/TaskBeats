@@ -8,6 +8,7 @@
     tools:context=".TaskActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraint_Item"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@drawable/item_background"
@@ -44,5 +45,51 @@
             tools:text="Description" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLO_AddTask"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:gravity="bottom"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/constraint_Item">
+
+        <TextView
+            android:id="@+id/textView_Title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Title:"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editText_Title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add a title for the task" />
+
+        <TextView
+            android:id="@+id/textView_Desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Description:"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editText_Desc"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add a title for the task" />
+
+        <Button
+            android:id="@+id/btn_Add"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Add a task" />
+
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
