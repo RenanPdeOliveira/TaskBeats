@@ -11,13 +11,13 @@ PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview
     * LinearLayout
     * RecyclerView
       * ViewHolder
-      * ViewHolderAdapter
+      * ListAdapter
 * UI Components
     * TextView
     * ImageView
 * Tool Bar Menu
     * Delete button
-* Toast to display messages
+* SnackBar to display messages
 * Intent Explicit to open a second Activity
 * FindViewById to recover UI components
 * String resource to text concatenation
