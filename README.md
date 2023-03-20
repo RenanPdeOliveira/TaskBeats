@@ -15,6 +15,7 @@ PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview
 * UI Components
     * TextView
     * ImageView
+    * Floating Action Button
 * Tool Bar Menu
     * Delete button
 * SnackBar to display messages
