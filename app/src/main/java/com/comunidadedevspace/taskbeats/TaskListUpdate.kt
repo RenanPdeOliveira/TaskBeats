@@ -10,27 +10,21 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.TextView
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 
-class TaskActivity : AppCompatActivity() {
+class TaskListUpdate : AppCompatActivity() {
 
-    private var titleShow: taskItem? = null
-    private var descShow: taskItem? = null
-
-    lateinit var OpenTextTitle: TextView
+    private var task: taskItem? = null
 
     companion object {
-        val detailTitle = "TITLE_EXTRA"
-        val detailDesc = "DESC_EXTRA"
+        val detailTask = "DETAIL_EXTRA"
 
         // Certificando que passe todas as views para a pagina unica de item
         fun start(context: Context, task: taskItem?): Intent {
-            val intent = Intent(context, TaskActivity::class.java)
+            val intent = Intent(context, TaskListUpdate::class.java)
                 .apply {
-                    putExtra(detailTitle, task)
-                    putExtra(detailDesc, task)
+                    putExtra(detailTask, task)
                 }
             return intent
         }
@@ -38,38 +32,41 @@ class TaskActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task)
-
-        OpenTextTitle = findViewById(R.id.OTtextViewTitle)
-        val OpenTextDesc: TextView = findViewById(R.id.OTtextViewDesc)
+        setContentView(R.layout.activity_task_list_update)
 
         val etTitle: EditText = findViewById(R.id.editText_Title)
         val etDesc: EditText = findViewById(R.id.editText_Desc)
         val btnAdd: Button = findViewById(R.id.btn_Add)
+
+        // Recuperar task
+        task = intent.getSerializableExtra(detailTask) as taskItem?
+
+        // Setar novo texto na tela
+        if (task != null) {
+            etTitle.setText(task?.title)
+            etDesc.setText(task?.desc)
+        }
 
         btnAdd.setOnClickListener {
             val title = etTitle.text.toString()
             val desc = etDesc.text.toString()
 
             if (title.isNotEmpty() && desc.isNotEmpty()) {
-                addTask(title, desc)
+                if (task == null) {
+                    AddorUpdateTask(0, title, desc, ActionType.CREATE)
+                } else {
+                    AddorUpdateTask(task!!.id, title, desc, ActionType.UPDATE)
+                }
             } else {
                 showMessage(it, "All fields are required")
             }
         }
 
-        // Recuperar task
-        titleShow = intent.getSerializableExtra(detailTitle) as taskItem?
-        descShow = intent.getSerializableExtra(detailDesc) as taskItem?
-
-        // Setar novo texto na tela
-        OpenTextTitle.text = titleShow?.title ?: "Add a task"
-        OpenTextDesc.text = descShow?.desc
     }
 
-    fun addTask(title: String, desc: String) {
-        val newTask = taskItem(0, title, desc)
-        actionButton(newTask, ActionType.CREATE)
+    fun AddorUpdateTask(id: Int, title: String, desc: String, actionType: ActionType) {
+        val newTask = taskItem(id, title, desc)
+        actionButton(newTask, actionType)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -81,10 +78,10 @@ class TaskActivity : AppCompatActivity() {
         return when (item.itemId) {
             R.id.action_bar_delete -> {
 
-                if (titleShow != null) {
-                    actionButton(titleShow!!, ActionType.DELETE)
+                if (task != null) {
+                    actionButton(task!!, ActionType.DELETE)
                 } else {
-                    showMessage(OpenTextTitle, "There is no item to delete")
+                    Toast.makeText(this, "There is no item to delete!", Toast.LENGTH_SHORT).show()
                 }
                 true
             }

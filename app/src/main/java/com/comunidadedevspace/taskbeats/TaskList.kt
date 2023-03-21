@@ -29,6 +29,7 @@ class MainActivity : AppCompatActivity() {
         ActivityResultContracts.StartActivityForResult()
     ) {
         if (it.resultCode == Activity.RESULT_OK) {
+
             // Pegando resultado
             val data = it.data
             val taskAction = data?.getSerializableExtra(TASK_ACTION_RESULT) as TaskAction
@@ -51,6 +52,7 @@ class MainActivity : AppCompatActivity() {
                 adapter.submitList(newList)
 
                 list = newList
+
             } else if (taskAction.actionType == ActionType.CREATE.name) {
                 val newList = arrayListOf<taskItem>()
                     .apply {
@@ -70,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_task_list)
 
         val taskRecyclerView: RecyclerView = findViewById(R.id.recyclerViewTask)
         val btnAdd: FloatingActionButton = findViewById(R.id.btnAdd)
@@ -88,14 +90,14 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Abre TaskActivity após clicar em algum item da lista
+    // Abre TaskActivity após clicar em algum item da lista. Deve conter um item
     private fun openListItemClicked(task: taskItem) {
         openTaskList(task)
     }
 
-    //Abre TaskActivity após clicar no botão ADD. Pode ou não existir um item
+    //Abre TaskActivity após clicar no botão ADD. Pode ou não existir um item!
     private fun openTaskList(task: taskItem? = null) {
-        val intent = TaskActivity.start(this, task)
+        val intent = TaskListUpdate.start(this, task)
         startForResult.launch(intent)
     }
 
@@ -106,10 +108,10 @@ class MainActivity : AppCompatActivity() {
     }
 }
 
-// Ações
+// CRUD (Create, Read, Update, Delete)
 enum class ActionType {
     DELETE,
-    EDIT,
+    UPDATE,
     CREATE
 }
 
