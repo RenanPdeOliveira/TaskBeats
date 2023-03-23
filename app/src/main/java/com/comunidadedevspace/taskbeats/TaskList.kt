@@ -63,6 +63,10 @@ class MainActivity : AppCompatActivity() {
 
                 showMessage(linearLOEmpty, "You added the task: ${task.title}")
 
+                if (newList.size != 0) {
+                    linearLOEmpty.visibility = View.GONE
+                }
+
                 adapter.submitList(newList)
 
                 list = newList
@@ -72,7 +76,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task_list)
+        setContentView(R.layout.task_list)
 
         val taskRecyclerView: RecyclerView = findViewById(R.id.recyclerViewTask)
         val btnAdd: FloatingActionButton = findViewById(R.id.btnAdd)

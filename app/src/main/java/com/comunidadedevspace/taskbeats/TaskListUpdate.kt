@@ -32,7 +32,8 @@ class TaskListUpdate : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task_list_update)
+        setContentView(R.layout.task_list_update)
+        setSupportActionBar(findViewById(R.id.toolBar))
 
         val etTitle: EditText = findViewById(R.id.editText_Title)
         val etDesc: EditText = findViewById(R.id.editText_Desc)
