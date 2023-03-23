@@ -9,12 +9,15 @@ PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview
 * ViewGroup
     * ConstraintLayout
     * LinearLayout
+    * CardView
     * RecyclerView
       * ViewHolder
       * ListAdapter
 * UI Components
     * TextView
+    * EditText
     * ImageView
+    * Button
     * Floating Action Button
 * Tool Bar Menu
     * Delete button
@@ -27,7 +30,7 @@ PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview
 ### TODO
 * Improve app styling
 * Add an edit button on menu tool bar
-* Add a create list item on MainActivity
+* Add Dialogs for the buttons
 
 ## Author
 Renan Pires de Oliveira (connect with me on [Linkedin](https://www.linkedin.com/in/renan-pires-332568142/))
