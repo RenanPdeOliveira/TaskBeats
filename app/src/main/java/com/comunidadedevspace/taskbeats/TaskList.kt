@@ -7,9 +7,13 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers.IO
 import java.io.Serializable
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -21,6 +25,18 @@ class MainActivity : AppCompatActivity() {
     )
 
     private lateinit var linearLOEmpty: LinearLayout
+    private lateinit var taskRecyclerView: RecyclerView
+    private lateinit var btnAdd: FloatingActionButton
+
+    private val dataBase by lazy {
+        Room.databaseBuilder(
+            applicationContext, AppDataBase::class.java, "Data_Base_App"
+        ).build()
+    }
+
+    private val dao by lazy {
+        dataBase.taskDao()
+    }
 
     private var adapter = taskListAdapter(::openListItemClicked)
 
@@ -36,40 +52,15 @@ class MainActivity : AppCompatActivity() {
             val task: taskItem = taskAction.task
 
             if (taskAction.actionType == ActionType.DELETE.name) {
-                val newList = arrayListOf<taskItem>()
-                    .apply {
-                        addAll(list)
-                    }
 
-                newList.remove(task)
-
-                showMessage(linearLOEmpty, "You deleted the task: ${task.title}")
-
-                if (newList.size == 0) {
-                    linearLOEmpty.visibility = View.VISIBLE
-                }
-
-                adapter.submitList(newList)
-
-                list = newList
+                deleteItem(task)
+                showMessage(linearLOEmpty, "You deleted ${task.title}")
 
             } else if (taskAction.actionType == ActionType.CREATE.name) {
-                val newList = arrayListOf<taskItem>()
-                    .apply {
-                        addAll(list)
-                    }
 
-                newList.add(task)
+                addItem(task)
+                showMessage(linearLOEmpty, "You added ${task.title}")
 
-                showMessage(linearLOEmpty, "You added the task: ${task.title}")
-
-                if (newList.size != 0) {
-                    linearLOEmpty.visibility = View.GONE
-                }
-
-                adapter.submitList(newList)
-
-                list = newList
             }
         }
     }
@@ -78,19 +69,37 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.task_list)
 
-        val taskRecyclerView: RecyclerView = findViewById(R.id.recyclerViewTask)
-        val btnAdd: FloatingActionButton = findViewById(R.id.btnAdd)
+        listUpdate()
 
+        taskRecyclerView = findViewById(R.id.recyclerViewTask)
+        btnAdd = findViewById(R.id.btnAdd)
         linearLOEmpty = findViewById(R.id.linearLayoutEmpty)
-
-        list.sortBy { it.title }
-
-        adapter.submitList(list)
 
         taskRecyclerView.adapter = adapter
 
         btnAdd.setOnClickListener {
             openTaskList()
+        }
+    }
+
+    private fun deleteItem(task: taskItem) {
+        CoroutineScope(IO).launch {
+            dao.delete(task)
+            listUpdate()
+        }
+    }
+
+    private fun addItem(task: taskItem) {
+        CoroutineScope(IO).launch {
+            dao.insert(task)
+            listUpdate()
+        }
+    }
+
+    private fun listUpdate() {
+        CoroutineScope(IO).launch {
+            val myDataBase: List<taskItem> = dao.getAll()
+            adapter.submitList(myDataBase)
         }
     }
 
