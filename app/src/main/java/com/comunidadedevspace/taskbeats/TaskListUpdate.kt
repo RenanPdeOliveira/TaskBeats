@@ -10,18 +10,17 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 
 class TaskListUpdate : AppCompatActivity() {
 
-    private var task: taskItem? = null
+    private var task: TaskItem? = null
 
     companion object {
         val detailTask = "DETAIL_EXTRA"
 
         // Certificando que passe todas as views para a pagina unica de item
-        fun start(context: Context, task: taskItem?): Intent {
+        fun start(context: Context, task: TaskItem?): Intent {
             val intent = Intent(context, TaskListUpdate::class.java)
                 .apply {
                     putExtra(detailTask, task)
@@ -30,17 +29,21 @@ class TaskListUpdate : AppCompatActivity() {
         }
     }
 
+    private lateinit var etTitle: EditText
+    private lateinit var etDesc: EditText
+    private lateinit var btnAdd: Button
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.task_list_update)
         setSupportActionBar(findViewById(R.id.toolBar))
 
-        val etTitle: EditText = findViewById(R.id.editText_Title)
-        val etDesc: EditText = findViewById(R.id.editText_Desc)
-        val btnAdd: Button = findViewById(R.id.btn_Add)
+        etTitle = findViewById(R.id.editText_Title)
+        etDesc = findViewById(R.id.editText_Desc)
+        btnAdd = findViewById(R.id.btn_Add)
 
         // Recuperar task
-        task = intent.getSerializableExtra(detailTask) as taskItem?
+        task = intent.getSerializableExtra(detailTask) as TaskItem?
 
         // Setar novo texto na tela
         if (task != null) {
@@ -66,8 +69,18 @@ class TaskListUpdate : AppCompatActivity() {
     }
 
     fun AddorUpdateTask(id: Int, title: String, desc: String, actionType: ActionType) {
-        val newTask = taskItem(id, title, desc)
+        val newTask = TaskItem(id, title, desc)
         actionButton(newTask, actionType)
+    }
+
+    private fun actionButton(task: TaskItem, actionType: ActionType) {
+        val intent = Intent()
+            .apply {
+                val taskAction = TaskAction(task, actionType.name)
+                putExtra(TASK_ACTION_RESULT, taskAction)
+            }
+        setResult(Activity.RESULT_OK, intent)
+        finish()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -78,11 +91,10 @@ class TaskListUpdate : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_bar_delete -> {
-
                 if (task != null) {
                     actionButton(task!!, ActionType.DELETE)
                 } else {
-                    Toast.makeText(this, "There is no item to delete!", Toast.LENGTH_SHORT).show()
+                    showMessage(etTitle, "There is no item to delete!")
                 }
                 true
             }
@@ -90,19 +102,10 @@ class TaskListUpdate : AppCompatActivity() {
         }
     }
 
-    private fun actionButton(task: taskItem, actionType: ActionType) {
-        val intent = Intent()
-            .apply {
-                val taskAction = TaskAction(task, actionType.name)
-                putExtra(TASK_ACTION_RESULT, taskAction)
-            }
-        setResult(Activity.RESULT_OK, intent)
-        finish()
-    }
-
     private fun showMessage(view: View, message: String) {
         Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
             .setAction("Action", null)
             .show()
     }
+
 }

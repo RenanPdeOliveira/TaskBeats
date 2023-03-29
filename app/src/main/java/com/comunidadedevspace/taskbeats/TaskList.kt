@@ -17,20 +17,13 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private var list = arrayListOf(
-        taskItem(0, "Mercado", "Comprar leite, maça e pão"),
-        taskItem(1, "Festa", "Convidar os amigos para festa"),
-        taskItem(2, "DevSpace", "Estudar RecyclerView"),
-        taskItem(3, "Carro", "Abastecer carro")
-    )
-
     private lateinit var linearLOEmpty: LinearLayout
     private lateinit var taskRecyclerView: RecyclerView
     private lateinit var btnAdd: FloatingActionButton
 
     private val dataBase by lazy {
         Room.databaseBuilder(
-            applicationContext, AppDataBase::class.java, "Data_Base_App"
+            applicationContext, AppDataBase::class.java, "Data_Base_Task"
         ).build()
     }
 
@@ -49,7 +42,7 @@ class MainActivity : AppCompatActivity() {
             // Pegando resultado
             val data = it.data
             val taskAction = data?.getSerializableExtra(TASK_ACTION_RESULT) as TaskAction
-            val task: taskItem = taskAction.task
+            val task: TaskItem = taskAction.task
 
             if (taskAction.actionType == ActionType.DELETE.name) {
 
@@ -60,6 +53,11 @@ class MainActivity : AppCompatActivity() {
 
                 addItem(task)
                 showMessage(linearLOEmpty, "You added ${task.title}")
+
+            } else if (taskAction.actionType == ActionType.UPDATE.name) {
+
+                updateItem(task)
+                showMessage(linearLOEmpty, "You updated ${task.title}")
 
             }
         }
@@ -82,14 +80,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun deleteItem(task: taskItem) {
+    private fun updateItem(task: TaskItem) {
+        CoroutineScope(IO).launch {
+            dao.update(task)
+            listUpdate()
+        }
+    }
+
+    private fun deleteItem(task: TaskItem) {
         CoroutineScope(IO).launch {
             dao.delete(task)
             listUpdate()
         }
     }
 
-    private fun addItem(task: taskItem) {
+    private fun addItem(task: TaskItem) {
         CoroutineScope(IO).launch {
             dao.insert(task)
             listUpdate()
@@ -98,18 +103,18 @@ class MainActivity : AppCompatActivity() {
 
     private fun listUpdate() {
         CoroutineScope(IO).launch {
-            val myDataBase: List<taskItem> = dao.getAll()
+            val myDataBase: List<TaskItem> = dao.getAll()
             adapter.submitList(myDataBase)
         }
     }
 
     // Abre TaskActivity após clicar em algum item da lista. Deve conter um item
-    private fun openListItemClicked(task: taskItem) {
+    private fun openListItemClicked(task: TaskItem) {
         openTaskList(task)
     }
 
     //Abre TaskActivity após clicar no botão ADD. Pode ou não existir um item!
-    private fun openTaskList(task: taskItem? = null) {
+    private fun openTaskList(task: TaskItem? = null) {
         val intent = TaskListUpdate.start(this, task)
         startForResult.launch(intent)
     }
@@ -129,7 +134,7 @@ enum class ActionType {
 }
 
 data class TaskAction(
-    val task: taskItem,
+    val task: TaskItem,
     val actionType: String
 ) : Serializable
 

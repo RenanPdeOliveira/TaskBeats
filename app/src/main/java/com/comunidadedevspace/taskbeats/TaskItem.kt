@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 import java.io.Serializable
 
 @Entity
-data class taskItem(
+data class TaskItem(
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0,
     var title: String,

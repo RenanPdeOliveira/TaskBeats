@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.ListAdapter
 
 // Criando um adapter para o recyclerview
 class taskListAdapter(
-    private val openTaskView: (task: taskItem) -> Unit
-) : ListAdapter<taskItem, taskListViewHolder>(taskListAdapter) {
+    private val openTaskView: (task: TaskItem) -> Unit
+) : ListAdapter<TaskItem, taskListViewHolder>(taskListAdapter) {
 
     // Criando um view no recyclerview
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): taskListViewHolder {
@@ -26,12 +26,12 @@ class taskListAdapter(
         holder.bind(item, openTaskView)
     }
 
-    private companion object : DiffUtil.ItemCallback<taskItem>() {
-        override fun areItemsTheSame(oldItem: taskItem, newItem: taskItem): Boolean {
+    private companion object : DiffUtil.ItemCallback<TaskItem>() {
+        override fun areItemsTheSame(oldItem: TaskItem, newItem: TaskItem): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: taskItem, newItem: taskItem): Boolean {
+        override fun areContentsTheSame(oldItem: TaskItem, newItem: TaskItem): Boolean {
             return oldItem.title == newItem.title && oldItem.desc == newItem.desc
         }
 
@@ -44,8 +44,8 @@ class taskListViewHolder(private val view: View) : RecyclerView.ViewHolder(view)
     val taskDesc: TextView = view.findViewById(R.id.textViewDesc)
 
     fun bind(
-        task: taskItem,
-        openTaskView: (task: taskItem) -> Unit
+        task: TaskItem,
+        openTaskView: (task: TaskItem) -> Unit
     ) {
         taskTitle.text = task.title
         taskDesc.text = task.desc
