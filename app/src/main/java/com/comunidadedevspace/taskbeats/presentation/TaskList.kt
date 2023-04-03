@@ -1,4 +1,4 @@
-package com.comunidadedevspace.taskbeats
+package com.comunidadedevspace.taskbeats.presentation
 
 import android.app.Activity
 import androidx.appcompat.app.AppCompatActivity
@@ -8,6 +8,9 @@ import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.RecyclerView
 import androidx.room.Room
+import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.data.AppDataBase
+import com.comunidadedevspace.taskbeats.data.TaskItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
@@ -17,8 +20,8 @@ import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var linearLOEmpty: LinearLayout
-    private lateinit var taskRecyclerView: RecyclerView
+    private lateinit var layoutEmpty: LinearLayout
+    private lateinit var rvLayout: RecyclerView
     private lateinit var btnAdd: FloatingActionButton
 
     private val dataBase by lazy {
@@ -44,21 +47,19 @@ class MainActivity : AppCompatActivity() {
             val taskAction = data?.getSerializableExtra(TASK_ACTION_RESULT) as TaskAction
             val task: TaskItem = taskAction.task
 
-            if (taskAction.actionType == ActionType.DELETE.name) {
-
-                deleteItem(task)
-                showMessage(linearLOEmpty, "You deleted ${task.title}")
-
-            } else if (taskAction.actionType == ActionType.CREATE.name) {
-
-                addItem(task)
-                showMessage(linearLOEmpty, "You added ${task.title}")
-
-            } else if (taskAction.actionType == ActionType.UPDATE.name) {
-
-                updateItem(task)
-                showMessage(linearLOEmpty, "You updated ${task.title}")
-
+            when (taskAction.actionType) {
+                ActionType.CREATE.name -> {
+                    addItem(task)
+                    showMessage(layoutEmpty, "You added ${task.title}")
+                }
+                ActionType.UPDATE.name -> {
+                    updateItem(task)
+                    showMessage(layoutEmpty, "You updated ${task.title}")
+                }
+                ActionType.DELETE.name -> {
+                    deleteItem(task)
+                    showMessage(layoutEmpty, "You deleted ${task.title}")
+                }
             }
         }
     }
@@ -69,27 +70,27 @@ class MainActivity : AppCompatActivity() {
 
         listUpdate()
 
-        taskRecyclerView = findViewById(R.id.recyclerViewTask)
-        btnAdd = findViewById(R.id.btnAdd)
-        linearLOEmpty = findViewById(R.id.linearLayoutEmpty)
+        rvLayout = findViewById(R.id.recyclerViewLayout)
+        btnAdd = findViewById(R.id.fabAdd)
+        layoutEmpty = findViewById(R.id.linearLayoutEmpty)
 
-        taskRecyclerView.adapter = adapter
+        rvLayout.adapter = adapter
 
         btnAdd.setOnClickListener {
             openTaskList()
         }
     }
 
-    private fun updateItem(task: TaskItem) {
+    private fun deleteItem(task: TaskItem) {
         CoroutineScope(IO).launch {
-            dao.update(task)
+            dao.delete(task)
             listUpdate()
         }
     }
 
-    private fun deleteItem(task: TaskItem) {
+    private fun updateItem(task: TaskItem) {
         CoroutineScope(IO).launch {
-            dao.delete(task)
+            dao.update(task)
             listUpdate()
         }
     }
@@ -124,6 +125,7 @@ class MainActivity : AppCompatActivity() {
             .setAction("Action", null)
             .show()
     }
+
 }
 
 // CRUD (Create, Read, Update, Delete)

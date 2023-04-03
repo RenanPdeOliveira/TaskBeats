@@ -1,4 +1,4 @@
-package com.comunidadedevspace.taskbeats
+package com.comunidadedevspace.taskbeats.presentation
 
 import android.app.Activity
 import android.content.Context
@@ -10,9 +10,15 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.data.TaskItem
 import com.google.android.material.snackbar.Snackbar
 
 class TaskListUpdate : AppCompatActivity() {
+
+    private lateinit var etTitle: EditText
+    private lateinit var etDesc: EditText
+    private lateinit var btnAdd: Button
 
     private var task: TaskItem? = null
 
@@ -29,18 +35,14 @@ class TaskListUpdate : AppCompatActivity() {
         }
     }
 
-    private lateinit var etTitle: EditText
-    private lateinit var etDesc: EditText
-    private lateinit var btnAdd: Button
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.task_list_update)
         setSupportActionBar(findViewById(R.id.toolBar))
 
-        etTitle = findViewById(R.id.editText_Title)
-        etDesc = findViewById(R.id.editText_Desc)
-        btnAdd = findViewById(R.id.btn_Add)
+        etTitle = findViewById(R.id.edit_Text_Title)
+        etDesc = findViewById(R.id.edit_Text_Desc)
+        btnAdd = findViewById(R.id.updateButton)
 
         // Recuperar task
         task = intent.getSerializableExtra(detailTask) as TaskItem?

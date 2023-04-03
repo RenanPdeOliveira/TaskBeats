@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".TaskListUpdate">
+    tools:context=".presentation.TaskListUpdate">
 
     <include
         android:id="@+id/toolBar"
@@ -18,7 +18,7 @@
         android:paddingHorizontal="8dp">
 
         <TextView
-            android:id="@+id/textView_Title"
+            android:id="@+id/text_View_Title"
             style="@style/headline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -26,13 +26,13 @@
             android:text="Title:" />
 
         <EditText
-            android:id="@+id/editText_Title"
+            android:id="@+id/edit_Text_Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Add a title for the task" />
 
         <TextView
-            android:id="@+id/textView_Desc"
+            android:id="@+id/text_View_Desc"
             style="@style/headline4"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -40,13 +40,13 @@
             android:text="Description:" />
 
         <EditText
-            android:id="@+id/editText_Desc"
+            android:id="@+id/edit_Text_Desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Add a title for the task" />
 
         <Button
-            android:id="@+id/btn_Add"
+            android:id="@+id/updateButton"
             style="@style/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
