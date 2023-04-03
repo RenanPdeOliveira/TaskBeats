@@ -20,7 +20,9 @@ PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview
     * Button
     * Floating Action Button
 * Tool Bar Menu
-    * Delete button
+    * Delete button   
+* Room DB
+   * CRUD
 * SnackBar to display messages
 * Intent Explicit to open a second Activity
 * FindViewById to recover UI components
@@ -29,7 +31,6 @@ PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview
 
 ### TODO
 * Improve app styling
-* Add an edit button on menu tool bar
 * Add Dialogs for the buttons
 
 ## Author
