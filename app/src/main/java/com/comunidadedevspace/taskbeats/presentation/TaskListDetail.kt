@@ -14,7 +14,7 @@ import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.TaskItem
 import com.google.android.material.snackbar.Snackbar
 
-class TaskListUpdate : AppCompatActivity() {
+class TaskListDetail : AppCompatActivity() {
 
     private lateinit var etTitle: EditText
     private lateinit var etDesc: EditText
@@ -27,7 +27,7 @@ class TaskListUpdate : AppCompatActivity() {
 
         // Certificando que passe todas as views para a pagina unica de item
         fun start(context: Context, task: TaskItem?): Intent {
-            val intent = Intent(context, TaskListUpdate::class.java)
+            val intent = Intent(context, TaskListDetail::class.java)
                 .apply {
                     putExtra(detailTask, task)
                 }
@@ -37,7 +37,7 @@ class TaskListUpdate : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.task_list_update)
+        setContentView(R.layout.task_list_detail)
         setSupportActionBar(findViewById(R.id.toolBar))
 
         etTitle = findViewById(R.id.edit_Text_Title)

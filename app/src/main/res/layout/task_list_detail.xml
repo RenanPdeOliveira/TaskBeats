@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".presentation.TaskListUpdate">
+    tools:context=".presentation.TaskListDetail">
 
     <include
         android:id="@+id/toolBar"
@@ -23,13 +23,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="Title:" />
+            android:text="@string/tvTitle" />
 
         <EditText
             android:id="@+id/edit_Text_Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Add a title for the task" />
+            android:hint="@string/etTitle" />
 
         <TextView
             android:id="@+id/text_View_Desc"
@@ -37,13 +37,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Description:" />
+            android:text="@string/tvDesc" />
 
         <EditText
             android:id="@+id/edit_Text_Desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Add a title for the task" />
+            android:hint="@string/etDesc" />
 
         <Button
             android:id="@+id/updateButton"
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Update" />
+            android:text="@string/updateButton" />
 
     </LinearLayout>
 

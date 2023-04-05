@@ -50,15 +50,15 @@
             app:layout_constraintTop_toTopOf="parent">
 
             <TextView
-                android:id="@+id/TextViewEmpty"
+                android:id="@+id/textViewEmpty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Your TaskBeats is empty"
+                android:text="@string/tvEmpty"
                 android:textColor="@color/pink_500"
                 android:textSize="30sp" />
 
             <ImageView
-                android:id="@+id/ImageViewEmpty"
+                android:id="@+id/imageViewEmpty"
                 android:layout_width="350dp"
                 android:layout_height="450dp"
                 android:src="@drawable/list_empty" />

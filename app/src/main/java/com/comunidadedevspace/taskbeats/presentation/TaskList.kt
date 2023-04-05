@@ -116,7 +116,7 @@ class MainActivity : AppCompatActivity() {
 
     //Abre TaskActivity após clicar no botão ADD. Pode ou não existir um item!
     private fun openTaskList(task: TaskItem? = null) {
-        val intent = TaskListUpdate.start(this, task)
+        val intent = TaskListDetail.start(this, task)
         startForResult.launch(intent)
     }
 

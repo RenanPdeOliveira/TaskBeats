@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">TaskBeats</string>
+
+    // Task List Activity
+    <string name="tvEmpty">There is no task</string>
+
+    // Detail Activity
+    <string name="tvTitle">Title:</string>
+    <string name="tvDesc">Description:</string>
+    <string name="etTitle">Add a title for the task</string>
+    <string name="etDesc">Add a description for the task</string>
+    <string name="updateButton">Update</string>
+
+    // ToolBar
+    <string name="tvToolbar">TaskBeats</string>
 </resources>
