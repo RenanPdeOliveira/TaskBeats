@@ -1,5 +1,6 @@
 package com.comunidadedevspace.taskbeats.data
 
+import androidx.lifecycle.LiveData
 import androidx.room.Dao
 import androidx.room.Delete
 import androidx.room.Insert
@@ -20,5 +21,5 @@ interface TaskDao {
     fun update(task: TaskItem)
 
     @Query("Select * from TaskItem") // Selecione todos da tabela taskItem
-    fun getAll(): List<TaskItem>
+    fun getAll(): LiveData<List<TaskItem>>
 }

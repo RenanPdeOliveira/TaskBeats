@@ -6,37 +6,27 @@ import android.os.Bundle
 import android.view.View
 import android.widget.LinearLayout
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
-import androidx.room.Room
 import com.comunidadedevspace.taskbeats.R
-import com.comunidadedevspace.taskbeats.data.AppDataBase
 import com.comunidadedevspace.taskbeats.data.TaskItem
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers.IO
 import java.io.Serializable
-import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class TaskList : AppCompatActivity() {
 
     private lateinit var layoutEmpty: LinearLayout
     private lateinit var rvLayout: RecyclerView
     private lateinit var btnAdd: FloatingActionButton
 
-    private val dataBase by lazy {
-        Room.databaseBuilder(
-            applicationContext, AppDataBase::class.java, "Data_Base_Task"
-        ).build()
-    }
-
-    private val dao by lazy {
-        dataBase.taskDao()
-    }
-
     private var adapter = taskListAdapter(::openListItemClicked)
 
-    // Certificando qual item excluir
+    private val viewModel: TaskListViewModel by lazy {
+        TaskListViewModel.create(application)
+    }
+
+    // Certificando qual item atualizar
     private val startForResult = registerForActivityResult(
         ActivityResultContracts.StartActivityForResult()
     ) {
@@ -45,30 +35,14 @@ class MainActivity : AppCompatActivity() {
             // Pegando resultado
             val data = it.data
             val taskAction = data?.getSerializableExtra(TASK_ACTION_RESULT) as TaskAction
-            val task: TaskItem = taskAction.task
 
-            when (taskAction.actionType) {
-                ActionType.CREATE.name -> {
-                    addItem(task)
-                    showMessage(layoutEmpty, "You added ${task.title}")
-                }
-                ActionType.UPDATE.name -> {
-                    updateItem(task)
-                    showMessage(layoutEmpty, "You updated ${task.title}")
-                }
-                ActionType.DELETE.name -> {
-                    deleteItem(task)
-                    showMessage(layoutEmpty, "You deleted ${task.title}")
-                }
-            }
+            viewModel.actionCRUD(taskAction)
         }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.task_list)
-
-        listUpdate()
 
         rvLayout = findViewById(R.id.recyclerViewLayout)
         btnAdd = findViewById(R.id.fabAdd)
@@ -81,32 +55,23 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun deleteItem(task: TaskItem) {
-        CoroutineScope(IO).launch {
-            dao.delete(task)
-            listUpdate()
-        }
-    }
+    override fun onStart() {
+        super.onStart()
 
-    private fun updateItem(task: TaskItem) {
-        CoroutineScope(IO).launch {
-            dao.update(task)
-            listUpdate()
-        }
-    }
-
-    private fun addItem(task: TaskItem) {
-        CoroutineScope(IO).launch {
-            dao.insert(task)
-            listUpdate()
-        }
+        listUpdate()
     }
 
     private fun listUpdate() {
-        CoroutineScope(IO).launch {
-            val myDataBase: List<TaskItem> = dao.getAll()
-            adapter.submitList(myDataBase)
+        val observer = Observer<List<TaskItem>> { list ->
+            if (list.isEmpty()) {
+                layoutEmpty.visibility = View.VISIBLE
+            } else {
+                layoutEmpty.visibility = View.GONE
+            }
+            adapter.submitList(list)
         }
+
+        viewModel.taskListObserver.observe(this@TaskList, observer)
     }
 
     // Abre TaskActivity após clicar em algum item da lista. Deve conter um item
