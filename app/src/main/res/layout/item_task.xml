@@ -5,42 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="8dp"
-    android:layout_marginTop="8dp"
+    android:layout_marginVertical="4dp"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView"
+    <TextView
+        android:id="@+id/textViewTitle"
+        style="@style/headline3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:backgroundTint="@color/pink_100"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        tools:text="Title" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="16dp">
+    <TextView
+        android:id="@+id/textViewDesc"
+        style="@style/body1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="4dp"
+        tools:text="Description" />
 
-            <TextView
-                android:id="@+id/textViewTitle"
-                style="@style/headline3"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="2dp"
-                tools:text="Title" />
-
-            <TextView
-                android:id="@+id/textViewDesc"
-                style="@style/body1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="2dp"
-                tools:text="Description" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/pink_300" />
 
 </LinearLayout>
