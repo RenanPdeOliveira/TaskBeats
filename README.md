@@ -9,7 +9,6 @@ PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview
 * ViewGroup
     * ConstraintLayout
     * LinearLayout
-    * CardView
     * RecyclerView
       * ViewHolder
       * ListAdapter
@@ -23,10 +22,12 @@ PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview
     * Delete button   
 * Room DB
    * CRUD
+* MVVM Architecture
+   * ViewModel
+   * Application
 * SnackBar to display messages
 * Intent Explicit to open a second Activity
 * FindViewById to recover UI components
-* String resource to text concatenation
 
 
 ### TODO
