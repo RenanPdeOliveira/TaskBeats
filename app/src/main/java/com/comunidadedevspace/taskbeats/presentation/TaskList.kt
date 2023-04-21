@@ -62,6 +62,8 @@ class TaskList : AppCompatActivity() {
     }
 
     private fun listUpdate() {
+
+        // Observer
         val observer = Observer<List<TaskItem>> { list ->
             if (list.isEmpty()) {
                 layoutEmpty.visibility = View.VISIBLE
@@ -71,7 +73,8 @@ class TaskList : AppCompatActivity() {
             adapter.submitList(list)
         }
 
-        viewModel.taskListObserver.observe(this@TaskList, observer)
+        // LiveData
+        viewModel.taskListLiveData.observe(this@TaskList, observer)
     }
 
     // Abre TaskActivity após clicar em algum item da lista. Deve conter um item

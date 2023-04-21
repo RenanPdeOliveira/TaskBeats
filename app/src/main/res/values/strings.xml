@@ -2,7 +2,7 @@
     <string name="app_name">TaskBeats</string>
 
     // Task List Activity
-    <string name="tvEmpty">There is no task</string>
+    <string name="tvEmpty">Add a task</string>
 
     // Detail Activity
     <string name="tvTitle">Title:</string>

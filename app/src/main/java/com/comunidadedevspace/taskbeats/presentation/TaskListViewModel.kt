@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 
 class TaskListViewModel(private val taskDao: TaskDao): ViewModel() {
 
-    val taskListObserver: LiveData<List<TaskItem>> = taskDao.getAll()
+    val taskListLiveData: LiveData<List<TaskItem>> = taskDao.getAll()
 
     fun actionCRUD(taskAction: TaskAction) {
 
