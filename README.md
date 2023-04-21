@@ -1,7 +1,7 @@
 # TaskBeats
-EN - TaskBeats is a todo list that i'm creating using recyclerview. Still working on it!
+EN - TaskBeats is a todo list that i'm still developing using Recyclerview, MVVM Architecture, Room DB, JUnit...
 
-PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview. Estou ainda trabalhando nisso!
+PT - TaskBeats é uma lista de tarefas que ainda estou desenvolvendo utilizando Recyclerview, MVVM Architecture, Room DB, JUnit...
 
 ## Technologies
 * Kotlin
@@ -9,7 +9,6 @@ PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview
 * ViewGroup
     * ConstraintLayout
     * LinearLayout
-    * CardView
     * RecyclerView
       * ViewHolder
       * ListAdapter
@@ -23,10 +22,13 @@ PT - TaskBeats é uma lista de tarefas que estou criando utilizando recyclerview
     * Delete button   
 * Room DB
    * CRUD
+* MVVM Architecture
+   * ViewModel
+   * Application
+* Unit Tests
 * SnackBar to display messages
 * Intent Explicit to open a second Activity
 * FindViewById to recover UI components
-* String resource to text concatenation
 
 
 ### TODO
