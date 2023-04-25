@@ -14,11 +14,9 @@
         android:theme="@style/Theme.TaskBeats"
         tools:targetApi="31">
         <activity
-            android:name=".presentation.TaskListDetail"
-            android:exported="false" />
-        <activity
-            android:name=".presentation.TaskList"
+            android:name=".presentation.MainActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,7 +26,11 @@
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
+
         </activity>
+        <activity
+            android:name=".presentation.TaskListDetailActivity"
+            android:exported="false" />
     </application>
 
 </manifest>

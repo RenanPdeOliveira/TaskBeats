@@ -1,6 +1,5 @@
 package com.comunidadedevspace.taskbeats.presentation
 
-import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -10,11 +9,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.Button
 import android.widget.EditText
+import androidx.activity.viewModels
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.TaskItem
 import com.google.android.material.snackbar.Snackbar
 
-class TaskListDetail : AppCompatActivity() {
+class TaskListDetailActivity : AppCompatActivity() {
 
     private lateinit var etTitle: EditText
     private lateinit var etDesc: EditText
@@ -22,12 +22,16 @@ class TaskListDetail : AppCompatActivity() {
 
     private var task: TaskItem? = null
 
+    private val viewModel: TaskListDetailViewModel by viewModels {
+        TaskListDetailViewModel.getFactoryViewModel(application)
+    }
+
     companion object {
         val detailTask = "DETAIL_EXTRA"
 
         // Certificando que passe todas as views para a pagina unica de item
         fun start(context: Context, task: TaskItem?): Intent {
-            val intent = Intent(context, TaskListDetail::class.java)
+            val intent = Intent(context, TaskListDetailActivity::class.java)
                 .apply {
                     putExtra(detailTask, task)
                 }
@@ -37,7 +41,7 @@ class TaskListDetail : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.task_list_detail)
+        setContentView(R.layout.activity_task_list_detail)
         setSupportActionBar(findViewById(R.id.toolBar))
 
         etTitle = findViewById(R.id.edit_Text_Title)
@@ -64,7 +68,7 @@ class TaskListDetail : AppCompatActivity() {
                     AddorUpdateTask(task!!.id, title, desc, ActionType.UPDATE)
                 }
             } else {
-                showMessage(it, "All fields are required")
+                showMessage(it, "All fields are required!")
             }
         }
 
@@ -76,12 +80,8 @@ class TaskListDetail : AppCompatActivity() {
     }
 
     private fun actionButton(task: TaskItem, actionType: ActionType) {
-        val intent = Intent()
-            .apply {
-                val taskAction = TaskAction(task, actionType.name)
-                putExtra(TASK_ACTION_RESULT, taskAction)
-            }
-        setResult(Activity.RESULT_OK, intent)
+        val taskAction = TaskAction(task, actionType.name)
+        viewModel.actionCRUD(taskAction)
         finish()
     }
 
