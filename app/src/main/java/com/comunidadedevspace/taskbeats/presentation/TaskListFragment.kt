@@ -38,7 +38,7 @@ class TaskListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rvLayout = view.findViewById(R.id.recyclerViewLayout)
+        rvLayout = view.findViewById(R.id.recyclerViewTask)
         layoutEmpty = view.findViewById(R.id.linearLayoutEmpty)
 
         rvLayout.adapter = adapter
