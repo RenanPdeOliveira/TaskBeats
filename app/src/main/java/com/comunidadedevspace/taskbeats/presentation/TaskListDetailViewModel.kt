@@ -29,19 +29,19 @@ class TaskListDetailViewModel(private val taskDao: TaskDao) : ViewModel() {
     }
 
     private fun addItem(task: TaskItem) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             taskDao.insert(task)
         }
     }
 
     private fun updateItem(task: TaskItem) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             taskDao.update(task)
         }
     }
 
     private fun deleteItem(task: TaskItem) {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch {
             taskDao.delete(task)
         }
     }
