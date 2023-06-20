@@ -11,7 +11,7 @@ import android.widget.Button
 import android.widget.EditText
 import androidx.activity.viewModels
 import com.comunidadedevspace.taskbeats.R
-import com.comunidadedevspace.taskbeats.data.TaskItem
+import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.google.android.material.snackbar.Snackbar
 
 class TaskListDetailActivity : AppCompatActivity() {

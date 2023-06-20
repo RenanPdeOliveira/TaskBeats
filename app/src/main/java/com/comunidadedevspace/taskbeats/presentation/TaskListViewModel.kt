@@ -4,8 +4,8 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.comunidadedevspace.taskbeats.TaskBeatsApplication
-import com.comunidadedevspace.taskbeats.data.TaskDao
-import com.comunidadedevspace.taskbeats.data.TaskItem
+import com.comunidadedevspace.taskbeats.data.local.TaskDao
+import com.comunidadedevspace.taskbeats.data.local.TaskItem
 
 class TaskListViewModel(taskDao: TaskDao): ViewModel() {
 

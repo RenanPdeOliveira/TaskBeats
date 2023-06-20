@@ -9,7 +9,7 @@ import android.widget.LinearLayout
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.RecyclerView
 import com.comunidadedevspace.taskbeats.R
-import com.comunidadedevspace.taskbeats.data.TaskItem
+import com.comunidadedevspace.taskbeats.data.local.TaskItem
 
 /**
  * A simple [Fragment] subclass.

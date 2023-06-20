@@ -2,7 +2,7 @@ package com.comunidadedevspace.taskbeats
 
 import android.app.Application
 import androidx.room.Room
-import com.comunidadedevspace.taskbeats.data.TaskDataBase
+import com.comunidadedevspace.taskbeats.data.local.TaskDataBase
 
 class TaskBeatsApplication : Application() {
 

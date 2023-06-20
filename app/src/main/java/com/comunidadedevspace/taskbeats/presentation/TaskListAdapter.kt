@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
 import com.comunidadedevspace.taskbeats.R
-import com.comunidadedevspace.taskbeats.data.TaskItem
+import com.comunidadedevspace.taskbeats.data.local.TaskItem
 
 // Criando um adapter para o recyclerview
 class taskListAdapter(

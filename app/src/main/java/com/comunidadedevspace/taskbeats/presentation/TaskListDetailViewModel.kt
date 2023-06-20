@@ -5,9 +5,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.TaskBeatsApplication
-import com.comunidadedevspace.taskbeats.data.TaskDao
-import com.comunidadedevspace.taskbeats.data.TaskItem
-import kotlinx.coroutines.Dispatchers
+import com.comunidadedevspace.taskbeats.data.local.TaskDao
+import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import kotlinx.coroutines.launch
 
 class TaskListDetailViewModel(private val taskDao: TaskDao) : ViewModel() {
