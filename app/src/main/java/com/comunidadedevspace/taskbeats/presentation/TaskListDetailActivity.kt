@@ -12,6 +12,7 @@ import android.widget.EditText
 import androidx.activity.viewModels
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
+import com.comunidadedevspace.taskbeats.data.remote.RetrofitModule
 import com.google.android.material.snackbar.Snackbar
 
 class TaskListDetailActivity : AppCompatActivity() {
@@ -27,7 +28,7 @@ class TaskListDetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        val detailTask = "DETAIL_EXTRA"
+        const val detailTask = "DETAIL_EXTRA"
 
         // Certificando que passe todas as views para a pagina unica de item
         fun start(context: Context, task: TaskItem?): Intent {
