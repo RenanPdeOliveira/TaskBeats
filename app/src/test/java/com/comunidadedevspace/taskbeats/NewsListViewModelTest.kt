@@ -41,7 +41,7 @@ class NewsListViewModelTest {
                     imageUrl = "Image 2"
                 )
             )
-            val newsResponse = NewsResponse(category = "Tech", data = newsList)
+            val newsResponse = NewsResponse(data = newsList)
             whenever(newsService.fetchData()).thenReturn(newsResponse)
 
             // WHEN
