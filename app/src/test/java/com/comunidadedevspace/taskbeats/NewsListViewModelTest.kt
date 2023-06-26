@@ -27,7 +27,7 @@ class NewsListViewModelTest {
     fun `LiveData Test`() {
         runBlocking {
             // GIVEN
-            val newsList = listOf<NewsDto>(
+            val topNews = listOf<NewsDto>(
                 NewsDto(
                     id = "1",
                     title = "Title 1",
@@ -41,15 +41,32 @@ class NewsListViewModelTest {
                     imageUrl = "Image 2"
                 )
             )
-            val newsResponse = NewsResponse(data = newsList)
-            whenever(newsService.fetchData()).thenReturn(newsResponse)
+            val allNews = listOf<NewsDto>(
+                NewsDto(
+                    id = "3",
+                    title = "Title 3",
+                    content = "Content 3",
+                    imageUrl = "Image 3"
+                ),
+                NewsDto(
+                    id = "4",
+                    title = "Title 4",
+                    content = "Content 4",
+                    imageUrl = "Image 4"
+                )
+            )
+
+            val topResponse = NewsResponse(data = topNews)
+            val allResponse = NewsResponse(data = allNews)
+            whenever(newsService.fetchTopNews()).thenReturn(topResponse)
+            whenever(newsService.fetchAllNews()).thenReturn(allResponse)
 
             // WHEN
             underTest = NewsListViewModel(newsService)
             val result = underTest.newsLiveData.getOrAwaitValue()
 
             // THEN
-            assert(result == newsList)
+            assert(result == topNews + allNews)
         }
     }
 }
