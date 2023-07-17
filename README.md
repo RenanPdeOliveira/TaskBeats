@@ -8,6 +8,7 @@ PT - TaskBeats é uma lista de tarefas que ainda estou desenvolvendo utilizando 
 * Activity to host screens
 * ViewGroup
     * ConstraintLayout
+    * CoordinatorLayout
     * LinearLayout
     * RecyclerView
       * ViewHolder
@@ -18,12 +19,24 @@ PT - TaskBeats é uma lista de tarefas que ainda estou desenvolvendo utilizando 
     * ImageView
     * Button
     * Floating Action Button
+    * FragmentContainerView
+    * BottomAppBar
+    * BottomNavigationView
 * Tool Bar Menu
     * Delete button   
 * Room DB
+   * Entity
+   * Dao
+   * RoomDataBase
    * CRUD
+* Retrofit
+   * API Request
+   * Service
+   * OkHttpClient
 * MVVM Architecture
    * ViewModel
+   * Livedata
+   * Coroutines
    * Application
 * Unit Tests
 * SnackBar to display messages
