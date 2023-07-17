@@ -9,7 +9,9 @@ import com.comunidadedevspace.taskbeats.data.local.TaskDao
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import kotlinx.coroutines.launch
 
-class TaskListDetailViewModel(private val taskDao: TaskDao) : ViewModel() {
+class TaskListDetailViewModel(
+    private val taskDao: TaskDao
+) : ViewModel() {
 
     fun actionCRUD(taskAction: TaskAction) {
 
@@ -17,9 +19,11 @@ class TaskListDetailViewModel(private val taskDao: TaskDao) : ViewModel() {
             ActionType.CREATE.name -> {
                 addItem(taskAction.task)
             }
+
             ActionType.UPDATE.name -> {
                 updateItem(taskAction.task)
             }
+
             ActionType.DELETE.name -> {
                 deleteItem(taskAction.task)
             }
