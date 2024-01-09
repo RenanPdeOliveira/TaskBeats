@@ -5,43 +5,38 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import androidx.lifecycle.Observer
-import androidx.recyclerview.widget.RecyclerView
-import com.comunidadedevspace.taskbeats.R
+import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
+import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListBinding
+import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
+import com.comunidadedevspace.taskbeats.util.UiEvent
+import kotlinx.coroutines.launch
 
-/**
- * A simple [Fragment] subclass.
- * Use the [TaskListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class TaskListFragment : Fragment() {
 
-    private lateinit var layoutEmpty: LinearLayout
-    private lateinit var rvLayout: RecyclerView
+    private var _binding: FragmentTaskListBinding? = null
+    private val binding get() = _binding!!
 
-    private var adapter = taskListAdapter(::openListItemClicked)
+    private var adapter = TaskListAdapter(::openListItemClicked)
 
     private val viewModel: TaskListViewModel by lazy {
         TaskListViewModel.create(requireActivity().application)
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_task_list, container, false)
+        _binding = FragmentTaskListBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rvLayout = view.findViewById(R.id.recyclerViewTask)
-        layoutEmpty = view.findViewById(R.id.linearLayoutEmpty)
-
-        rvLayout.adapter = adapter
+        binding.recyclerViewTask.adapter = adapter
     }
 
     override fun onStart() {
@@ -50,19 +45,14 @@ class TaskListFragment : Fragment() {
     }
 
     private fun listUpdate() {
-
-        // Observer
-        val observer = Observer<List<TaskItem>> { list ->
+        viewModel.taskListLiveData.observe(this@TaskListFragment) { list ->
             if (list.isEmpty()) {
-                layoutEmpty.visibility = View.VISIBLE
+                binding.linearLayoutEmpty.visibility = View.VISIBLE
             } else {
-                layoutEmpty.visibility = View.GONE
+                binding.linearLayoutEmpty.visibility = View.GONE
             }
             adapter.submitList(list)
         }
-
-        // LiveData
-        viewModel.taskListLiveData.observe(this@TaskListFragment, observer)
     }
 
     private fun openListItemClicked(task: TaskItem) {

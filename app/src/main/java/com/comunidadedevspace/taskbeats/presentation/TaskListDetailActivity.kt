@@ -2,24 +2,26 @@ package com.comunidadedevspace.taskbeats.presentation
 
 import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Button
-import android.widget.EditText
 import androidx.activity.viewModels
+import androidx.annotation.RequiresApi
+import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
-import com.comunidadedevspace.taskbeats.data.remote.RetrofitModule
+import com.comunidadedevspace.taskbeats.databinding.ActivityTaskListDetailBinding
+import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
+import com.comunidadedevspace.taskbeats.util.UiEvent
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.coroutines.launch
 
 class TaskListDetailActivity : AppCompatActivity() {
 
-    private lateinit var etTitle: EditText
-    private lateinit var etDesc: EditText
-    private lateinit var btnAdd: Button
+    private lateinit var binding: ActivityTaskListDetailBinding
 
     private var task: TaskItem? = null
 
@@ -30,7 +32,6 @@ class TaskListDetailActivity : AppCompatActivity() {
     companion object {
         const val detailTask = "DETAIL_EXTRA"
 
-        // Certificando que passe todas as views para a pagina unica de item
         fun start(context: Context, task: TaskItem?): Intent {
             val intent = Intent(context, TaskListDetailActivity::class.java)
                 .apply {
@@ -40,69 +41,56 @@ class TaskListDetailActivity : AppCompatActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_task_list_detail)
-        setSupportActionBar(findViewById(R.id.toolBar))
+        binding = ActivityTaskListDetailBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        etTitle = findViewById(R.id.edit_Text_Title)
-        etDesc = findViewById(R.id.edit_Text_Desc)
-        btnAdd = findViewById(R.id.updateButton)
+        lifecycleScope.launch {
+            viewModel.uiEvent.collect { event ->
+                when (event) {
+                    is UiEvent.Navigate -> {
+                        finish()
+                    }
 
-        // Recuperar task
-        task = intent.getSerializableExtra(detailTask) as TaskItem?
-
-        // Setar novo texto na tela
-        if (task != null) {
-            etTitle.setText(task?.title)
-            etDesc.setText(task?.desc)
-        }
-
-        btnAdd.setOnClickListener {
-            val title = etTitle.text.toString()
-            val desc = etDesc.text.toString()
-
-            if (title.isNotEmpty() && desc.isNotEmpty()) {
-                if (task == null) {
-                    AddorUpdateTask(0, title, desc, ActionType.CREATE)
-                } else {
-                    AddorUpdateTask(task!!.id, title, desc, ActionType.UPDATE)
+                    is UiEvent.ShowSnackBar -> {
+                        showMessage(binding.root, event.message)
+                    }
                 }
-            } else {
-                showMessage(it, "All fields are required!")
             }
         }
 
-    }
+        task = intent.getParcelableExtra(detailTask, TaskItem::class.java)
 
-    fun AddorUpdateTask(id: Int, title: String, desc: String, actionType: ActionType) {
-        val newTask = TaskItem(id, title, desc)
-        actionButton(newTask, actionType)
-    }
-
-    private fun actionButton(task: TaskItem, actionType: ActionType) {
-        val taskAction = TaskAction(task, actionType.name)
-        viewModel.actionCRUD(taskAction)
-        finish()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.menu_bar, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            R.id.action_bar_delete -> {
-                if (task != null) {
-                    actionButton(task!!, ActionType.DELETE)
-                } else {
-                    showMessage(etTitle, "There is no item to delete!")
-                }
-                true
-            }
-            else -> super.onOptionsItemSelected(item)
+        task?.let {
+            binding.editTextTitle.setText(task?.title)
+            binding.editTextDesc.setText(task?.desc)
         }
+
+        binding.updateButton.setOnClickListener {
+            val title = binding.editTextTitle.text.toString()
+            val desc = binding.editTextDesc.text.toString()
+
+            task?.let {
+                viewModel.actionCRUD(DetailEvents.OnEditItemClick(TaskItem(it.id, title, desc, it.isFavorite)))
+            } ?: viewModel.actionCRUD(DetailEvents.OnAddItemClick(TaskItem(0, title, desc, false)))
+        }
+
+        binding.detailToolBar.setOnMenuItemClickListener { menu ->
+            when (menu.itemId) {
+                R.id.action_bar_delete -> {
+                    viewModel.actionCRUD(DetailEvents.OnDeleteItemClick(task))
+                    true
+                }
+                else -> false
+            }
+        }
+
+        binding.detailToolBar.setNavigationOnClickListener {
+            finish()
+        }
+
     }
 
     private fun showMessage(view: View, message: String) {

@@ -2,40 +2,55 @@ package com.comunidadedevspace.taskbeats.presentation
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.viewModels
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
+import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.databinding.ActivityMainBinding
+import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
+import com.comunidadedevspace.taskbeats.util.UiEvent
 import com.google.android.material.bottomappbar.BottomAppBar
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var bottomAppBar: BottomAppBar
-    private lateinit var bottomNavigation: BottomNavigationView
-    private lateinit var fabAdd: FloatingActionButton
+    private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: MainActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        bottomAppBar = findViewById(R.id.bottomAppBar)
-        bottomNavigation = findViewById(R.id.bottomNavigationView)
-        fabAdd = findViewById(R.id.fabAdd)
+        binding.bottomNavigationView.background = null
+        binding.bottomNavigationView.menu.getItem(1).isEnabled = false
 
-        bottomNavigation.background = null
-        bottomNavigation.menu.getItem(1).isEnabled = false
+        lifecycleScope.launch {
+            viewModel.uiEvent.collect {event ->
+                when (event) {
+                    is UiEvent.Navigate -> {
+                        openTaskDetail()
+                    }
 
-        fabAdd.setOnClickListener {
-            openTaskDetail()
+                    else -> Unit
+                }
+            }
+        }
+
+        binding.fabAdd.setOnClickListener {
+            viewModel.onEvent(TaskListEvents.OnAddButtonClick)
         }
 
         val taskListFragment = TaskListFragment.newInstance()
         val newsListFragment = NewsListFragment.newInstance()
 
-        defautFragment(taskListFragment)
+        defaultFragment(taskListFragment)
 
-        bottomNavigation.setOnItemSelectedListener { item ->
+        binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.listButton -> {
                     showFragment(taskListFragment)
@@ -64,7 +79,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun defautFragment(fragment: Fragment) {
+    private fun defaultFragment(fragment: Fragment) {
         supportFragmentManager.commit {
             replace(R.id.fragmentContainerView, fragment)
             setReorderingAllowed(true)

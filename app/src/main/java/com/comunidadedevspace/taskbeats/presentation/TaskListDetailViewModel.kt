@@ -7,45 +7,70 @@ import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.TaskBeatsApplication
 import com.comunidadedevspace.taskbeats.data.local.TaskDao
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
+import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
+import com.comunidadedevspace.taskbeats.util.UiEvent
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class TaskListDetailViewModel(
     private val taskDao: TaskDao
 ) : ViewModel() {
 
-    fun actionCRUD(taskAction: TaskAction) {
+    private val _uiEvent = Channel<UiEvent>()
+    val uiEvent = _uiEvent.receiveAsFlow()
 
-        when (taskAction.actionType) {
-            ActionType.CREATE.name -> {
-                addItem(taskAction.task)
+    fun actionCRUD(event: DetailEvents) {
+
+        when (event) {
+            is DetailEvents.OnAddItemClick -> {
+                addItem(event.task)
             }
 
-            ActionType.UPDATE.name -> {
-                updateItem(taskAction.task)
+            is DetailEvents.OnEditItemClick -> {
+                updateItem(event.task)
             }
 
-            ActionType.DELETE.name -> {
-                deleteItem(taskAction.task)
+            is DetailEvents.OnDeleteItemClick -> {
+                deleteItem(event.task)
+            }
+
+            is DetailEvents.OnNavigateBack -> {
+                viewModelScope.launch {
+                    _uiEvent.send(UiEvent.Navigate("main_screen"))
+                }
             }
         }
 
     }
 
-    private fun addItem(task: TaskItem) {
-        viewModelScope.launch {
+    private fun addItem(task: TaskItem) = viewModelScope.launch {
+        if (task.title.isNotBlank() && task.desc.isNotBlank()) {
             taskDao.insert(task)
+            _uiEvent.send(UiEvent.Navigate("main_screen"))
+            _uiEvent.send(UiEvent.ShowSnackBar("You added a new task ${task.title}"))
+        } else {
+            _uiEvent.send(UiEvent.ShowSnackBar("Fill in all fields"))
         }
     }
 
-    private fun updateItem(task: TaskItem) {
-        viewModelScope.launch {
+    private fun updateItem(task: TaskItem) = viewModelScope.launch {
+        if (task.title.isNotBlank() && task.desc.isNotBlank()) {
             taskDao.update(task)
+            _uiEvent.send(UiEvent.Navigate("main_screen"))
+            _uiEvent.send(UiEvent.ShowSnackBar("You updated the task ${task.title}"))
+        } else {
+            _uiEvent.send(UiEvent.ShowSnackBar("Fill in all fields"))
         }
     }
 
-    private fun deleteItem(task: TaskItem) {
-        viewModelScope.launch {
+    private fun deleteItem(task: TaskItem?) = viewModelScope.launch {
+        if (task != null) {
             taskDao.delete(task)
+            _uiEvent.send(UiEvent.Navigate("main_screen"))
+            _uiEvent.send(UiEvent.ShowSnackBar("You deleted the task ${task.title}"))
+        } else {
+            _uiEvent.send(UiEvent.ShowSnackBar("There is no item to delete!"))
         }
     }
 

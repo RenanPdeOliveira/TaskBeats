@@ -2,9 +2,8 @@ package com.comunidadedevspace.taskbeats
 
 import com.comunidadedevspace.taskbeats.data.local.TaskDao
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
-import com.comunidadedevspace.taskbeats.presentation.ActionType
-import com.comunidadedevspace.taskbeats.presentation.TaskAction
 import com.comunidadedevspace.taskbeats.presentation.TaskListDetailViewModel
+import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -30,13 +29,12 @@ class TaskListDetailViewModelTest {
         val task = TaskItem(
             1,
             "Buy",
-            "Banana"
+            "Banana",
+            true
         )
-        val action = ActionType.CREATE.name
-        val insertTask = TaskAction(task, action)
 
         // When
-        underTest.actionCRUD(insertTask)
+        underTest.actionCRUD(DetailEvents.OnAddItemClick(task))
 
         // Then
         verify(taskDao).insert(task)
@@ -48,13 +46,12 @@ class TaskListDetailViewModelTest {
         val task = TaskItem(
             2,
             "Study",
-            "Math"
+            "Math",
+            false
         )
-        val action = ActionType.UPDATE.name
-        val updateTask = TaskAction(task, action)
 
         // When
-        underTest.actionCRUD(updateTask)
+        underTest.actionCRUD(DetailEvents.OnEditItemClick(task))
 
         // Then
         verify(taskDao).update(task)
@@ -66,13 +63,12 @@ class TaskListDetailViewModelTest {
         val task = TaskItem(
             3,
             "Work",
-            "Create an app"
+            "Create an app",
+            true
         )
-        val action = ActionType.DELETE.name
-        val deleteTask = TaskAction(task, action)
 
         // When
-        underTest.actionCRUD(deleteTask)
+        underTest.actionCRUD(DetailEvents.OnDeleteItemClick(task))
 
         // Then
         verify(taskDao).delete(task)

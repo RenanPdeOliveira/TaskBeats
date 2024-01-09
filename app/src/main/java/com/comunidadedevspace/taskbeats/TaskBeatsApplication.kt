@@ -13,7 +13,7 @@ class TaskBeatsApplication : Application() {
 
         db = Room.databaseBuilder(
             applicationContext, TaskDataBase::class.java, "Data_Base_Task"
-        ).build()
+        ).fallbackToDestructiveMigration().build()
     }
 
     fun getDataBase(): TaskDataBase {

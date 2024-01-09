@@ -39,7 +39,7 @@
             android:id="@+id/textViewEmpty"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/tvEmpty"
+            android:text="@string/tv_empty"
             android:textColor="@color/pink_500"
             android:textSize="20sp" />
 

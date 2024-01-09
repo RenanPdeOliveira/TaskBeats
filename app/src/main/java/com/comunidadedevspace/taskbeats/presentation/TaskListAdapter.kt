@@ -3,6 +3,7 @@ package com.comunidadedevspace.taskbeats.presentation
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,20 +11,17 @@ import androidx.recyclerview.widget.ListAdapter
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 
-// Criando um adapter para o recyclerview
-class taskListAdapter(
+class TaskListAdapter(
     private val openTaskView: (task: TaskItem) -> Unit
-) : ListAdapter<TaskItem, taskListViewHolder>(taskListAdapter) {
+) : ListAdapter<TaskItem, TaskListViewHolder>(TaskListAdapter) {
 
-    // Criando um view no recyclerview
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): taskListViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskListViewHolder {
         val view: View =
             LayoutInflater.from(parent.context).inflate(R.layout.item_task, parent, false)
-        return taskListViewHolder(view)
+        return TaskListViewHolder(view)
     }
 
-    // Agrupando as views
-    override fun onBindViewHolder(holder: taskListViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TaskListViewHolder, position: Int) {
         val item = getItem(position)
         holder.bind(item, openTaskView)
     }
@@ -34,16 +32,19 @@ class taskListAdapter(
         }
 
         override fun areContentsTheSame(oldItem: TaskItem, newItem: TaskItem): Boolean {
-            return oldItem.title == newItem.title && oldItem.desc == newItem.desc
+            return oldItem.title == newItem.title &&
+                    oldItem.desc == newItem.desc &&
+                    oldItem.isFavorite == newItem.isFavorite
         }
 
     }
 }
 
-// Criando um viewholder no recyclerview
-class taskListViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-    val taskTitle: TextView = view.findViewById(R.id.textViewTitle)
-    val taskDesc: TextView = view.findViewById(R.id.textViewDesc)
+class TaskListViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+    private val taskTitle: TextView = view.findViewById(R.id.textViewTitle)
+    private val taskDesc: TextView = view.findViewById(R.id.textViewDesc)
+    private var btnFavorite: ImageButton = view.findViewById(R.id.imageIsFavorite)
+    private var btnNotFavorite: ImageButton = view.findViewById(R.id.imageIsNotFavorite)
 
     fun bind(
         task: TaskItem,
@@ -54,6 +55,26 @@ class taskListViewHolder(private val view: View) : RecyclerView.ViewHolder(view)
 
         view.setOnClickListener {
             openTaskView.invoke(task)
+        }
+
+        btnFavorite.setOnClickListener {
+            if (task.isFavorite) {
+                btnFavorite.visibility = View.VISIBLE
+                btnNotFavorite.visibility = View.GONE
+            } else {
+                btnFavorite.visibility = View.GONE
+                btnNotFavorite.visibility = View.VISIBLE
+            }
+        }
+
+        btnNotFavorite.setOnClickListener {
+            if (task.isFavorite) {
+                btnFavorite.visibility = View.VISIBLE
+                btnNotFavorite.visibility = View.GONE
+            } else {
+                btnFavorite.visibility = View.GONE
+                btnNotFavorite.visibility = View.VISIBLE
+            }
         }
     }
 }

@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
         android:id="@+id/listButton"
         android:icon="@drawable/ic_list_button"
-        android:title="Tasks"
-        app:showAsAction="always" />
+        android:title="@string/tasks_list" />
 
     <item
         android:id="@+id/emptyItem"
@@ -15,6 +13,5 @@
     <item
         android:id="@+id/newsButton"
         android:icon="@drawable/ic_news_button"
-        android:title="News"
-        app:showAsAction="always" />
+        android:title="@string/news_list" />
 </menu>

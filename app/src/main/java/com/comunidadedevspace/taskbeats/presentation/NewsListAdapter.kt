@@ -13,7 +13,7 @@ import coil.transform.RoundedCornersTransformation
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.NewsItem
 
-class NewsListAdapter() : ListAdapter<NewsItem, NewsListViewHolder>(NewsListAdapter) {
+class NewsListAdapter : ListAdapter<NewsItem, NewsListViewHolder>(NewsListAdapter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsListViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
@@ -40,8 +40,8 @@ class NewsListAdapter() : ListAdapter<NewsItem, NewsListViewHolder>(NewsListAdap
 }
 
 class NewsListViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-    val tvNews: TextView = view.findViewById(R.id.textViewNews)
-    val imageView: ImageView = view.findViewById(R.id.imageViewNews)
+    private val tvNews: TextView = view.findViewById(R.id.textViewNews)
+    private val imageView: ImageView = view.findViewById(R.id.imageViewNews)
 
     fun bind(
         item: NewsItem

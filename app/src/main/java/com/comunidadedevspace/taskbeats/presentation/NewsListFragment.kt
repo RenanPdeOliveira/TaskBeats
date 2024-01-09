@@ -8,15 +8,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.NewsItem
+import com.comunidadedevspace.taskbeats.databinding.FragmentNewsListBinding
 
-/**
- * A simple [Fragment] subclass.
- * Use the [NewsListFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NewsListFragment : Fragment() {
 
-    private lateinit var rvLayout: RecyclerView
+    private var _binding: FragmentNewsListBinding? = null
+    private val binding get() = _binding!!
 
     private val adapter = NewsListAdapter()
 
@@ -25,19 +22,19 @@ class NewsListFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
+        inflater: LayoutInflater,
+        container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_news_list, container, false)
+        _binding = FragmentNewsListBinding.inflate(inflater, container, false)
+        val view = binding.root
+        return view
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        rvLayout = view.findViewById(R.id.recyclerViewNews)
-
-        rvLayout.adapter = adapter
+        binding.recyclerViewNews.adapter = adapter
 
         viewModel.newsLiveData.observe(viewLifecycleOwner) { newsDto ->
             val newsItem = newsDto.map { item ->

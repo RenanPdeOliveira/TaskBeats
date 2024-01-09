@@ -7,9 +7,20 @@
     android:orientation="vertical"
     tools:context=".presentation.TaskListDetailActivity">
 
-    <include
-        android:id="@+id/toolBar"
-        layout="@layout/tool_bar" />
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/detailToolBar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            app:menu="@menu/top_app_bar"
+            app:navigationIcon="@drawable/baseline_arrow_back_24"
+            app:navigationIconTint="@color/white"
+            app:title="@string/tool_bar" />
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,13 +34,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/tvTitle" />
+            android:text="@string/tv_title" />
 
         <EditText
             android:id="@+id/edit_Text_Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etTitle" />
+            android:hint="@string/et_title" />
 
         <TextView
             android:id="@+id/text_View_Desc"
@@ -37,13 +48,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="@string/tvDesc" />
+            android:text="@string/tv_desc" />
 
         <EditText
             android:id="@+id/edit_Text_Desc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/etDesc" />
+            android:hint="@string/et_desc" />
 
         <Button
             android:id="@+id/updateButton"
@@ -51,7 +62,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="@string/updateButton" />
+            android:text="@string/update_button" />
 
     </LinearLayout>
 

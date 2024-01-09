@@ -20,6 +20,9 @@ interface TaskDao {
     @Update(onConflict = OnConflictStrategy.REPLACE)
     suspend fun update(task: TaskItem)
 
-    @Query("Select * from TaskItem")
+    @Query("SELECT * FROM TaskItem")
     fun getAll(): LiveData<List<TaskItem>>
+
+    /*@Query("SELECT * FROM TaskItem WHERE isFavorite = true")
+    fun getAllFavorite(): LiveData<List<TaskItem>>*/
 }

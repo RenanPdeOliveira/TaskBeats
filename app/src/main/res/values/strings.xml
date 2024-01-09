@@ -2,15 +2,21 @@
     <string name="app_name">TaskBeats</string>
 
     // Task List Activity
-    <string name="tvEmpty">Add a task</string>
+    <string name="tv_empty">Add a task</string>
 
     // Detail Activity
-    <string name="tvTitle">Title:</string>
-    <string name="tvDesc">Description:</string>
-    <string name="etTitle">Add a title for the task</string>
-    <string name="etDesc">Add a description for the task</string>
-    <string name="updateButton">Update</string>
+    <string name="tv_title">Title:</string>
+    <string name="tv_desc">Description:</string>
+    <string name="et_title">Add a title for the task</string>
+    <string name="et_desc">Add a description for the task</string>
+    <string name="update_button">Update</string>
 
-    // ToolBar
-    <string name="tvToolbar">TaskBeats</string>
+    // Menu
+    <string name="tool_bar">TaskBeats</string>
+    <string name="tasks_list">Tasks</string>
+    <string name="news_list">News</string>
+    <string name="delete_button">Delete</string>
+
+    <string name="fab_description">fab add button</string>
+    <string name="favorite_button_description">favorite button</string>
 </resources>
