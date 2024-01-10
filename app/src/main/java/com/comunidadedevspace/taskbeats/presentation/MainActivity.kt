@@ -8,6 +8,7 @@ import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.databinding.ActivityMainBinding
+import com.comunidadedevspace.taskbeats.presentation.events.MainEvents
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import com.google.android.material.bottomappbar.BottomAppBar
@@ -29,11 +30,18 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.background = null
         binding.bottomNavigationView.menu.getItem(1).isEnabled = false
 
+        val taskListFragment = TaskListFragment.newInstance()
+        val newsListFragment = NewsListFragment.newInstance()
+
         lifecycleScope.launch {
-            viewModel.uiEvent.collect {event ->
+            viewModel.uiEvent.collect { event ->
                 when (event) {
                     is UiEvent.Navigate -> {
-                        openTaskDetail()
+                        when (event.route) {
+                            "task_list_screen" -> showFragment(taskListFragment)
+                            "news_list_screen" -> showFragment(newsListFragment)
+                            "detail_screen" -> openTaskDetail()
+                        }
                     }
 
                     else -> Unit
@@ -42,24 +50,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         binding.fabAdd.setOnClickListener {
-            viewModel.onEvent(TaskListEvents.OnAddButtonClick)
+            viewModel.onEvent(MainEvents.OnAddTaskClick)
         }
-
-        val taskListFragment = TaskListFragment.newInstance()
-        val newsListFragment = NewsListFragment.newInstance()
 
         defaultFragment(taskListFragment)
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.listButton -> {
-                    showFragment(taskListFragment)
+                    viewModel.onEvent(MainEvents.OnTaskListNavigationClick)
                     true
                 }
+
                 R.id.newsButton -> {
-                    showFragment(newsListFragment)
+                    viewModel.onEvent(MainEvents.OnNewsListNavigationClick)
                     true
                 }
+
                 else -> false
             }
         }

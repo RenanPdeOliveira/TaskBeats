@@ -51,7 +51,9 @@ class TaskListDetailActivity : AppCompatActivity() {
             viewModel.uiEvent.collect { event ->
                 when (event) {
                     is UiEvent.Navigate -> {
-                        finish()
+                        when (event.route) {
+                            "main_screen" -> finish()
+                        }
                     }
 
                     is UiEvent.ShowSnackBar -> {
@@ -73,7 +75,16 @@ class TaskListDetailActivity : AppCompatActivity() {
             val desc = binding.editTextDesc.text.toString()
 
             task?.let {
-                viewModel.actionCRUD(DetailEvents.OnEditItemClick(TaskItem(it.id, title, desc, it.isFavorite)))
+                viewModel.actionCRUD(
+                    DetailEvents.OnEditItemClick(
+                        TaskItem(
+                            it.id,
+                            title,
+                            desc,
+                            it.isFavorite
+                        )
+                    )
+                )
             } ?: viewModel.actionCRUD(DetailEvents.OnAddItemClick(TaskItem(0, title, desc, false)))
         }
 
@@ -83,6 +94,7 @@ class TaskListDetailActivity : AppCompatActivity() {
                     viewModel.actionCRUD(DetailEvents.OnDeleteItemClick(task))
                     true
                 }
+
                 else -> false
             }
         }

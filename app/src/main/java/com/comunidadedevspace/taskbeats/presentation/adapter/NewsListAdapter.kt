@@ -1,4 +1,4 @@
-package com.comunidadedevspace.taskbeats.presentation
+package com.comunidadedevspace.taskbeats.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.View

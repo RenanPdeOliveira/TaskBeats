@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListBinding
+import com.comunidadedevspace.taskbeats.presentation.adapter.TaskListAdapter
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import kotlinx.coroutines.launch
@@ -17,7 +18,7 @@ class TaskListFragment : Fragment() {
     private var _binding: FragmentTaskListBinding? = null
     private val binding get() = _binding!!
 
-    private var adapter = TaskListAdapter(::openListItemClicked)
+    private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
 
     private val viewModel: TaskListViewModel by lazy {
         TaskListViewModel.create(requireActivity().application)
@@ -37,6 +38,19 @@ class TaskListFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.recyclerViewTask.adapter = adapter
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiEvent.collect { event ->
+                when (event) {
+                    is UiEvent.Navigate -> {
+                        when (event.route) {
+                            "detail_screen" -> adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
+                        }
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
     }
 
     override fun onStart() {
@@ -58,6 +72,12 @@ class TaskListFragment : Fragment() {
     private fun openListItemClicked(task: TaskItem) {
         val intent = TaskListDetailActivity.start(requireContext(), task)
         requireActivity().startActivity(intent)
+    }
+
+    private fun changeIsFavorite(task: TaskItem) {
+        task.let {
+            viewModel.onEvent(TaskListEvents.OnFavoriteButtonClick(TaskItem(it.id, it.title, it.desc, !it.isFavorite)))
+        }
     }
 
     companion object {

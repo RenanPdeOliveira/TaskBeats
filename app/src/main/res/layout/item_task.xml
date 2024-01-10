@@ -40,30 +40,18 @@
 
         <ImageButton
             android:id="@+id/imageIsFavorite"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
             android:layout_marginEnd="8dp"
-            android:background="@android:color/transparent"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:clickable="true"
+            android:focusable="true"
             android:contentDescription="@string/favorite_button_description"
-            android:src="@drawable/baseline_favorite_border_24"
+            android:src="@drawable/baseline_outline_grade_24"
             android:visibility="visible"
             app:layout_constraintBottom_toBottomOf="@+id/textViewDesc"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/textViewTitle" />
-
-        <ImageButton
-            android:id="@+id/imageIsNotFavorite"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="8dp"
-            android:background="@android:color/transparent"
-            android:contentDescription="@string/favorite_button_description"
-            android:src="@drawable/baseline_favorite_24"
-            android:visibility="gone"
-            app:layout_constraintBottom_toBottomOf="@+id/textViewDesc"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textViewTitle" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
