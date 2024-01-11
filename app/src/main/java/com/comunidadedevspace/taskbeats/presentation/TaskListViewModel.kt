@@ -7,15 +7,18 @@ import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.TaskBeatsApplication
 import com.comunidadedevspace.taskbeats.data.local.TaskDao
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
+import com.comunidadedevspace.taskbeats.domain.TaskRepository
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-class TaskListViewModel(private val taskDao: TaskDao) : ViewModel() {
+class TaskListViewModel(
+    private val repository: TaskRepository
+) : ViewModel() {
 
-    val taskListLiveData: LiveData<List<TaskItem>> = taskDao.getAll()
+    val taskListLiveData: LiveData<List<TaskItem>> = repository.getAll()
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -35,13 +38,12 @@ class TaskListViewModel(private val taskDao: TaskDao) : ViewModel() {
     }
 
     private fun changeFavoriteButton(task: TaskItem) = viewModelScope.launch {
-        taskDao.update(task)
+        repository.update(task)
     }
 
     companion object {
         fun create(application: Application): TaskListViewModel {
-            val dataBaseInstance = (application as TaskBeatsApplication).getDataBase()
-            val dao = dataBaseInstance.taskDao()
+            val dao = (application as TaskBeatsApplication).getRepository()
             return TaskListViewModel(dao)
         }
     }

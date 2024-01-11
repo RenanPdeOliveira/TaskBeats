@@ -3,6 +3,8 @@ package com.comunidadedevspace.taskbeats
 import android.app.Application
 import androidx.room.Room
 import com.comunidadedevspace.taskbeats.data.local.TaskDataBase
+import com.comunidadedevspace.taskbeats.data.repository.TaskRepositoryImpl
+import com.comunidadedevspace.taskbeats.domain.TaskRepository
 
 class TaskBeatsApplication : Application() {
 
@@ -16,8 +18,8 @@ class TaskBeatsApplication : Application() {
         ).fallbackToDestructiveMigration().build()
     }
 
-    fun getDataBase(): TaskDataBase {
-        return db
+    fun getRepository(): TaskRepository {
+        return TaskRepositoryImpl(db.taskDao())
     }
 
 }

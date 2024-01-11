@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.TaskBeatsApplication
 import com.comunidadedevspace.taskbeats.data.local.TaskDao
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
+import com.comunidadedevspace.taskbeats.domain.TaskRepository
 import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import kotlinx.coroutines.channels.Channel
@@ -14,7 +15,7 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class TaskListDetailViewModel(
-    private val taskDao: TaskDao
+    private val repository: TaskRepository
 ) : ViewModel() {
 
     private val _uiEvent = Channel<UiEvent>()
@@ -46,7 +47,7 @@ class TaskListDetailViewModel(
 
     private fun addItem(task: TaskItem) = viewModelScope.launch {
         if (task.title.isNotBlank() && task.desc.isNotBlank()) {
-            taskDao.insert(task)
+            repository.insert(task)
             _uiEvent.send(UiEvent.Navigate("main_screen"))
             _uiEvent.send(UiEvent.ShowSnackBar("You added a new task ${task.title}"))
         } else {
@@ -56,7 +57,7 @@ class TaskListDetailViewModel(
 
     private fun updateItem(task: TaskItem) = viewModelScope.launch {
         if (task.title.isNotBlank() && task.desc.isNotBlank()) {
-            taskDao.update(task)
+            repository.update(task)
             _uiEvent.send(UiEvent.Navigate("main_screen"))
             _uiEvent.send(UiEvent.ShowSnackBar("You updated the task ${task.title}"))
         } else {
@@ -66,7 +67,7 @@ class TaskListDetailViewModel(
 
     private fun deleteItem(task: TaskItem?) = viewModelScope.launch {
         if (task != null) {
-            taskDao.delete(task)
+            repository.delete(task)
             _uiEvent.send(UiEvent.Navigate("main_screen"))
             _uiEvent.send(UiEvent.ShowSnackBar("You deleted the task ${task.title}"))
         } else {
@@ -76,8 +77,7 @@ class TaskListDetailViewModel(
 
     companion object {
         fun getFactoryViewModel(application: Application): ViewModelProvider.Factory {
-            val dataBaseInstance = (application as TaskBeatsApplication).getDataBase()
-            val dao = dataBaseInstance.taskDao()
+            val dao = (application as TaskBeatsApplication).getRepository()
             return object : ViewModelProvider.Factory {
                 override fun <T : ViewModel> create(modelClass: Class<T>): T {
                     return TaskListDetailViewModel(dao) as T
