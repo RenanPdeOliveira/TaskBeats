@@ -5,11 +5,10 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
@@ -57,7 +56,7 @@ class TaskListDetailActivity : AppCompatActivity() {
                     }
 
                     is UiEvent.ShowSnackBar -> {
-                        showMessage(binding.root, event.message)
+                        showMessage(binding.root, event.message, event.action)
                     }
                 }
             }
@@ -66,8 +65,9 @@ class TaskListDetailActivity : AppCompatActivity() {
         task = intent.getParcelableExtra(detailTask, TaskItem::class.java)
 
         task?.let {
-            binding.editTextTitle.setText(task?.title)
-            binding.editTextDesc.setText(task?.desc)
+            binding.editTextTitle.setText(it.title)
+            binding.editTextDesc.setText(it.desc)
+            binding.detailToolBar.title = it.title
         }
 
         binding.updateButton.setOnClickListener {
@@ -105,10 +105,22 @@ class TaskListDetailActivity : AppCompatActivity() {
 
     }
 
-    private fun showMessage(view: View, message: String) {
-        Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
-            .setAction("Action", null)
-            .show()
-    }
+    private fun showMessage(view: View, message: String, action: String? = null) {
+        when (action) {
+            "Close" -> {
+                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                    .setAction(action) {
+                        it.isVisible = false
+                    }
+                    .show()
+            }
 
+            null -> {
+                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null)
+                    .show()
+            }
+        }
+
+    }
 }

@@ -1,23 +1,27 @@
 <resources>
     <string name="app_name">TaskBeats</string>
 
+    // Main Activity
+    <string name="fab_description">fab add button</string>
+    <string name="favorite_button_description">favorite button</string>
+
     // Task List Activity
-    <string name="tv_empty">Add a task</string>
+    <string name="tasks_top_bar_title">Tasks</string>
+    <string name="tv_empty_state">Add a task</string>
+    <string name="empty_state_description">empty state</string>
 
     // Detail Activity
+    <string name="detail_top_bar_title">TaskBeats</string>
     <string name="tv_title">Title:</string>
     <string name="tv_desc">Description:</string>
     <string name="et_title">Add a title for the task</string>
     <string name="et_desc">Add a description for the task</string>
-    <string name="update_button">Update</string>
+    <string name="save_button">Save</string>
 
-    // Menu
-    <string name="tool_bar">TaskBeats</string>
+    // Bottom Menu
     <string name="tasks_list">Tasks</string>
     <string name="news_list">News</string>
-    <string name="delete_button">Delete</string>
 
-    <string name="fab_description">fab add button</string>
-    <string name="favorite_button_description">favorite button</string>
-    <string name="empty_state">empty state</string>
+    // Top Menu
+    <string name="delete_button">Delete</string>
 </resources>

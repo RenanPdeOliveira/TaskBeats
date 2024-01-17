@@ -5,7 +5,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.TaskBeatsApplication
-import com.comunidadedevspace.taskbeats.data.local.TaskDao
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.domain.TaskRepository
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents

@@ -34,7 +34,7 @@
         <item name="android:textColor">@color/brown_700</item>
     </style>
 
-    <style name="button" parent="Widget.AppCompat.Button">
+    <style name="button" parent="Widget.Material3.Button">
         <item name="background">@drawable/btn_add_task</item>
         <item name="android:textColor">@color/brown_700</item>
         <item name="android:fontFamily">@font/rubik_regular</item>

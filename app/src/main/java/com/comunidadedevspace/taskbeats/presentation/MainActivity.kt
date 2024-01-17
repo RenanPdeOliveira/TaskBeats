@@ -9,11 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.databinding.ActivityMainBinding
 import com.comunidadedevspace.taskbeats.presentation.events.MainEvents
-import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
 import com.comunidadedevspace.taskbeats.util.UiEvent
-import com.google.android.material.bottomappbar.BottomAppBar
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
