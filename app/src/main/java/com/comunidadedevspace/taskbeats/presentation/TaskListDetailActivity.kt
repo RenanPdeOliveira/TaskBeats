@@ -81,11 +81,12 @@ class TaskListDetailActivity : AppCompatActivity() {
                             it.id,
                             title,
                             desc,
-                            it.isFavorite
+                            it.isFavorite,
+                            it.drawableResId
                         )
                     )
                 )
-            } ?: viewModel.actionCRUD(DetailEvents.OnAddItemClick(TaskItem(0, title, desc, false)))
+            } ?: viewModel.actionCRUD(DetailEvents.OnAddItemClick(TaskItem(0, title, desc, false, R.drawable.baseline_outline_grade_24)))
         }
 
         binding.detailToolBar.setOnMenuItemClickListener { menu ->

@@ -12,5 +12,6 @@ data class TaskItem(
     val id: Int = 0,
     val title: String,
     val desc: String,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
+    val drawableResId: Int
 ) : Parcelable

@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.TaskListAdapter
@@ -43,7 +44,8 @@ class TaskListFragment : Fragment() {
                 when (event) {
                     is UiEvent.Navigate -> {
                         when (event.route) {
-                            "detail_screen" -> adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
+                            "detail_screen" -> adapter =
+                                TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
                         }
                     }
 
@@ -75,9 +77,17 @@ class TaskListFragment : Fragment() {
     }
 
     private fun changeIsFavorite(task: TaskItem) {
-        task.let {
-            viewModel.onEvent(TaskListEvents.OnFavoriteButtonClick(TaskItem(it.id, it.title, it.desc, !it.isFavorite)))
-        }
+        viewModel.onEvent(
+            TaskListEvents.OnFavoriteButtonClick(
+                TaskItem(
+                    task.id,
+                    task.title,
+                    task.desc,
+                    !task.isFavorite,
+                    if (task.isFavorite) R.drawable.baseline_grade_24 else R.drawable.baseline_outline_grade_24
+                )
+            )
+        )
     }
 
     override fun onDestroy() {
