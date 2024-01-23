@@ -24,4 +24,7 @@
 
     // Top Menu
     <string name="delete_button">Delete</string>
+
+    // Tasks Top Menu
+    <string name="delete_all_button">Delete all</string>
 </resources>

@@ -1,10 +1,12 @@
 package com.comunidadedevspace.taskbeats.presentation
 
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
@@ -12,6 +14,7 @@ import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.TaskListAdapter
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
 import com.comunidadedevspace.taskbeats.util.UiEvent
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
 
 class TaskListFragment : Fragment() {
@@ -49,8 +52,23 @@ class TaskListFragment : Fragment() {
                         }
                     }
 
+                    is UiEvent.ShowSnackBar -> {
+                        showSnackBar(binding.root, event.message, event.action)
+                    }
+
                     else -> Unit
                 }
+            }
+        }
+
+        binding.tasksToolBar.setOnMenuItemClickListener { menu ->
+            when (menu.itemId) {
+                R.id.deleteAll -> {
+                    showDialog()
+                    true
+                }
+
+                else -> false
             }
         }
     }
@@ -88,6 +106,40 @@ class TaskListFragment : Fragment() {
                 )
             )
         )
+    }
+
+    private fun showSnackBar(view: View, message: String, action: String?) {
+        when (action) {
+            "Close" -> {
+                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                    .setAction(action) {
+                        it.isVisible = false
+                    }
+                    .setAnchorView(requireActivity().findViewById(R.id.fabAdd))
+                    .show()
+            }
+
+            null -> {
+                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
+                    .setAction("Action", null)
+                    .setAnchorView(requireActivity().findViewById(R.id.fabAdd))
+                    .show()
+            }
+        }
+    }
+
+    private fun showDialog() {
+        AlertDialog.Builder(requireActivity())
+            .setTitle("Delete all")
+            .setMessage("Are you sure you want to delete all tasks?")
+            .setPositiveButton("Yes") { _, _ ->
+                viewModel.onEvent(TaskListEvents.OnDeleteAllButtonClick)
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 
     override fun onDestroy() {

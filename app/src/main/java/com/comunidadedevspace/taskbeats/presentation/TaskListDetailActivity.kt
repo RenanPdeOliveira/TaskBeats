@@ -1,5 +1,6 @@
 package com.comunidadedevspace.taskbeats.presentation
 
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
@@ -57,6 +58,10 @@ class TaskListDetailActivity : AppCompatActivity() {
 
                     is UiEvent.ShowSnackBar -> {
                         showMessage(binding.root, event.message, event.action)
+                    }
+
+                    is UiEvent.ShowDialog -> {
+                        event.task?.let { showDialog(title = event.title, message = event.message, task = it) }
                     }
                 }
             }
@@ -123,5 +128,19 @@ class TaskListDetailActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+    private fun showDialog(title: String, message: String, task: TaskItem) {
+        AlertDialog.Builder(this)
+            .setTitle(title)
+            .setMessage(message)
+            .setPositiveButton("Yes") { _, _ ->
+                viewModel.actionCRUD(DetailEvents.OnYesDialogButtonClick(task))
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .create()
+            .show()
     }
 }

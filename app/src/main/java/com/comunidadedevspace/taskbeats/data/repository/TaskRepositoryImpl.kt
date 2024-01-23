@@ -20,6 +20,10 @@ class TaskRepositoryImpl(
         dao.update(task)
     }
 
+    override suspend fun deleteAll() {
+        dao.deleteAll()
+    }
+
     override fun getAll(): LiveData<List<TaskItem>> {
         return dao.getAll()
     }

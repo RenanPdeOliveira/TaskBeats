@@ -32,6 +32,10 @@ class TaskListDetailViewModel(
             }
 
             is DetailEvents.OnDeleteItemClick -> {
+                showDialog(event.task)
+            }
+
+            is DetailEvents.OnYesDialogButtonClick -> {
                 deleteItem(event.task)
             }
 
@@ -64,11 +68,9 @@ class TaskListDetailViewModel(
         }
     }
 
-    private fun deleteItem(task: TaskItem?) = viewModelScope.launch {
+    private fun showDialog(task: TaskItem?) = viewModelScope.launch {
         if (task != null) {
-            repository.delete(task)
-            _uiEvent.send(UiEvent.Navigate("main_screen"))
-            _uiEvent.send(UiEvent.ShowSnackBar(message = "You deleted the task ${task.title}"))
+            _uiEvent.send(UiEvent.ShowDialog("Delete task", "Are you sure you want to delete this task?", task))
         } else {
             _uiEvent.send(
                 UiEvent.ShowSnackBar(
@@ -77,6 +79,12 @@ class TaskListDetailViewModel(
                 )
             )
         }
+    }
+
+    private fun deleteItem(task: TaskItem) = viewModelScope.launch {
+        repository.delete(task)
+        _uiEvent.send(UiEvent.Navigate("main_screen"))
+        _uiEvent.send(UiEvent.ShowSnackBar(message = "You deleted the task ${task.title}"))
     }
 
     companion object {
