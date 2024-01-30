@@ -15,9 +15,11 @@
             android:id="@+id/detailToolBar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
+            android:background="@color/pink_300"
             app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/baseline_arrow_back_24"
-            app:title="@string/detail_top_bar_title" />
+            app:title="@string/detail_top_bar_title"
+            app:titleTextAppearance="@style/title_app_bar" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

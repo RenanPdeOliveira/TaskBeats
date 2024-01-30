@@ -18,7 +18,8 @@
         android:layout_gravity="bottom"
         android:backgroundTint="@color/pink_500"
         app:fabAlignmentMode="center"
-        app:fabCradleMargin="6dp"
+        app:fabAnchorMode="cradle"
+        app:fabCradleMargin="12dp"
         app:fabCradleRoundedCornerRadius="8dp"
         app:fabCradleVerticalOffset="8dp">
 

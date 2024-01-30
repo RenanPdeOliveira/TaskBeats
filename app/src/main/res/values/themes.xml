@@ -1,6 +1,6 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-    <style name="Theme.TaskBeats" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <style name="Theme.TaskBeats" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/pink_300</item>
         <item name="colorPrimaryVariant">@color/pink_500</item>
@@ -34,8 +34,13 @@
         <item name="android:textColor">@color/brown_700</item>
     </style>
 
+    <style name="title_app_bar" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/rubik_medium</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/brown_700</item>
+    </style>
+
     <style name="button" parent="Widget.Material3.Button">
-        <item name="background">@drawable/btn_add_task</item>
         <item name="android:textColor">@color/brown_700</item>
         <item name="android:fontFamily">@font/rubik_regular</item>
         <item name="android:textSize">18sp</item>

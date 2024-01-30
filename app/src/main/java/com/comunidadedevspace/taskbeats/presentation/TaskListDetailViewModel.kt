@@ -52,7 +52,7 @@ class TaskListDetailViewModel(
         if (task.title.isNotBlank() && task.desc.isNotBlank()) {
             repository.insert(task)
             _uiEvent.send(UiEvent.Navigate("main_screen"))
-            _uiEvent.send(UiEvent.ShowSnackBar(message = "You added a new task ${task.title}"))
+            _uiEvent.send(UiEvent.ShowSnackBar(message = "You added a new task ${task.title}", action = "Close"))
         } else {
             _uiEvent.send(UiEvent.ShowSnackBar(message = "Fill in all fields", action = "Close"))
         }
@@ -62,7 +62,7 @@ class TaskListDetailViewModel(
         if (task.title.isNotBlank() && task.desc.isNotBlank()) {
             repository.update(task)
             _uiEvent.send(UiEvent.Navigate("main_screen"))
-            _uiEvent.send(UiEvent.ShowSnackBar(message = "You updated the task ${task.title}"))
+            _uiEvent.send(UiEvent.ShowSnackBar(message = "You updated the task ${task.title}", action = "Close"))
         } else {
             _uiEvent.send(UiEvent.ShowSnackBar(message = "Fill in all fields", action = "Close"))
         }
@@ -75,7 +75,7 @@ class TaskListDetailViewModel(
             _uiEvent.send(
                 UiEvent.ShowSnackBar(
                     message = "There is no item to delete!",
-                    action = "Close"
+                    action = null
                 )
             )
         }
@@ -84,7 +84,7 @@ class TaskListDetailViewModel(
     private fun deleteItem(task: TaskItem) = viewModelScope.launch {
         repository.delete(task)
         _uiEvent.send(UiEvent.Navigate("main_screen"))
-        _uiEvent.send(UiEvent.ShowSnackBar(message = "You deleted the task ${task.title}"))
+        _uiEvent.send(UiEvent.ShowSnackBar(message = "You deleted the task ${task.title}", action = "Close"))
     }
 
     companion object {

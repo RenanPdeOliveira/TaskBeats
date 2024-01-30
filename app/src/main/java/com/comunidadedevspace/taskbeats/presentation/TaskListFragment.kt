@@ -32,10 +32,9 @@ class TaskListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentTaskListBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -56,7 +55,9 @@ class TaskListFragment : Fragment() {
                         showSnackBar(binding.root, event.message, event.action)
                     }
 
-                    else -> Unit
+                    is UiEvent.ShowDialog -> {
+                        showDialog(event.title, event.message)
+                    }
                 }
             }
         }
@@ -64,7 +65,7 @@ class TaskListFragment : Fragment() {
         binding.tasksToolBar.setOnMenuItemClickListener { menu ->
             when (menu.itemId) {
                 R.id.deleteAll -> {
-                    showDialog()
+                    viewModel.onEvent(TaskListEvents.OnDeleteAllButtonClick)
                     true
                 }
 
@@ -128,12 +129,12 @@ class TaskListFragment : Fragment() {
         }
     }
 
-    private fun showDialog() {
+    private fun showDialog(title: String, message: String) {
         AlertDialog.Builder(requireActivity())
-            .setTitle("Delete all")
-            .setMessage("Are you sure you want to delete all tasks?")
+            .setTitle(title)
+            .setMessage(message)
             .setPositiveButton("Yes") { _, _ ->
-                viewModel.onEvent(TaskListEvents.OnDeleteAllButtonClick)
+                viewModel.onEvent(TaskListEvents.OnYesDialogButtonClick)
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.dismiss()

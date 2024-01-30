@@ -35,6 +35,10 @@ class TaskListViewModel(
             }
 
             is TaskListEvents.OnDeleteAllButtonClick -> {
+                showDialog()
+            }
+
+            is TaskListEvents.OnYesDialogButtonClick -> {
                 deleteAllItems()
             }
         }
@@ -42,6 +46,14 @@ class TaskListViewModel(
 
     private fun changeFavoriteButton(task: TaskItem) = viewModelScope.launch {
         repository.update(task)
+    }
+
+    private fun showDialog() = viewModelScope.launch {
+        if (taskListLiveData.value!!.isNotEmpty()) {
+            _uiEvent.send(UiEvent.ShowDialog(title = "Delete all", message = "Are you sure you want to delete all tasks?"))
+        } else {
+            _uiEvent.send(UiEvent.ShowSnackBar(message = "There is no item to delete!", action = "Close"))
+        }
     }
 
     private fun deleteAllItems() = viewModelScope.launch {
