@@ -3,9 +3,28 @@ EN - TaskBeats is a todo list that i'm still developing using Recyclerview, MVVM
 
 PT - TaskBeats é uma lista de tarefas que ainda estou desenvolvendo utilizando Recyclerview, MVVM Architecture, Room DB, JUnit...
 
+## :camera_flash: Screenshots
+<!-- You can add more screenshots here if you like -->
+<img src="/results/Screenshot_taskbeats_2.png" width="260">&emsp;<img src="/results/Screenshot_taskbeats_3.png" width="260">&emsp;<img src="/results/Screenshot_taskbeats_4.png" width="260">&emsp;<img src="/results/Screenshot_taskbeats_5.png" width="260">&emsp;<img src="/results/Screenshot_taskbeats_6.png" width="260">&emsp;<img src="/results/Screenshot_taskbeats_7.png" width="260">
+
 ## Technologies
 * Kotlin
 * Activity to host screens
+* Room DB
+   * Entity
+   * Dao
+   * RoomDataBase
+   * CRUD
+* Retrofit
+   * REST API
+   * Service
+   * OkHttpClient
+* MVVM Architecture
+   * ViewModel
+   * Livedata
+   * Application
+* Coroutines
+* Unit Tests
 * ViewGroup
     * ConstraintLayout
     * CoordinatorLayout
@@ -22,31 +41,21 @@ PT - TaskBeats é uma lista de tarefas que ainda estou desenvolvendo utilizando 
     * FragmentContainerView
     * BottomAppBar
     * BottomNavigationView
-* Tool Bar Menu
-    * Delete button   
-* Room DB
-   * Entity
-   * Dao
-   * RoomDataBase
-   * CRUD
-* Retrofit
-   * API Request
-   * Service
-   * OkHttpClient
-* MVVM Architecture
-   * ViewModel
-   * Livedata
-   * Coroutines
-   * Application
-* Unit Tests
-* SnackBar to display messages
+    * AppBarLayout
+    * ToolBarLayout
+* UiEvents
+   * SnackBar to display messages
+   * Dialog to display messages
+* One time events with Channel
+* Empty state
 * Intent Explicit to open a second Activity
-* FindViewById to recover UI components
 
 
 ### TODO
-* Improve app styling
-* Add Dialogs for the buttons
+- [x] Add Dialogs for the buttons
+- [ ] Improve app styling
+- [ ] Improve news list fragment
+- [ ] Create favorite screen with viewPager2
 
 ## Author
 Renan Pires de Oliveira (connect with me on [Linkedin](https://www.linkedin.com/in/renan-pires-332568142/))
