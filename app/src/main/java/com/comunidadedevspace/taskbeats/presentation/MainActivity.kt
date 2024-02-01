@@ -9,6 +9,7 @@ import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.databinding.ActivityMainBinding
 import com.comunidadedevspace.taskbeats.presentation.events.MainEvents
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.MainActivityViewModel
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import kotlinx.coroutines.launch
 
@@ -26,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.background = null
         binding.bottomNavigationView.menu.getItem(1).isEnabled = false
 
-        val taskListFragment = TaskListFragment.newInstance()
+        val taskListViewPagerFragment = TaskListViewPagerFragment.newInstance()
         val newsListFragment = NewsListFragment.newInstance()
 
         lifecycleScope.launch {
@@ -34,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                 when (event) {
                     is UiEvent.Navigate -> {
                         when (event.route) {
-                            "task_list_screen" -> showFragment(taskListFragment)
+                            "task_list_screen" -> showFragment(taskListViewPagerFragment)
                             "news_list_screen" -> showFragment(newsListFragment)
                             "detail_screen" -> openTaskDetail()
                         }
@@ -49,7 +50,7 @@ class MainActivity : AppCompatActivity() {
             viewModel.onEvent(MainEvents.OnAddTaskClick)
         }
 
-        defaultFragment(taskListFragment)
+        defaultFragment(taskListViewPagerFragment)
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {

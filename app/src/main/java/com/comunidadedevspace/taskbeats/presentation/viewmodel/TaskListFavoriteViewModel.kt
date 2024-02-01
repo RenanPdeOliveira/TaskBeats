@@ -1,8 +1,8 @@
-package com.comunidadedevspace.taskbeats.presentation
+package com.comunidadedevspace.taskbeats.presentation.viewmodel
 
 import android.app.Application
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.TaskBeatsApplication
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
@@ -13,11 +13,11 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
-class TaskListViewModel(
+class TaskListFavoriteViewModel(
     private val repository: TaskRepository
-) : ViewModel() {
+): ViewModel() {
 
-    val taskListLiveData: LiveData<List<TaskItem>> = repository.getAll()
+    val list = repository.getAll()
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -33,14 +33,6 @@ class TaskListViewModel(
             is TaskListEvents.OnFavoriteButtonClick -> {
                 changeFavoriteButton(event.task)
             }
-
-            is TaskListEvents.OnDeleteAllButtonClick -> {
-                showDialog()
-            }
-
-            is TaskListEvents.OnYesDialogButtonClick -> {
-                deleteAllItems()
-            }
         }
     }
 
@@ -48,24 +40,14 @@ class TaskListViewModel(
         repository.update(task)
     }
 
-    private fun showDialog() = viewModelScope.launch {
-        if (taskListLiveData.value!!.isNotEmpty()) {
-            _uiEvent.send(UiEvent.ShowDialog(title = "Delete all", message = "Are you sure you want to delete all tasks?"))
-        } else {
-            _uiEvent.send(UiEvent.ShowSnackBar(message = "There is no item to delete!", action = "Close"))
-        }
-    }
-
-    private fun deleteAllItems() = viewModelScope.launch {
-        repository.deleteAll()
-        _uiEvent.send(UiEvent.ShowSnackBar(message = "You have deleted all items!", action = "Close"))
-    }
-
     companion object {
-        fun create(application: Application): TaskListViewModel {
-            val dao = (application as TaskBeatsApplication).getRepository()
-            return TaskListViewModel(dao)
+        fun getFactory(app: Application): ViewModelProvider.Factory {
+            val repository = (app as TaskBeatsApplication).getRepository()
+            return object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return TaskListFavoriteViewModel(repository) as T
+                }
+            }
         }
     }
-
 }

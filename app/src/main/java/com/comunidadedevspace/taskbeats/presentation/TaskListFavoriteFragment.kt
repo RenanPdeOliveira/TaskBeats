@@ -6,40 +6,40 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
-import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListBinding
+import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListFavoriteBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.TaskListAdapter
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
-import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListViewModel
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListFavoriteViewModel
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import kotlinx.coroutines.launch
 
-class TaskListFragment : Fragment() {
+class TaskListFavoriteFragment : Fragment() {
 
-    private var _binding: FragmentTaskListBinding? = null
+    private var _binding: FragmentTaskListFavoriteBinding? = null
     private val binding get() = _binding!!
 
-    private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
-
-    private val viewModel: TaskListViewModel by lazy {
-        TaskListViewModel.create(requireActivity().application)
+    private val viewModel: TaskListFavoriteViewModel by viewModels {
+        TaskListFavoriteViewModel.getFactory(requireActivity().application)
     }
+
+    private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentTaskListBinding.inflate(inflater, container, false)
+        _binding = FragmentTaskListFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.recyclerViewTask.adapter = adapter
+        binding.recyclerViewTaskFavorite.adapter = adapter
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiEvent.collect { event ->
                 when (event) {
@@ -54,18 +54,18 @@ class TaskListFragment : Fragment() {
                 }
             }
         }
-
     }
 
     override fun onStart() {
         super.onStart()
-        listUpdate()
+        getFavoriteList()
     }
 
-    private fun listUpdate() {
-        viewModel.taskListLiveData.observe(this@TaskListFragment) { list ->
-            binding.linearLayoutEmpty.isVisible = list.isEmpty()
-            adapter.submitList(list)
+    private fun getFavoriteList() {
+        viewModel.list.observe(this) { list ->
+            val newList = list.filter { it.isFavorite }
+            binding.linearLayoutEmpty.isVisible = newList.isEmpty()
+            adapter.submitList(newList)
         }
     }
 
@@ -97,10 +97,8 @@ class TaskListFragment : Fragment() {
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
-         * @return A new instance of fragment TaskListFragment.
          */
         @JvmStatic
-        fun newInstance() = TaskListFragment()
+        fun newInstance() = TaskListFavoriteFragment()
     }
-
 }

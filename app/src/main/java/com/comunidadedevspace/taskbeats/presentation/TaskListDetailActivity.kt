@@ -15,6 +15,7 @@ import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.ActivityTaskListDetailBinding
 import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListDetailViewModel
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch

@@ -4,7 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.comunidadedevspace.taskbeats.data.remote.NewsDto
 import com.comunidadedevspace.taskbeats.data.remote.NewsResponse
 import com.comunidadedevspace.taskbeats.data.remote.NewsService
-import com.comunidadedevspace.taskbeats.presentation.NewsListViewModel
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.NewsListViewModel
 import kotlinx.coroutines.runBlocking
 import org.junit.Rule
 import org.junit.Test

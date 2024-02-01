@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.comunidadedevspace.taskbeats.data.local.NewsItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentNewsListBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.NewsListAdapter
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.NewsListViewModel
 
 class NewsListFragment : Fragment() {
 
@@ -24,10 +25,9 @@ class NewsListFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentNewsListBinding.inflate(inflater, container, false)
-        val view = binding.root
-        return view
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -44,6 +44,11 @@ class NewsListFragment : Fragment() {
             }
             adapter.submitList(newsItem)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
     }
 
     companion object {

@@ -2,7 +2,7 @@ package com.comunidadedevspace.taskbeats
 
 import com.comunidadedevspace.taskbeats.data.local.TaskDao
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
-import com.comunidadedevspace.taskbeats.presentation.TaskListDetailViewModel
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListDetailViewModel
 import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest

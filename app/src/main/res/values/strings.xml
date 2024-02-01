@@ -7,7 +7,8 @@
 
     // Task List Activity
     <string name="tasks_top_bar_title">Tasks</string>
-    <string name="tv_empty_state">Add a task</string>
+    <string name="tv_empty_state">There is no task yet!</string>
+    <string name="tv_empty_state_favorite">There is no favorite task yet!</string>
     <string name="empty_state_description">empty state</string>
 
     // Detail Activity
