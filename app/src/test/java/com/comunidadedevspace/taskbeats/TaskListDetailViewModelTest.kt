@@ -1,7 +1,7 @@
 package com.comunidadedevspace.taskbeats
 
-import com.comunidadedevspace.taskbeats.data.local.TaskDao
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
+import com.comunidadedevspace.taskbeats.domain.TaskRepository
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListDetailViewModel
 import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -17,10 +17,10 @@ class TaskListDetailViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val taskDao: TaskDao = mock()
+    private val repository: TaskRepository = mock()
 
     private val underTest: TaskListDetailViewModel by lazy {
-        TaskListDetailViewModel(taskDao)
+        TaskListDetailViewModel(repository)
     }
 
     @Test
@@ -30,14 +30,15 @@ class TaskListDetailViewModelTest {
             1,
             "Buy",
             "Banana",
-            true
+            false,
+            R.drawable.baseline_outline_grade_24
         )
 
         // When
         underTest.actionCRUD(DetailEvents.OnAddItemClick(task))
 
         // Then
-        verify(taskDao).insert(task)
+        verify(repository).insert(task)
     }
 
     @Test
@@ -47,14 +48,15 @@ class TaskListDetailViewModelTest {
             2,
             "Study",
             "Math",
-            false
+            false,
+            R.drawable.baseline_outline_grade_24
         )
 
         // When
         underTest.actionCRUD(DetailEvents.OnEditItemClick(task))
 
         // Then
-        verify(taskDao).update(task)
+        verify(repository).update(task)
     }
 
     @Test
@@ -64,14 +66,15 @@ class TaskListDetailViewModelTest {
             3,
             "Work",
             "Create an app",
-            true
+            false,
+            R.drawable.baseline_outline_grade_24
         )
 
         // When
         underTest.actionCRUD(DetailEvents.OnDeleteItemClick(task))
 
         // Then
-        verify(taskDao).delete(task)
+        verify(repository).delete(task)
     }
 
 }
