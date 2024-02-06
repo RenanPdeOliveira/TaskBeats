@@ -13,7 +13,7 @@
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/tasksToolBar"
             android:layout_width="match_parent"
-            android:layout_height="?actionBarSize"
+            android:layout_height="50dp"
             android:background="@color/pink_300"
             app:menu="@menu/tasks_top_app_bar"
             app:title="@string/tasks_top_bar_title"
@@ -29,7 +29,7 @@
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/tabLayout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="40dp"
             android:background="@color/pink_300"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

@@ -15,6 +15,7 @@ import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.ActivityTaskListDetailBinding
 import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.ProvideViewModelFactory
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListDetailViewModel
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import com.google.android.material.snackbar.Snackbar
@@ -26,8 +27,8 @@ class TaskListDetailActivity : AppCompatActivity() {
 
     private var task: TaskItem? = null
 
-    private val viewModel: TaskListDetailViewModel by viewModels {
-        TaskListDetailViewModel.getFactoryViewModel(application)
+    private val viewModel by viewModels<TaskListDetailViewModel> {
+        ProvideViewModelFactory(application)
     }
 
     companion object {

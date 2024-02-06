@@ -13,6 +13,7 @@ import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListFavoriteBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.TaskListAdapter
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.ProvideViewModelFactory
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListFavoriteViewModel
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import kotlinx.coroutines.launch
@@ -22,8 +23,8 @@ class TaskListFavoriteFragment : Fragment() {
     private var _binding: FragmentTaskListFavoriteBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TaskListFavoriteViewModel by viewModels {
-        TaskListFavoriteViewModel.getFactory(requireActivity().application)
+    private val viewModel by viewModels<TaskListFavoriteViewModel> {
+        ProvideViewModelFactory(requireActivity().application)
     }
 
     private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite)

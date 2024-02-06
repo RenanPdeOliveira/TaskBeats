@@ -6,12 +6,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.TaskListAdapter
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.ProvideViewModelFactory
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListViewModel
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import kotlinx.coroutines.launch
@@ -23,8 +25,8 @@ class TaskListFragment : Fragment() {
 
     private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
 
-    private val viewModel: TaskListViewModel by lazy {
-        TaskListViewModel.create(requireActivity().application)
+    private val viewModel by viewModels<TaskListViewModel> {
+        ProvideViewModelFactory(requireActivity().application)
     }
 
     override fun onCreateView(

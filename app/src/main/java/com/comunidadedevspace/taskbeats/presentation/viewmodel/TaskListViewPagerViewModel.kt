@@ -1,11 +1,8 @@
 package com.comunidadedevspace.taskbeats.presentation.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import com.comunidadedevspace.taskbeats.TaskBeatsApplication
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.domain.TaskRepository
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListViewPagerEvent
@@ -73,14 +70,4 @@ class TaskListViewPagerViewModel(
         )
     }
 
-    companion object {
-        fun getFactory(app: Application): ViewModelProvider.Factory {
-            val repository = (app as TaskBeatsApplication).getRepository()
-            return object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return TaskListViewPagerViewModel(repository) as T
-                }
-            }
-        }
-    }
 }

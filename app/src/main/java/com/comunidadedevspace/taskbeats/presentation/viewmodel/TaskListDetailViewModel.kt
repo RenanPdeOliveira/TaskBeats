@@ -1,10 +1,7 @@
 package com.comunidadedevspace.taskbeats.presentation.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.comunidadedevspace.taskbeats.TaskBeatsApplication
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.domain.TaskRepository
 import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
@@ -85,17 +82,6 @@ class TaskListDetailViewModel(
         repository.delete(task)
         _uiEvent.send(UiEvent.Navigate("main_screen"))
         _uiEvent.send(UiEvent.ShowSnackBar(message = "You deleted the task ${task.title}", action = "Close"))
-    }
-
-    companion object {
-        fun getFactoryViewModel(application: Application): ViewModelProvider.Factory {
-            val dao = (application as TaskBeatsApplication).getRepository()
-            return object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return TaskListDetailViewModel(dao) as T
-                }
-            }
-        }
     }
 
 }

@@ -1,10 +1,8 @@
 package com.comunidadedevspace.taskbeats.presentation.viewmodel
 
-import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.comunidadedevspace.taskbeats.TaskBeatsApplication
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.domain.TaskRepository
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
@@ -38,13 +36,6 @@ class TaskListViewModel(
 
     private fun changeFavoriteButton(task: TaskItem) = viewModelScope.launch {
         repository.update(task)
-    }
-
-    companion object {
-        fun create(application: Application): TaskListViewModel {
-            val dao = (application as TaskBeatsApplication).getRepository()
-            return TaskListViewModel(dao)
-        }
     }
 
 }

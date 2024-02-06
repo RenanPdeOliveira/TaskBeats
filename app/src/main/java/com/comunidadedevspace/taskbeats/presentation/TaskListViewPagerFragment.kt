@@ -13,6 +13,7 @@ import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListViewPagerBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.AdapterViewPager
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListViewPagerEvent
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.ProvideViewModelFactory
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListViewPagerViewModel
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import com.google.android.material.snackbar.Snackbar
@@ -24,8 +25,8 @@ class TaskListViewPagerFragment : Fragment() {
     private var _binding: FragmentTaskListViewPagerBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel: TaskListViewPagerViewModel by viewModels {
-        TaskListViewPagerViewModel.getFactory(requireActivity().application)
+    private val viewModel by viewModels<TaskListViewPagerViewModel> {
+        ProvideViewModelFactory(requireActivity().application)
     }
 
     private val taskListFragment = TaskListFragment.newInstance()
