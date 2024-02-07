@@ -14,7 +14,7 @@ import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListFavoriteBind
 import com.comunidadedevspace.taskbeats.presentation.adapter.TaskListAdapter
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.ProvideViewModelFactory
-import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListFavoriteViewModel
+import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListViewModel
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import kotlinx.coroutines.launch
 
@@ -23,7 +23,7 @@ class TaskListFavoriteFragment : Fragment() {
     private var _binding: FragmentTaskListFavoriteBinding? = null
     private val binding get() = _binding!!
 
-    private val viewModel by viewModels<TaskListFavoriteViewModel> {
+    private val viewModel by viewModels<TaskListViewModel> {
         ProvideViewModelFactory(requireActivity().application)
     }
 
@@ -40,6 +40,7 @@ class TaskListFavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         binding.recyclerViewTaskFavorite.adapter = adapter
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiEvent.collect { event ->
@@ -63,7 +64,7 @@ class TaskListFavoriteFragment : Fragment() {
     }
 
     private fun getFavoriteList() {
-        viewModel.list.observe(this) { list ->
+        viewModel.taskList.observe(viewLifecycleOwner) { list ->
             val newList = list.filter { it.isFavorite }
             binding.linearLayoutEmpty.isVisible = newList.isEmpty()
             adapter.submitList(newList)

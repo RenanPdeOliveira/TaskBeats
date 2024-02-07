@@ -23,11 +23,11 @@ class TaskListFragment : Fragment() {
     private var _binding: FragmentTaskListBinding? = null
     private val binding get() = _binding!!
 
-    private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
-
     private val viewModel by viewModels<TaskListViewModel> {
         ProvideViewModelFactory(requireActivity().application)
     }
+
+    private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -65,7 +65,7 @@ class TaskListFragment : Fragment() {
     }
 
     private fun listUpdate() {
-        viewModel.taskListLiveData.observe(this@TaskListFragment) { list ->
+        viewModel.taskList.observe(viewLifecycleOwner) { list ->
             binding.linearLayoutEmpty.isVisible = list.isEmpty()
             adapter.submitList(list)
         }
@@ -99,10 +99,8 @@ class TaskListFragment : Fragment() {
         /**
          * Use this factory method to create a new instance of
          * this fragment using the provided parameters.
-         * @return A new instance of fragment TaskListFragment.
          */
         @JvmStatic
         fun newInstance() = TaskListFragment()
     }
-
 }

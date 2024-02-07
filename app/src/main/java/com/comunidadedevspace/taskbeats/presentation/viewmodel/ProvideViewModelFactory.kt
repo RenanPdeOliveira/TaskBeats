@@ -15,7 +15,6 @@ class ProvideViewModelFactory(
         return when (modelClass) {
             TaskListDetailViewModel::class.java -> TaskListDetailViewModel(repository) as T
             TaskListViewModel::class.java -> TaskListViewModel(repository) as T
-            TaskListFavoriteViewModel::class.java -> TaskListFavoriteViewModel(repository) as T
             TaskListViewPagerViewModel::class.java -> TaskListViewPagerViewModel(repository) as T
             else -> IllegalArgumentException("Unknown viewModel instance $modelClass") as T
         }

@@ -19,6 +19,9 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: MainActivityViewModel by viewModels()
 
+    private val taskListViewPagerFragment = TaskListViewPagerFragment.newInstance()
+    private val newsListFragment = NewsListFragment.newInstance()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -27,8 +30,7 @@ class MainActivity : AppCompatActivity() {
         binding.bottomNavigationView.background = null
         binding.bottomNavigationView.menu.getItem(1).isEnabled = false
 
-        val taskListViewPagerFragment = TaskListViewPagerFragment.newInstance()
-        val newsListFragment = NewsListFragment.newInstance()
+        defaultFragment(taskListViewPagerFragment)
 
         lifecycleScope.launch {
             viewModel.uiEvent.collect { event ->
@@ -49,8 +51,6 @@ class MainActivity : AppCompatActivity() {
         binding.fabAdd.setOnClickListener {
             viewModel.onEvent(MainEvents.OnAddTaskClick)
         }
-
-        defaultFragment(taskListViewPagerFragment)
 
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {

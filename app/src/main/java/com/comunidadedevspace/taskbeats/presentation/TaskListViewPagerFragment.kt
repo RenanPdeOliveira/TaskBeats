@@ -29,6 +29,8 @@ class TaskListViewPagerFragment : Fragment() {
         ProvideViewModelFactory(requireActivity().application)
     }
 
+    private lateinit var adapterViewPager: AdapterViewPager
+
     private val taskListFragment = TaskListFragment.newInstance()
     private val taskListFavoriteFragment = TaskListFavoriteFragment.newInstance()
 
@@ -44,11 +46,9 @@ class TaskListViewPagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = AdapterViewPager(this)
-
-        adapter.getFragment(taskListFragment, taskListFavoriteFragment)
-
-        binding.viewPager.adapter = adapter
+        adapterViewPager = AdapterViewPager(this)
+        adapterViewPager.getFragment(taskListFragment, taskListFavoriteFragment)
+        binding.viewPager.adapter = adapterViewPager
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiEvent.collect { event ->

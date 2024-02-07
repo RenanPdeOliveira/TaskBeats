@@ -15,7 +15,7 @@ class TaskListViewModel(
     private val repository: TaskRepository
 ) : ViewModel() {
 
-    val taskListLiveData: LiveData<List<TaskItem>> = repository.getAll()
+    val taskList: LiveData<List<TaskItem>> = repository.getAll()
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
