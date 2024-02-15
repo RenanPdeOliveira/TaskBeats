@@ -4,19 +4,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presentation.TaskListViewPagerFragment">
+    tools:context=".presentation.NewsListViewPagerFragment">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/tasksToolBar"
+            android:id="@+id/newsToolBar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/pink_300"
-            app:menu="@menu/tasks_top_app_bar"
-            app:title="@string/tasks_top_bar_title"
+            app:title="News"
             app:titleTextAppearance="@style/title_app_bar" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -27,7 +26,7 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.google.android.material.tabs.TabLayout
-            android:id="@+id/taskTabLayout"
+            android:id="@+id/newsTabLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:background="@color/pink_300"
@@ -39,13 +38,13 @@
             app:tabTextColor="@color/brown_700" />
 
         <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/taskViewPager"
+            android:id="@+id/newsViewPager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/taskTabLayout" />
+            app:layout_constraintTop_toBottomOf="@+id/newsTabLayout" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

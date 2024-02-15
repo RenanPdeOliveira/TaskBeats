@@ -10,8 +10,7 @@ object RetrofitModule {
 
     fun createNewsService(): NewsService {
 
-        val logging = HttpLoggingInterceptor()
-        logging.apply {
+        val logging = HttpLoggingInterceptor().apply {
             HttpLoggingInterceptor.Level.BODY
         }
 
@@ -19,11 +18,11 @@ object RetrofitModule {
             .addInterceptor(logging)
             .build()
 
-        val retrofit = Retrofit
-            .Builder()
+        return Retrofit.Builder()
             .client(client)
             .baseUrl("https://api.thenewsapi.com/v1/news/")
             .addConverterFactory(GsonConverterFactory.create(Gson()))
-        return retrofit.build().create(NewsService::class.java)
+            .build()
+            .create(NewsService::class.java)
     }
 }

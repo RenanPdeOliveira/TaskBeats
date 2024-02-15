@@ -28,4 +28,6 @@
 
     // Tasks Top Menu
     <string name="delete_all_button">Delete all</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

@@ -11,7 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListViewPagerBinding
-import com.comunidadedevspace.taskbeats.presentation.adapter.AdapterViewPager
+import com.comunidadedevspace.taskbeats.presentation.adapter.ViewPagerTaskAdapter
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListViewPagerEvent
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.ProvideViewModelFactory
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListViewPagerViewModel
@@ -29,7 +29,7 @@ class TaskListViewPagerFragment : Fragment() {
         ProvideViewModelFactory(requireActivity().application)
     }
 
-    private lateinit var adapterViewPager: AdapterViewPager
+    private lateinit var viewPagerAdapter: ViewPagerTaskAdapter
 
     private val taskListFragment = TaskListFragment.newInstance()
     private val taskListFavoriteFragment = TaskListFavoriteFragment.newInstance()
@@ -46,9 +46,9 @@ class TaskListViewPagerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        adapterViewPager = AdapterViewPager(this)
-        adapterViewPager.getFragment(taskListFragment, taskListFavoriteFragment)
-        binding.viewPager.adapter = adapterViewPager
+        viewPagerAdapter = ViewPagerTaskAdapter(this)
+        viewPagerAdapter.getFragment(taskListFragment, taskListFavoriteFragment)
+        binding.taskViewPager.adapter = viewPagerAdapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.uiEvent.collect { event ->
@@ -77,7 +77,7 @@ class TaskListViewPagerFragment : Fragment() {
             }
         }
 
-        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+        TabLayoutMediator(binding.taskTabLayout, binding.taskViewPager) { tab, position ->
             when (position) {
                 0 -> {
                     tab.text = "Tasks"

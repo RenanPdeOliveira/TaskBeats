@@ -3,8 +3,9 @@ package com.comunidadedevspace.taskbeats
 import android.app.Application
 import androidx.room.Room
 import com.comunidadedevspace.taskbeats.data.local.TaskDataBase
+import com.comunidadedevspace.taskbeats.data.remote.RetrofitModule
 import com.comunidadedevspace.taskbeats.data.repository.TaskRepositoryImpl
-import com.comunidadedevspace.taskbeats.domain.TaskRepository
+import com.comunidadedevspace.taskbeats.domain.repository.TaskRepository
 
 class TaskBeatsApplication : Application() {
 
@@ -19,7 +20,7 @@ class TaskBeatsApplication : Application() {
     }
 
     fun getRepository(): TaskRepository {
-        return TaskRepositoryImpl(db.taskDao())
+        return TaskRepositoryImpl(db.taskDao(), RetrofitModule.createNewsService())
     }
 
 }

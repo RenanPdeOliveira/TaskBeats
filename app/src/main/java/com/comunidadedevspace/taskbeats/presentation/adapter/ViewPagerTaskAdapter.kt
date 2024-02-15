@@ -3,7 +3,7 @@ package com.comunidadedevspace.taskbeats.presentation.adapter
 import androidx.fragment.app.Fragment
 import androidx.viewpager2.adapter.FragmentStateAdapter
 
-class AdapterViewPager(fragment: Fragment): FragmentStateAdapter(fragment) {
+class ViewPagerTaskAdapter(fragment: Fragment): FragmentStateAdapter(fragment) {
 
     private lateinit var taskListFragment: Fragment
     private lateinit var taskListFavoriteFragment: Fragment

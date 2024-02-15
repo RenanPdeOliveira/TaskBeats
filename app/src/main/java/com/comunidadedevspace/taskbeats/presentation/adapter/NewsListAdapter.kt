@@ -12,12 +12,13 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.NewsItem
+import com.comunidadedevspace.taskbeats.databinding.ItemNewsBinding
 
 class NewsListAdapter : ListAdapter<NewsItem, NewsListViewHolder>(NewsListAdapter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsListViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_news, parent, false)
-        return NewsListViewHolder(view)
+        val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return NewsListViewHolder(binding)
     }
 
     override fun onBindViewHolder(holder: NewsListViewHolder, position: Int) {
@@ -32,23 +33,27 @@ class NewsListAdapter : ListAdapter<NewsItem, NewsListViewHolder>(NewsListAdapte
         }
 
         override fun areContentsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
-            return oldItem.title == newItem.title && oldItem.imageUrl == newItem.imageUrl
+            return oldItem.title == newItem.title &&
+                    oldItem.imageUrl == newItem.imageUrl
         }
 
     }
 
 }
 
-class NewsListViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
-    private val tvNews: TextView = view.findViewById(R.id.textViewNews)
-    private val imageView: ImageView = view.findViewById(R.id.imageViewNews)
-
+class NewsListViewHolder(private val binding: ItemNewsBinding) :
+    RecyclerView.ViewHolder(binding.root) {
     fun bind(
         item: NewsItem
     ) {
-        tvNews.text = item.title
-        imageView.load(item.imageUrl) {
-            transformations(RoundedCornersTransformation(16f))
+        with(binding) {
+            textViewNews.text = item.title
+            imageViewNews.load(item.imageUrl) {
+                transformations(RoundedCornersTransformation(16f))
+            }
+            newsFavoriteButton.setOnClickListener {
+
+            }
         }
     }
 }

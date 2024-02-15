@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
-import com.comunidadedevspace.taskbeats.domain.TaskRepository
+import com.comunidadedevspace.taskbeats.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListViewPagerEvent
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import kotlinx.coroutines.channels.Channel

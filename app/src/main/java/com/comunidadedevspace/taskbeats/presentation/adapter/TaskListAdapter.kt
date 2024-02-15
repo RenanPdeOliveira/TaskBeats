@@ -47,16 +47,18 @@ class TaskListViewHolder(private val binding: ItemTaskBinding) :
         openTaskView: (task: TaskItem) -> Unit,
         isFavorite: (task: TaskItem) -> Unit
     ) {
-        binding.textViewTitle.text = task.title
-        binding.textViewDesc.text = task.desc
-        binding.imageIsFavorite.setImageResource(task.drawableResId)
+        with(binding) {
+            textViewTitle.text = task.title
+            textViewDesc.text = task.desc
+            imageIsFavorite.setImageResource(task.drawableResId)
 
-        binding.root.setOnClickListener {
-            openTaskView.invoke(task)
-        }
+            root.setOnClickListener {
+                openTaskView.invoke(task)
+            }
 
-        binding.imageIsFavorite.setOnClickListener {
-            isFavorite.invoke(task)
+            imageIsFavorite.setOnClickListener {
+                isFavorite.invoke(task)
+            }
         }
     }
 }

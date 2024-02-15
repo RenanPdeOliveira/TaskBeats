@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.comunidadedevspace.taskbeats.TaskBeatsApplication
+import com.comunidadedevspace.taskbeats.presentation.NewsListFragment
 import java.lang.IllegalArgumentException
 
 class ProvideViewModelFactory(
@@ -16,6 +17,7 @@ class ProvideViewModelFactory(
             TaskListDetailViewModel::class.java -> TaskListDetailViewModel(repository) as T
             TaskListViewModel::class.java -> TaskListViewModel(repository) as T
             TaskListViewPagerViewModel::class.java -> TaskListViewPagerViewModel(repository) as T
+            NewsListViewModel::class.java -> NewsListViewModel(repository) as T
             else -> IllegalArgumentException("Unknown viewModel instance $modelClass") as T
         }
     }

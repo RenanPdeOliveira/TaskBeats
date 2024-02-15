@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
     private val viewModel: MainActivityViewModel by viewModels()
 
     private val taskListViewPagerFragment = TaskListViewPagerFragment.newInstance()
-    private val newsListFragment = NewsListFragment.newInstance()
+    private val newsListViewPagerFragment = NewsListViewPagerFragment.newInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
                     is UiEvent.Navigate -> {
                         when (event.route) {
                             "task_list_screen" -> showFragment(taskListViewPagerFragment)
-                            "news_list_screen" -> showFragment(newsListFragment)
+                            "news_list_screen" -> showFragment(newsListViewPagerFragment)
                             "detail_screen" -> openTaskDetail()
                         }
                     }
@@ -89,5 +89,4 @@ class MainActivity : AppCompatActivity() {
             setReorderingAllowed(true)
         }
     }
-
 }

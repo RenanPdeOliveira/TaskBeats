@@ -11,15 +11,15 @@ import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.NewsItem
-import com.comunidadedevspace.taskbeats.databinding.FragmentNewsListBinding
+import com.comunidadedevspace.taskbeats.databinding.FragmentNewsListFavoriteBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.NewsListAdapter
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.NewsListViewModel
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.ProvideViewModelFactory
 import kotlinx.coroutines.launch
 
-class NewsListFragment : Fragment() {
+class NewsListFavoriteFragment : Fragment() {
 
-    private var _binding: FragmentNewsListBinding? = null
+    private var _binding: FragmentNewsListFavoriteBinding? = null
     private val binding get() = _binding!!
 
     private val adapter = NewsListAdapter()
@@ -33,24 +33,24 @@ class NewsListFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding = FragmentNewsListBinding.inflate(inflater, container, false)
+        _binding = FragmentNewsListFavoriteBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.recyclerViewNews.adapter = adapter
+        binding.recyclerViewNewsFavorite.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.topList.collect { topList ->
-                    val newList = topList?.map { top ->
+                viewModel.allList.collect { allList ->
+                    val newList = allList?.map { all ->
                         NewsItem(
-                            title = top.title,
-                            imageUrl = top.imageUrl,
-                            isFavorite = false,
-                            drawableResId = R.drawable.baseline_favorite_border_24
+                            title = all.title,
+                            imageUrl = all.imageUrl,
+                            isFavorite = true,
+                            drawableResId = R.drawable.baseline_favorite_24
                         )
                     }
                     adapter.submitList(newList)
@@ -66,6 +66,6 @@ class NewsListFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = NewsListFragment()
+        fun newInstance() = NewsListFavoriteFragment()
     }
 }

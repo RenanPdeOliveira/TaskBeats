@@ -1,7 +1,7 @@
 package com.comunidadedevspace.taskbeats
 
 import com.comunidadedevspace.taskbeats.data.local.TaskItem
-import com.comunidadedevspace.taskbeats.domain.TaskRepository
+import com.comunidadedevspace.taskbeats.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListDetailViewModel
 import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
