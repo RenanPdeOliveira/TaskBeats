@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -13,16 +14,19 @@ import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.NewsItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentNewsListFavoriteBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.NewsListAdapter
+import com.comunidadedevspace.taskbeats.presentation.events.NewsListEvents
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.NewsListViewModel
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.ProvideViewModelFactory
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class NewsListFavoriteFragment : Fragment() {
 
     private var _binding: FragmentNewsListFavoriteBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter = NewsListAdapter()
+    private val adapter = NewsListAdapter(::onFavoriteButtonClick)
 
     private val viewModel by viewModels<NewsListViewModel> {
         ProvideViewModelFactory(requireActivity().application)
@@ -43,19 +47,43 @@ class NewsListFavoriteFragment : Fragment() {
         binding.recyclerViewNewsFavorite.adapter = adapter
 
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                viewModel.allList.collect { allList ->
-                    val newList = allList?.map { all ->
-                        NewsItem(
-                            title = all.title,
-                            imageUrl = all.imageUrl,
-                            isFavorite = true,
-                            drawableResId = R.drawable.baseline_favorite_24
-                        )
-                    }
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.newsListFavorite.collect { newsList ->
+                    val newList = newsList.filter { it.isFavorite }
                     adapter.submitList(newList)
+                    withContext(Dispatchers.Main) {
+                        binding.newsStateEmptyFavorite.isVisible = newList.isEmpty()
+                    }
                 }
             }
+        }
+    }
+
+    private fun onFavoriteButtonClick(news: NewsItem) {
+        if (!news.isFavorite) {
+            viewModel.onEvent(
+                NewsListEvents.OnAddFavorite(
+                    NewsItem(
+                        id = news.id,
+                        title = news.title,
+                        imageUrl = news.imageUrl,
+                        isFavorite = true,
+                        drawableResId = R.drawable.baseline_favorite_24
+                    )
+                )
+            )
+        } else {
+            viewModel.onEvent(
+                NewsListEvents.OnDeleteFavorite(
+                    NewsItem(
+                        id = news.id,
+                        title = news.title,
+                        imageUrl = news.imageUrl,
+                        isFavorite = false,
+                        drawableResId = R.drawable.baseline_favorite_border_24
+                    )
+                )
+            )
         }
     }
 

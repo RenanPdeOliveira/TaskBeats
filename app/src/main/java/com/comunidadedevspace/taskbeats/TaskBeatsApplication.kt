@@ -20,7 +20,7 @@ class TaskBeatsApplication : Application() {
     }
 
     fun getRepository(): TaskRepository {
-        return TaskRepositoryImpl(db.taskDao(), RetrofitModule.createNewsService())
+        return TaskRepositoryImpl(db.taskDao(), db.newsDao(), RetrofitModule.createNewsService())
     }
 
 }

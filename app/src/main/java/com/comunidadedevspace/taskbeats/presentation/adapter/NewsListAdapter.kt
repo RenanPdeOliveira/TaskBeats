@@ -1,20 +1,18 @@
 package com.comunidadedevspace.taskbeats.presentation.adapter
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
-import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.NewsItem
 import com.comunidadedevspace.taskbeats.databinding.ItemNewsBinding
 
-class NewsListAdapter : ListAdapter<NewsItem, NewsListViewHolder>(NewsListAdapter) {
+class NewsListAdapter(
+    private val onFavoriteClick: (news: NewsItem) -> Unit
+) : ListAdapter<NewsItem, NewsListViewHolder>(NewsListAdapter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsListViewHolder {
         val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -23,7 +21,7 @@ class NewsListAdapter : ListAdapter<NewsItem, NewsListViewHolder>(NewsListAdapte
 
     override fun onBindViewHolder(holder: NewsListViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item)
+        holder.bind(item, onFavoriteClick)
     }
 
     companion object : DiffUtil.ItemCallback<NewsItem>() {
@@ -44,15 +42,17 @@ class NewsListAdapter : ListAdapter<NewsItem, NewsListViewHolder>(NewsListAdapte
 class NewsListViewHolder(private val binding: ItemNewsBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(
-        item: NewsItem
+        item: NewsItem,
+        onFavoriteClick: (news: NewsItem) -> Unit
     ) {
         with(binding) {
             textViewNews.text = item.title
             imageViewNews.load(item.imageUrl) {
                 transformations(RoundedCornersTransformation(16f))
             }
+            newsFavoriteButton.setImageResource(item.drawableResId)
             newsFavoriteButton.setOnClickListener {
-
+                onFavoriteClick.invoke(item)
             }
         }
     }
