@@ -11,7 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.comunidadedevspace.taskbeats.R
-import com.comunidadedevspace.taskbeats.data.local.NewsItem
+import com.comunidadedevspace.taskbeats.data.local.entity.NewsItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentNewsListBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.NewsListAdapter
 import com.comunidadedevspace.taskbeats.presentation.events.NewsListEvents
@@ -49,19 +49,15 @@ class NewsListFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsState.collect { state ->
-                    val newList = state.list?.map { item ->
-                        NewsItem(
-                            id = item.id,
-                            title = item.title,
-                            imageUrl = item.imageUrl,
-                            isFavorite = false,
-                            drawableResId = R.drawable.baseline_favorite_border_24
-                        )
-                    }
-                    adapter.submitList(newList)
-                    withContext(Dispatchers.Main) {
-                        binding.progressBarNewsList.isVisible = state.isLoading
-                        binding.newsStateEmpty.isVisible = state.list?.size == 0
+                    withContext(Dispatchers.Main) { binding.progressBarNewsList.isVisible = state.isLoading }
+                    state.list?.let { list1 ->
+                        state.allNews?.let { list2 ->
+                            val newList = list1 + list2
+                            adapter.submitList(newList)
+                            withContext(Dispatchers.Main) {
+                                binding.newsStateEmpty.isVisible = newList.isEmpty()
+                            }
+                        }
                     }
                 }
             }

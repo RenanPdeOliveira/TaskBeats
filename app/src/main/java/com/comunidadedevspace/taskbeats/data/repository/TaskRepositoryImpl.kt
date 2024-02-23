@@ -1,11 +1,11 @@
 package com.comunidadedevspace.taskbeats.data.repository
 
 import androidx.lifecycle.LiveData
-import com.comunidadedevspace.taskbeats.data.local.NewsDao
-import com.comunidadedevspace.taskbeats.data.local.NewsItem
-import com.comunidadedevspace.taskbeats.data.local.TaskDao
-import com.comunidadedevspace.taskbeats.data.local.TaskItem
-import com.comunidadedevspace.taskbeats.data.remote.NewsResponse
+import com.comunidadedevspace.taskbeats.data.local.dao.NewsDao
+import com.comunidadedevspace.taskbeats.data.local.entity.NewsItem
+import com.comunidadedevspace.taskbeats.data.local.dao.TaskDao
+import com.comunidadedevspace.taskbeats.data.local.entity.TaskItem
+import com.comunidadedevspace.taskbeats.data.mappers.toNewsItem
 import com.comunidadedevspace.taskbeats.data.remote.NewsService
 import com.comunidadedevspace.taskbeats.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.domain.util.Resource
@@ -37,9 +37,9 @@ class TaskRepositoryImpl(
         return taskDao.getAll()
     }
 
-    override suspend fun fetchTopNews(): Resource<NewsResponse> {
+    override suspend fun fetchTopNews(): Resource<List<NewsItem>> {
         return try {
-            Resource.Success(data = api.fetchTopNews())
+            Resource.Success(data = api.fetchTopNews().data.toNewsItem())
         } catch (e: Exception) {
             if (e is CancellationException) throw e
             e.printStackTrace()
@@ -47,9 +47,9 @@ class TaskRepositoryImpl(
         }
     }
 
-    override suspend fun fetchAllNews(): Resource<NewsResponse> {
+    override suspend fun fetchAllNews(): Resource<List<NewsItem>> {
         return try {
-            Resource.Success(data = api.fetchAllNews())
+            Resource.Success(data = api.fetchAllNews().data.toNewsItem())
         } catch (e: Exception) {
             if (e is CancellationException) throw e
             e.printStackTrace()

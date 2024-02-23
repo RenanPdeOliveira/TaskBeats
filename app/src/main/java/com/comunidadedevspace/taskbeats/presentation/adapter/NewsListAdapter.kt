@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.RoundedCornersTransformation
-import com.comunidadedevspace.taskbeats.data.local.NewsItem
+import com.comunidadedevspace.taskbeats.data.local.entity.NewsItem
 import com.comunidadedevspace.taskbeats.databinding.ItemNewsBinding
 
 class NewsListAdapter(

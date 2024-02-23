@@ -11,7 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import com.comunidadedevspace.taskbeats.R
-import com.comunidadedevspace.taskbeats.data.local.NewsItem
+import com.comunidadedevspace.taskbeats.data.local.entity.NewsItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentNewsListFavoriteBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.NewsListAdapter
 import com.comunidadedevspace.taskbeats.presentation.events.NewsListEvents

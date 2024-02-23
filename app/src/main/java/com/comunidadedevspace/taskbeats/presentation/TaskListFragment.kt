@@ -9,7 +9,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
-import com.comunidadedevspace.taskbeats.data.local.TaskItem
+import com.comunidadedevspace.taskbeats.data.local.entity.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListBinding
 import com.comunidadedevspace.taskbeats.presentation.adapter.TaskListAdapter
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListEvents

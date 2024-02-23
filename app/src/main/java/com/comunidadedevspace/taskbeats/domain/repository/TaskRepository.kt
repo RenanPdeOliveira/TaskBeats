@@ -1,9 +1,8 @@
 package com.comunidadedevspace.taskbeats.domain.repository
 
 import androidx.lifecycle.LiveData
-import com.comunidadedevspace.taskbeats.data.local.NewsItem
-import com.comunidadedevspace.taskbeats.data.local.TaskItem
-import com.comunidadedevspace.taskbeats.data.remote.NewsResponse
+import com.comunidadedevspace.taskbeats.data.local.entity.NewsItem
+import com.comunidadedevspace.taskbeats.data.local.entity.TaskItem
 import com.comunidadedevspace.taskbeats.domain.util.Resource
 import kotlinx.coroutines.flow.Flow
 
@@ -19,9 +18,9 @@ interface TaskRepository {
 
     fun getAll(): LiveData<List<TaskItem>>
 
-    suspend fun fetchTopNews(): Resource<NewsResponse>
+    suspend fun fetchTopNews(): Resource<List<NewsItem>>
 
-    suspend fun fetchAllNews(): Resource<NewsResponse>
+    suspend fun fetchAllNews(): Resource<List<NewsItem>>
 
     suspend fun insertNews(news: NewsItem)
 

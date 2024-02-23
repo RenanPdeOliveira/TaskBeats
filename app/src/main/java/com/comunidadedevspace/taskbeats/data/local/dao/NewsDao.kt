@@ -1,9 +1,10 @@
-package com.comunidadedevspace.taskbeats.data.local
+package com.comunidadedevspace.taskbeats.data.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.comunidadedevspace.taskbeats.data.local.entity.NewsItem
 import kotlinx.coroutines.flow.Flow
 
 @Dao

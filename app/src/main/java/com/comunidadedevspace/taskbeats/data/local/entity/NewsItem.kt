@@ -1,4 +1,4 @@
-package com.comunidadedevspace.taskbeats.data.local
+package com.comunidadedevspace.taskbeats.data.local.entity
 
 import android.os.Parcelable
 import androidx.room.Entity

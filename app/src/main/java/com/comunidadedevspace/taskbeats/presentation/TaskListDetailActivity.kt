@@ -12,7 +12,7 @@ import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
-import com.comunidadedevspace.taskbeats.data.local.TaskItem
+import com.comunidadedevspace.taskbeats.data.local.entity.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.ActivityTaskListDetailBinding
 import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.ProvideViewModelFactory

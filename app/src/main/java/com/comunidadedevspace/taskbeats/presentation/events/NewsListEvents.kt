@@ -1,6 +1,6 @@
 package com.comunidadedevspace.taskbeats.presentation.events
 
-import com.comunidadedevspace.taskbeats.data.local.NewsItem
+import com.comunidadedevspace.taskbeats.data.local.entity.NewsItem
 
 sealed class NewsListEvents {
     data class OnAddFavorite(val news: NewsItem) : NewsListEvents()

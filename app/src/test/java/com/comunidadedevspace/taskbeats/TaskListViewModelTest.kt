@@ -1,9 +1,5 @@
 package com.comunidadedevspace.taskbeats
 
-import com.comunidadedevspace.taskbeats.data.local.TaskDao
-import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListViewModel
-import org.mockito.kotlin.mock
-
 class TaskListViewModelTest {
 
     /*private val taskDao: TaskDao = mock()

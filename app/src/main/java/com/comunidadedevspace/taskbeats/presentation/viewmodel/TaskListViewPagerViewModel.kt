@@ -3,7 +3,7 @@ package com.comunidadedevspace.taskbeats.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import com.comunidadedevspace.taskbeats.data.local.TaskItem
+import com.comunidadedevspace.taskbeats.data.local.entity.TaskItem
 import com.comunidadedevspace.taskbeats.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.presentation.events.TaskListViewPagerEvent
 import com.comunidadedevspace.taskbeats.util.UiEvent
