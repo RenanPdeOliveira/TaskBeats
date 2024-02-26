@@ -20,6 +20,9 @@ import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListDetailVie
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.launch
+import java.text.DateFormat
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 class TaskListDetailActivity : AppCompatActivity() {
 
@@ -88,12 +91,20 @@ class TaskListDetailActivity : AppCompatActivity() {
                             it.id,
                             title,
                             desc,
+                            LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm")),
                             it.isFavorite,
                             it.drawableResId
                         )
                     )
                 )
-            } ?: viewModel.actionCRUD(DetailEvents.OnAddItemClick(TaskItem(0, title, desc, false, R.drawable.baseline_outline_grade_24)))
+            } ?: viewModel.actionCRUD(DetailEvents.OnAddItemClick(TaskItem(
+                0,
+                title,
+                desc,
+                LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm")),
+                false,
+                R.drawable.baseline_outline_grade_24
+            )))
         }
 
         binding.detailToolBar.setOnMenuItemClickListener { menu ->

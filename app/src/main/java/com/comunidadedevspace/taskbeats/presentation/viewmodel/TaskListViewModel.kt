@@ -31,11 +31,20 @@ class TaskListViewModel(
             is TaskListEvents.OnFavoriteButtonClick -> {
                 changeFavoriteButton(event.task)
             }
+
+            is TaskListEvents.OnDeleteButtonClick -> {
+                deleteTask(event.task)
+            }
         }
     }
 
     private fun changeFavoriteButton(task: TaskItem) = viewModelScope.launch {
         repository.update(task)
+    }
+
+    private fun deleteTask(task: TaskItem) = viewModelScope.launch {
+        repository.delete(task)
+        _uiEvent.send(UiEvent.ShowSnackBar(message = "You have deleted ${task.title}"))
     }
 
 }

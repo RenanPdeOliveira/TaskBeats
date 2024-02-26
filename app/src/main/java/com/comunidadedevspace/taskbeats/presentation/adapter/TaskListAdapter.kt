@@ -5,12 +5,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.ListAdapter
+import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.data.local.entity.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.ItemTaskBinding
 
 class TaskListAdapter(
     private val openTaskView: (task: TaskItem) -> Unit,
-    private val isFavorite: (task: TaskItem) -> Unit
+    private val isFavorite: (task: TaskItem) -> Unit,
+    private val deleteTask: (task: TaskItem) -> Unit
 ) : ListAdapter<TaskItem, TaskListViewHolder>(TaskListAdapter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TaskListViewHolder {
@@ -21,7 +23,7 @@ class TaskListAdapter(
 
     override fun onBindViewHolder(holder: TaskListViewHolder, position: Int) {
         val item = getItem(position)
-        holder.bind(item, openTaskView, isFavorite)
+        holder.bind(item, openTaskView, isFavorite, deleteTask)
     }
 
     private companion object : DiffUtil.ItemCallback<TaskItem>() {
@@ -44,11 +46,13 @@ class TaskListViewHolder(private val binding: ItemTaskBinding) :
     fun bind(
         task: TaskItem,
         openTaskView: (task: TaskItem) -> Unit,
-        isFavorite: (task: TaskItem) -> Unit
+        isFavorite: (task: TaskItem) -> Unit,
+        deleteTask: (task: TaskItem) -> Unit
     ) {
         with(binding) {
             textViewTitle.text = task.title
             textViewDesc.text = task.desc
+            textViewDate.text = "Last update: ${task.dateTime}"
             imageIsFavorite.setImageResource(task.drawableResId)
 
             root.setOnClickListener {
@@ -57,6 +61,10 @@ class TaskListViewHolder(private val binding: ItemTaskBinding) :
 
             imageIsFavorite.setOnClickListener {
                 isFavorite.invoke(task)
+            }
+
+            imageButtonDelete.setOnClickListener {
+                deleteTask.invoke(task)
             }
         }
     }

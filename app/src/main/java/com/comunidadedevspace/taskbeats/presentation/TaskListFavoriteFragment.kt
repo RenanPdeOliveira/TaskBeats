@@ -1,10 +1,12 @@
 package com.comunidadedevspace.taskbeats.presentation
 
+import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -17,7 +19,10 @@ import com.comunidadedevspace.taskbeats.presentation.viewmodel.ProvideViewModelF
 import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListViewModel
 import com.comunidadedevspace.taskbeats.util.UiEvent
 import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.O)
 class TaskListFavoriteFragment : Fragment() {
 
     private var _binding: FragmentTaskListFavoriteBinding? = null
@@ -27,7 +32,7 @@ class TaskListFavoriteFragment : Fragment() {
         ProvideViewModelFactory(requireActivity().application)
     }
 
-    private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
+    private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsFavorite, ::deleteTask)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -48,7 +53,7 @@ class TaskListFavoriteFragment : Fragment() {
                     is UiEvent.Navigate -> {
                         when (event.route) {
                             "detail_screen" -> adapter =
-                                TaskListAdapter(::openListItemClicked, ::changeIsFavorite)
+                                TaskListAdapter(::openListItemClicked, ::changeIsFavorite, ::deleteTask)
                         }
                     }
 
@@ -83,11 +88,16 @@ class TaskListFavoriteFragment : Fragment() {
                     task.id,
                     task.title,
                     task.desc,
+                    LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm")),
                     !task.isFavorite,
                     if (task.isFavorite) R.drawable.baseline_outline_grade_24 else R.drawable.baseline_grade_24
                 )
             )
         )
+    }
+
+    private fun deleteTask(task: TaskItem) {
+        viewModel.onEvent(TaskListEvents.OnDeleteButtonClick(task))
     }
 
     override fun onDestroy() {
