@@ -1,0 +1,142 @@
+package com.comunidadedevspace.taskbeats.tasks.presentation
+
+import android.os.Build
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AlertDialog
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
+import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
+import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListBinding
+import com.comunidadedevspace.taskbeats.tasks.presentation.adapter.TaskListAdapter
+import com.comunidadedevspace.taskbeats.tasks.presentation.events.TaskListEvents
+import com.comunidadedevspace.taskbeats.core.presentation.viewmodel.ProvideViewModelFactory
+import com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel.TaskListViewModel
+import com.comunidadedevspace.taskbeats.util.UiEvent
+import kotlinx.coroutines.launch
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+
+@RequiresApi(Build.VERSION_CODES.O)
+class TaskListFragment : Fragment() {
+
+    private var _binding: FragmentTaskListBinding? = null
+    private val binding get() = _binding!!
+
+    private val viewModel by viewModels<TaskListViewModel> {
+        ProvideViewModelFactory(requireActivity().application)
+    }
+
+    private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsDone, ::changeIsFavorite, ::deleteTask)
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentTaskListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.recyclerViewTask.adapter = adapter
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiEvent.collect { event ->
+                when (event) {
+                    is UiEvent.Navigate -> {
+                        when (event.route) {
+                            "detail_screen" -> adapter =
+                                TaskListAdapter(::openListItemClicked, ::changeIsDone, ::changeIsFavorite, ::deleteTask)
+                        }
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
+
+    }
+
+    override fun onStart() {
+        super.onStart()
+        listUpdate()
+    }
+
+    private fun listUpdate() {
+        viewModel.taskList.observe(viewLifecycleOwner) { list ->
+            binding.linearLayoutEmpty.isVisible = list.isEmpty()
+            adapter.submitList(list)
+        }
+    }
+
+    private fun openListItemClicked(task: TaskItem) {
+        val intent = TaskListDetailActivity.start(requireContext(), task)
+        requireActivity().startActivity(intent)
+    }
+
+    private fun changeIsFavorite(task: TaskItem) {
+        viewModel.onEvent(
+            TaskListEvents.OnFavoriteButtonClick(
+                TaskItem(
+                    id = task.id,
+                    title = task.title,
+                    desc = task.desc,
+                    dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm")),
+                    isDone = task.isDone,
+                    isFavorite = !task.isFavorite,
+                    drawableResId = if (task.isFavorite) R.drawable.baseline_outline_grade_24 else R.drawable.baseline_grade_24
+                )
+            )
+        )
+    }
+
+    private fun changeIsDone(task: TaskItem) {
+        viewModel.onEvent(
+            TaskListEvents.OnDoneButtonClick(
+                TaskItem(
+                    id = task.id,
+                    title = task.title,
+                    desc = task.desc,
+                    dateTime = task.dateTime,
+                    isDone = !task.isDone,
+                    isFavorite = task.isFavorite,
+                    drawableResId = task.drawableResId
+                )
+            )
+        )
+    }
+
+    private fun deleteTask(task: TaskItem) {
+        AlertDialog.Builder(requireContext())
+            .setTitle("Delete")
+            .setMessage("Are you sure you want to delete the item ${task.title}?")
+            .setPositiveButton("Yes") { _, _ ->
+                viewModel.onEvent(TaskListEvents.OnDeleteButtonClick(task))
+            }.setNegativeButton("No") { dialog, _ ->
+                dialog.dismiss()
+            }.create()
+            .show()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         */
+        @JvmStatic
+        fun newInstance() = TaskListFragment()
+    }
+}

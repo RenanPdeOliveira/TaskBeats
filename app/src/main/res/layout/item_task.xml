@@ -19,14 +19,22 @@
             android:layout_height="match_parent"
             android:padding="8dp">
 
-            <TextView
+            <com.google.android.material.checkbox.MaterialCheckBox
+                android:id="@+id/checkBoxIsDone"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewTitle"
                 style="@style/headline3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginHorizontal="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/imageIsFavorite"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/checkBoxIsDone"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Title" />
 
@@ -36,9 +44,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginHorizontal="8dp"
                 app:layout_constraintEnd_toStartOf="@+id/imageIsFavorite"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/checkBoxIsDone"
                 app:layout_constraintTop_toBottomOf="@+id/textViewTitle"
                 tools:text="Description" />
 
@@ -48,10 +56,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginHorizontal="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/imageIsFavorite"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/checkBoxIsDone"
                 app:layout_constraintTop_toBottomOf="@+id/textViewDesc"
                 tools:text="Date" />
 

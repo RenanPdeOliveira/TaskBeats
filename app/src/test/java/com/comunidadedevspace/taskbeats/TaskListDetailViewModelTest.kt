@@ -1,9 +1,9 @@
 package com.comunidadedevspace.taskbeats
 
-import com.comunidadedevspace.taskbeats.data.local.entity.TaskItem
-import com.comunidadedevspace.taskbeats.domain.repository.TaskRepository
-import com.comunidadedevspace.taskbeats.presentation.viewmodel.TaskListDetailViewModel
-import com.comunidadedevspace.taskbeats.presentation.events.DetailEvents
+import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
+import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
+import com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel.TaskListDetailViewModel
+import com.comunidadedevspace.taskbeats.tasks.presentation.events.DetailEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule

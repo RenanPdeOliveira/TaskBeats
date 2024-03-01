@@ -2,10 +2,10 @@ package com.comunidadedevspace.taskbeats
 
 import android.app.Application
 import androidx.room.Room
-import com.comunidadedevspace.taskbeats.data.local.TaskDataBase
-import com.comunidadedevspace.taskbeats.data.remote.RetrofitModule
-import com.comunidadedevspace.taskbeats.data.repository.TaskRepositoryImpl
-import com.comunidadedevspace.taskbeats.domain.repository.TaskRepository
+import com.comunidadedevspace.taskbeats.core.data.local.TaskDataBase
+import com.comunidadedevspace.taskbeats.news.data.remote.RetrofitModule
+import com.comunidadedevspace.taskbeats.core.data.repository.TaskRepositoryImpl
+import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 
 class TaskBeatsApplication : Application() {
 
