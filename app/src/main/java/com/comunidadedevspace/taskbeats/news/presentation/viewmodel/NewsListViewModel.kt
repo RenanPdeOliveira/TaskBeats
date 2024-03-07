@@ -7,7 +7,7 @@ import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.core.domain.util.Resource
 import com.comunidadedevspace.taskbeats.news.presentation.NewsState
 import com.comunidadedevspace.taskbeats.news.presentation.events.NewsListEvents
-import com.comunidadedevspace.taskbeats.util.UiEvent
+import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

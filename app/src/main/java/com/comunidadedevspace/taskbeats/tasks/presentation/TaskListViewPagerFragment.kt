@@ -1,6 +1,5 @@
 package com.comunidadedevspace.taskbeats.tasks.presentation
 
-import android.app.AlertDialog
 import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -8,21 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.core.presentation.showAlertDialog
+import com.comunidadedevspace.taskbeats.core.presentation.showSnackBar
 import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListViewPagerBinding
 import com.comunidadedevspace.taskbeats.tasks.presentation.adapter.ViewPagerTaskAdapter
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.TaskListViewPagerEvent
 import com.comunidadedevspace.taskbeats.core.presentation.viewmodel.ProvideViewModelFactory
 import com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel.TaskListViewPagerViewModel
-import com.comunidadedevspace.taskbeats.util.UiEvent
-import com.google.android.material.snackbar.Snackbar
+import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class TaskListViewPagerFragment : Fragment() {
 
     private var _binding: FragmentTaskListViewPagerBinding? = null
@@ -48,38 +47,19 @@ class TaskListViewPagerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpViewPagerAdapter()
+        setUpUiEvent()
+        setUpTabLayoutMediator()
+        setUpToolBar()
+    }
 
+    private fun setUpViewPagerAdapter() {
         viewPagerAdapter = ViewPagerTaskAdapter(this)
         viewPagerAdapter.getFragment(taskListFragment, taskListFavoriteFragment)
         binding.taskViewPager.adapter = viewPagerAdapter
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiEvent.collect { event ->
-                when (event) {
-                    is UiEvent.ShowSnackBar -> {
-                        showSnackBar(binding.root, event.message, event.action)
-                    }
-
-                    is UiEvent.ShowDialog -> {
-                        showDialog(event.title, event.message)
-                    }
-
-                    else -> Unit
-                }
-            }
-        }
-
-        binding.tasksToolBar.setOnMenuItemClickListener { menu ->
-            when (menu.itemId) {
-                R.id.deleteAll -> {
-                    viewModel.onEvent(TaskListViewPagerEvent.OnDeleteAllButtonClick)
-                    true
-                }
-
-                else -> false
-            }
-        }
-
+    private fun setUpTabLayoutMediator() {
         TabLayoutMediator(binding.taskTabLayout, binding.taskViewPager) { tab, position ->
             when (position) {
                 0 -> {
@@ -93,38 +73,42 @@ class TaskListViewPagerFragment : Fragment() {
         }.attach()
     }
 
-    private fun showSnackBar(view: View, message: String, action: String?) {
-        when (action) {
-            "Close" -> {
-                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
-                    .setAction(action) {
-                        it.isVisible = false
-                    }
-                    .setAnchorView(requireActivity().findViewById(R.id.fabAdd))
-                    .show()
-            }
+    private fun setUpToolBar() {
+        binding.tasksToolBar.setOnMenuItemClickListener { menu ->
+            when (menu.itemId) {
+                R.id.deleteAll -> {
+                    viewModel.onEvent(TaskListViewPagerEvent.OnDeleteAllButtonClick)
+                    true
+                }
 
-            null -> {
-                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
-                    .setAction("Action", null)
-                    .setAnchorView(requireActivity().findViewById(R.id.fabAdd))
-                    .show()
+                else -> false
             }
         }
     }
 
-    private fun showDialog(title: String, message: String) {
-        AlertDialog.Builder(requireActivity())
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("Yes") { _, _ ->
-                viewModel.onEvent(TaskListViewPagerEvent.OnYesDialogButtonClick)
+    private fun setUpUiEvent() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiEvent.collect { event ->
+                when (event) {
+                    is UiEvent.ShowSnackBar -> {
+                        showSnackBar(requireActivity(), event.message, event.action)
+                    }
+
+                    is UiEvent.ShowDialog -> {
+                        showAlertDialog(
+                            context = requireContext(),
+                            title = event.title,
+                            message = event.message,
+                            positiveText = event.positiveText,
+                            negativeText = event.negativeText,
+                            onPositiveClick = { viewModel.onEvent(TaskListViewPagerEvent.OnYesDialogButtonClick) }
+                        )
+                    }
+
+                    else -> Unit
+                }
             }
-            .setNegativeButton("No") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .create()
-            .show()
+        }
     }
 
     override fun onDestroy() {
@@ -133,10 +117,6 @@ class TaskListViewPagerFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         */
         @JvmStatic
         fun newInstance() = TaskListViewPagerFragment()
     }

@@ -43,9 +43,15 @@ class NewsListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerViewAdapter()
+        collectDataFromViewModel()
+    }
 
+    private fun setUpRecyclerViewAdapter() {
         binding.recyclerViewNews.adapter = adapter
+    }
 
+    private fun collectDataFromViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsState.collect { state ->

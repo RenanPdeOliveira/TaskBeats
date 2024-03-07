@@ -43,9 +43,15 @@ class NewsListFavoriteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpRecyclerViewAdapter()
+        collectDataFromViewModel()
+    }
 
+    private fun setUpRecyclerViewAdapter() {
         binding.recyclerViewNewsFavorite.adapter = adapter
+    }
 
+    private fun collectDataFromViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsListFavorite.collect { newsList ->

@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
 import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.DetailEvents
-import com.comunidadedevspace.taskbeats.util.UiEvent
+import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -49,7 +49,12 @@ class TaskListDetailViewModel(
         if (task.title.isNotBlank() && task.desc.isNotBlank()) {
             repository.insert(task)
             _uiEvent.send(UiEvent.Navigate("main_screen"))
-            _uiEvent.send(UiEvent.ShowSnackBar(message = "You added a new task ${task.title}", action = "Close"))
+            _uiEvent.send(
+                UiEvent.ShowSnackBar(
+                    message = "You added a new task ${task.title}",
+                    action = "Close"
+                )
+            )
         } else {
             _uiEvent.send(UiEvent.ShowSnackBar(message = "Fill in all fields", action = "Close"))
         }
@@ -59,7 +64,12 @@ class TaskListDetailViewModel(
         if (task.title.isNotBlank() && task.desc.isNotBlank()) {
             repository.update(task)
             _uiEvent.send(UiEvent.Navigate("main_screen"))
-            _uiEvent.send(UiEvent.ShowSnackBar(message = "You updated the task ${task.title}", action = "Close"))
+            _uiEvent.send(
+                UiEvent.ShowSnackBar(
+                    message = "You updated the task ${task.title}",
+                    action = "Close"
+                )
+            )
         } else {
             _uiEvent.send(UiEvent.ShowSnackBar(message = "Fill in all fields", action = "Close"))
         }
@@ -67,7 +77,15 @@ class TaskListDetailViewModel(
 
     private fun showDialog(task: TaskItem?) = viewModelScope.launch {
         if (task != null) {
-            _uiEvent.send(UiEvent.ShowDialog("Delete task", "Are you sure you want to delete this task?", task))
+            _uiEvent.send(
+                UiEvent.ShowDialog(
+                    title = "Delete task",
+                    message = "Are you sure you want to delete this task?",
+                    positiveText = "Yes",
+                    negativeText = "No",
+                    task = task
+                )
+            )
         } else {
             _uiEvent.send(
                 UiEvent.ShowSnackBar(
@@ -81,7 +99,12 @@ class TaskListDetailViewModel(
     private fun deleteItem(task: TaskItem) = viewModelScope.launch {
         repository.delete(task)
         _uiEvent.send(UiEvent.Navigate("main_screen"))
-        _uiEvent.send(UiEvent.ShowSnackBar(message = "You deleted the task ${task.title}", action = "Close"))
+        _uiEvent.send(
+            UiEvent.ShowSnackBar(
+                message = "You deleted the task ${task.title}",
+                action = "Close"
+            )
+        )
     }
 
 }

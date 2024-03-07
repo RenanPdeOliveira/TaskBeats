@@ -30,11 +30,17 @@ class NewsListViewPagerFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setUpViewPagerAdapter()
+        setUpTabLayoutMediator()
+    }
 
+    private fun setUpViewPagerAdapter() {
         viewPagerAdapter = ViewPagerNewsAdapter(this)
         viewPagerAdapter.getNewsFragment(newsListFragment, newsListFavoriteFragment)
         binding.newsViewPager.adapter = viewPagerAdapter
+    }
 
+    private fun setUpTabLayoutMediator() {
         TabLayoutMediator(binding.newsTabLayout, binding.newsViewPager) { tab, position ->
             when (position) {
                 0 -> {
@@ -53,10 +59,6 @@ class NewsListViewPagerFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         */
         @JvmStatic
         fun newInstance() = NewsListViewPagerFragment()
     }

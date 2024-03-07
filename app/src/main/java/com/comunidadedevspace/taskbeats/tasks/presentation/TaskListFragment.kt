@@ -7,23 +7,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AlertDialog
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.core.presentation.showAlertDialog
+import com.comunidadedevspace.taskbeats.core.presentation.showSnackBar
 import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListBinding
 import com.comunidadedevspace.taskbeats.tasks.presentation.adapter.TaskListAdapter
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.TaskListEvents
 import com.comunidadedevspace.taskbeats.core.presentation.viewmodel.ProvideViewModelFactory
 import com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel.TaskListViewModel
-import com.comunidadedevspace.taskbeats.util.UiEvent
+import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@RequiresApi(Build.VERSION_CODES.O)
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class TaskListFragment : Fragment() {
 
     private var _binding: FragmentTaskListBinding? = null
@@ -33,7 +34,7 @@ class TaskListFragment : Fragment() {
         ProvideViewModelFactory(requireActivity().application)
     }
 
-    private var adapter = TaskListAdapter(::openListItemClicked, ::changeIsDone, ::changeIsFavorite, ::deleteTask)
+    private var adapter = TaskListAdapter(::openListItemClicked, ::onDoneTaskClick, ::onFavoriteTaskClick, ::onDeleteTaskClick)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -46,23 +47,8 @@ class TaskListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.recyclerViewTask.adapter = adapter
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.uiEvent.collect { event ->
-                when (event) {
-                    is UiEvent.Navigate -> {
-                        when (event.route) {
-                            "detail_screen" -> adapter =
-                                TaskListAdapter(::openListItemClicked, ::changeIsDone, ::changeIsFavorite, ::deleteTask)
-                        }
-                    }
-
-                    else -> Unit
-                }
-            }
-        }
-
+        setUpRecyclerViewAdapter()
+        setUpUiEvent()
     }
 
     override fun onStart() {
@@ -77,12 +63,37 @@ class TaskListFragment : Fragment() {
         }
     }
 
+    private fun setUpRecyclerViewAdapter() {
+        binding.recyclerViewTask.adapter = adapter
+    }
+
+    private fun setUpUiEvent() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.uiEvent.collect { event ->
+                when (event) {
+                    is UiEvent.Navigate -> {
+                        when (event.route) {
+                            "detail_screen" -> adapter =
+                                TaskListAdapter(::openListItemClicked, ::onDoneTaskClick, ::onFavoriteTaskClick, ::onDeleteTaskClick)
+                        }
+                    }
+
+                    is UiEvent.ShowSnackBar -> {
+                        showSnackBar(requireActivity(), event.message, event.action)
+                    }
+
+                    else -> Unit
+                }
+            }
+        }
+    }
+
     private fun openListItemClicked(task: TaskItem) {
         val intent = TaskListDetailActivity.start(requireContext(), task)
         requireActivity().startActivity(intent)
     }
 
-    private fun changeIsFavorite(task: TaskItem) {
+    private fun onFavoriteTaskClick(task: TaskItem) {
         viewModel.onEvent(
             TaskListEvents.OnFavoriteButtonClick(
                 TaskItem(
@@ -98,7 +109,7 @@ class TaskListFragment : Fragment() {
         )
     }
 
-    private fun changeIsDone(task: TaskItem) {
+    private fun onDoneTaskClick(task: TaskItem) {
         viewModel.onEvent(
             TaskListEvents.OnDoneButtonClick(
                 TaskItem(
@@ -114,16 +125,15 @@ class TaskListFragment : Fragment() {
         )
     }
 
-    private fun deleteTask(task: TaskItem) {
-        AlertDialog.Builder(requireContext())
-            .setTitle("Delete")
-            .setMessage("Are you sure you want to delete the item ${task.title}?")
-            .setPositiveButton("Yes") { _, _ ->
-                viewModel.onEvent(TaskListEvents.OnDeleteButtonClick(task))
-            }.setNegativeButton("No") { dialog, _ ->
-                dialog.dismiss()
-            }.create()
-            .show()
+    private fun onDeleteTaskClick(task: TaskItem) {
+        showAlertDialog(
+            context = requireContext(),
+            title = "Delete",
+            message = "Are you sure you want to delete the item ${task.title}?",
+            positiveText = "Yes",
+            negativeText = "No",
+            onPositiveClick = { viewModel.onEvent(TaskListEvents.OnDeleteButtonClick(task)) }
+        )
     }
 
     override fun onDestroy() {
@@ -132,10 +142,6 @@ class TaskListFragment : Fragment() {
     }
 
     companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         */
         @JvmStatic
         fun newInstance() = TaskListFragment()
     }

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
 import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.TaskListViewPagerEvent
-import com.comunidadedevspace.taskbeats.util.UiEvent
+import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -54,7 +54,9 @@ class TaskListViewPagerViewModel(
             _uiEvent.send(
                 UiEvent.ShowDialog(
                     title = "Delete all",
-                    message = "Are you sure you want to delete all tasks?"
+                    message = "Are you sure you want to delete all tasks?",
+                    positiveText = "Yes",
+                    negativeText = "No"
                 )
             )
         }

@@ -1,28 +1,28 @@
 package com.comunidadedevspace.taskbeats.tasks.presentation
 
-import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
-import androidx.core.view.isVisible
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.core.presentation.MainActivity
+import com.comunidadedevspace.taskbeats.core.presentation.showAlertDialog
+import com.comunidadedevspace.taskbeats.core.presentation.showSnackBar
 import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.ActivityTaskListDetailBinding
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.DetailEvents
 import com.comunidadedevspace.taskbeats.core.presentation.viewmodel.ProvideViewModelFactory
 import com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel.TaskListDetailViewModel
-import com.comunidadedevspace.taskbeats.util.UiEvent
-import com.google.android.material.snackbar.Snackbar
+import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
+@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class TaskListDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTaskListDetailBinding
@@ -45,46 +45,18 @@ class TaskListDetailActivity : AppCompatActivity() {
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityTaskListDetailBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        lifecycleScope.launch {
-            viewModel.uiEvent.collect { event ->
-                when (event) {
-                    is UiEvent.Navigate -> {
-                        when (event.route) {
-                            "main_screen" -> finish()
-                        }
-                    }
+        setUpUiEvent()
+        setUpTaskItemParcelize()
+        setUpButtonClick()
+        setUpToolBar()
+    }
 
-                    is UiEvent.ShowSnackBar -> {
-                        showMessage(binding.root, event.message, event.action)
-                    }
-
-                    is UiEvent.ShowDialog -> {
-                        event.task?.let {
-                            showDialog(
-                                title = event.title,
-                                message = event.message,
-                                task = it
-                            )
-                        }
-                    }
-                }
-            }
-        }
-
-        task = intent.getParcelableExtra(detailTask, TaskItem::class.java)
-
-        task?.let {
-            binding.editTextTitle.setText(it.title)
-            binding.editTextDesc.setText(it.desc)
-            binding.detailToolBar.title = it.title
-        }
-
+    private fun setUpButtonClick() {
         binding.updateButton.setOnClickListener {
             val title = binding.editTextTitle.text.toString()
             val desc = binding.editTextDesc.text.toString()
@@ -119,7 +91,9 @@ class TaskListDetailActivity : AppCompatActivity() {
                 )
             )
         }
+    }
 
+    private fun setUpToolBar() {
         binding.detailToolBar.setOnMenuItemClickListener { menu ->
             when (menu.itemId) {
                 R.id.action_bar_delete -> {
@@ -134,39 +108,46 @@ class TaskListDetailActivity : AppCompatActivity() {
         binding.detailToolBar.setNavigationOnClickListener {
             finish()
         }
-
     }
 
-    private fun showMessage(view: View, message: String, action: String? = null) {
-        when (action) {
-            "Close" -> {
-                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
-                    .setAction(action) {
-                        it.isVisible = false
-                    }
-                    .show()
-            }
+    private fun setUpTaskItemParcelize() {
+        task = intent.getParcelableExtra(detailTask, TaskItem::class.java)
 
-            null -> {
-                Snackbar.make(view, message, Snackbar.LENGTH_SHORT)
-                    .setAction("Action", null)
-                    .show()
+        task?.let {
+            binding.editTextTitle.setText(it.title)
+            binding.editTextDesc.setText(it.desc)
+            binding.detailToolBar.title = it.title
+        }
+    }
+
+    private fun setUpUiEvent() {
+        lifecycleScope.launch {
+            viewModel.uiEvent.collect { event ->
+                when (event) {
+                    is UiEvent.Navigate -> {
+                        when (event.route) {
+                            "main_screen" -> finish()
+                        }
+                    }
+
+                    is UiEvent.ShowSnackBar -> {
+                        showSnackBar(this@TaskListDetailActivity, event.message, event.action)
+                    }
+
+                    is UiEvent.ShowDialog -> {
+                        event.task?.let {
+                            showAlertDialog(
+                                context = this@TaskListDetailActivity,
+                                title = event.title,
+                                message = event.message,
+                                positiveText = event.positiveText,
+                                negativeText = event.negativeText,
+                                onPositiveClick = { viewModel.actionCRUD(DetailEvents.OnYesDialogButtonClick(it)) }
+                            )
+                        }
+                    }
+                }
             }
         }
-
-    }
-
-    private fun showDialog(title: String, message: String, task: TaskItem) {
-        AlertDialog.Builder(this)
-            .setTitle(title)
-            .setMessage(message)
-            .setPositiveButton("Yes") { _, _ ->
-                viewModel.actionCRUD(DetailEvents.OnYesDialogButtonClick(task))
-            }
-            .setNegativeButton("No") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .create()
-            .show()
     }
 }

@@ -6,7 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
 import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.TaskListEvents
-import com.comunidadedevspace.taskbeats.util.UiEvent
+import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
