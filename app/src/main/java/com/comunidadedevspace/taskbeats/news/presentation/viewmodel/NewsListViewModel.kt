@@ -8,18 +8,20 @@ import com.comunidadedevspace.taskbeats.core.domain.util.Resource
 import com.comunidadedevspace.taskbeats.news.presentation.NewsState
 import com.comunidadedevspace.taskbeats.news.presentation.events.NewsListEvents
 import com.comunidadedevspace.taskbeats.core.util.UiEvent
+import com.comunidadedevspace.taskbeats.news.domain.usecase.NewsListUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class NewsListViewModel(
-    private val repository: TaskRepository
+    private val newsListUseCase: NewsListUseCase
 ) : ViewModel() {
 
-    val newsListFavorite = repository.getAllNews()
+    val newsListFavorite = newsListUseCase.getAllFavoriteNewsUseCase()
 
     private val _uiEvent = Channel<UiEvent>()
     val uiEvent = _uiEvent.receiveAsFlow()
@@ -39,17 +41,17 @@ class NewsListViewModel(
     }
 
     private fun insertNews(news: NewsItem) = viewModelScope.launch {
-        repository.insertNews(news)
+        newsListUseCase.insertNewsUseCase(news)
     }
 
     private fun deleteNews(news: NewsItem) = viewModelScope.launch {
-        repository.deleteNewsById(news.id)
+        newsListUseCase.deleteNewsByIdUseCase(news)
     }
 
     private fun getNewsList() = viewModelScope.launch {
         _newsState.update { it.copy(isLoading = true) }
 
-        when (val result = repository.fetchTopNews()) {
+        when (val result = newsListUseCase.getAllNewsUseCase()) {
             is Resource.Success -> {
                 _newsState.update {
                     it.copy(
@@ -62,7 +64,7 @@ class NewsListViewModel(
                 _uiEvent.send(UiEvent.ShowSnackBar(message = "Top news not found!"))
             }
         }
-        when (val result = repository.fetchAllNews()) {
+        when (val result = newsListUseCase.getTopNewsUseCase()) {
             is Resource.Success -> {
                 _newsState.update {
                     it.copy(
@@ -70,6 +72,7 @@ class NewsListViewModel(
                         isLoading = false
                     )
                 }
+                _uiEvent.send(UiEvent.ShowSnackBar(message = "All and Top news found!"))
             }
 
             is Resource.Error -> {

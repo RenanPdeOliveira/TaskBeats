@@ -9,10 +9,9 @@ import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
-import com.comunidadedevspace.taskbeats.core.presentation.MainActivity
 import com.comunidadedevspace.taskbeats.core.presentation.showAlertDialog
 import com.comunidadedevspace.taskbeats.core.presentation.showSnackBar
-import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
+import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.ActivityTaskListDetailBinding
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.DetailEvents
 import com.comunidadedevspace.taskbeats.core.presentation.viewmodel.ProvideViewModelFactory
@@ -62,7 +61,7 @@ class TaskListDetailActivity : AppCompatActivity() {
             val desc = binding.editTextDesc.text.toString()
 
             task?.let {
-                viewModel.actionCRUD(
+                viewModel.onEvent(
                     DetailEvents.OnEditItemClick(
                         TaskItem(
                             id = it.id,
@@ -76,7 +75,7 @@ class TaskListDetailActivity : AppCompatActivity() {
                         )
                     )
                 )
-            } ?: viewModel.actionCRUD(
+            } ?: viewModel.onEvent(
                 DetailEvents.OnAddItemClick(
                     TaskItem(
                         id = 0,
@@ -97,7 +96,7 @@ class TaskListDetailActivity : AppCompatActivity() {
         binding.detailToolBar.setOnMenuItemClickListener { menu ->
             when (menu.itemId) {
                 R.id.action_bar_delete -> {
-                    viewModel.actionCRUD(DetailEvents.OnDeleteItemClick(task))
+                    viewModel.onEvent(DetailEvents.OnDeleteItemClick(task))
                     true
                 }
 
@@ -142,7 +141,7 @@ class TaskListDetailActivity : AppCompatActivity() {
                                 message = event.message,
                                 positiveText = event.positiveText,
                                 negativeText = event.negativeText,
-                                onPositiveClick = { viewModel.actionCRUD(DetailEvents.OnYesDialogButtonClick(it)) }
+                                onPositiveClick = { viewModel.onEvent(DetailEvents.OnYesDialogButtonClick(it)) }
                             )
                         }
                     }

@@ -3,7 +3,7 @@ package com.comunidadedevspace.taskbeats.core.domain.repository
 import androidx.lifecycle.LiveData
 import com.comunidadedevspace.taskbeats.news.data.local.NewsItem
 import com.comunidadedevspace.taskbeats.core.domain.util.Resource
-import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
+import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 import kotlinx.coroutines.flow.Flow
 
 interface TaskRepository {

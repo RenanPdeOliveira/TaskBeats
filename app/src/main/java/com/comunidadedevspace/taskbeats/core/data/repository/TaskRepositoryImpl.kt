@@ -3,8 +3,8 @@ package com.comunidadedevspace.taskbeats.core.data.repository
 import androidx.lifecycle.LiveData
 import com.comunidadedevspace.taskbeats.news.data.local.NewsDao
 import com.comunidadedevspace.taskbeats.news.data.local.NewsItem
-import com.comunidadedevspace.taskbeats.tasks.data.TaskDao
-import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
+import com.comunidadedevspace.taskbeats.tasks.data.local.TaskDao
+import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.news.data.mappers.toNewsItem
 import com.comunidadedevspace.taskbeats.news.data.remote.NewsService
 import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository

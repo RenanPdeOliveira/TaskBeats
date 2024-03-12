@@ -1,6 +1,6 @@
 package com.comunidadedevspace.taskbeats.tasks.presentation.events
 
-import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
+import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 
 sealed class TaskListEvents {
     data class OnItemClick(val task: TaskItem) : TaskListEvents()

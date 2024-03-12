@@ -13,7 +13,7 @@ import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.core.presentation.showAlertDialog
 import com.comunidadedevspace.taskbeats.core.presentation.showSnackBar
-import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
+import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.databinding.FragmentTaskListBinding
 import com.comunidadedevspace.taskbeats.tasks.presentation.adapter.TaskListAdapter
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.TaskListEvents

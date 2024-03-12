@@ -3,7 +3,6 @@ package com.comunidadedevspace.taskbeats.core.presentation
 import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
 
 fun showAlertDialog(
     context: Context,

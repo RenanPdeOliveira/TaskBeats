@@ -1,6 +1,6 @@
 package com.comunidadedevspace.taskbeats.core.util
 
-import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
+import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 
 sealed class UiEvent {
     data class Navigate(val route: String) : UiEvent()

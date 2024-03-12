@@ -1,6 +1,6 @@
 package com.comunidadedevspace.taskbeats
 
-import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
+import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel.TaskListDetailViewModel
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.DetailEvents
@@ -35,7 +35,7 @@ class TaskListDetailViewModelTest {
         )
 
         // When
-        underTest.actionCRUD(DetailEvents.OnAddItemClick(task))
+        underTest.onEvent(DetailEvents.OnAddItemClick(task))
 
         // Then
         verify(repository).insert(task)
@@ -53,7 +53,7 @@ class TaskListDetailViewModelTest {
         )
 
         // When
-        underTest.actionCRUD(DetailEvents.OnEditItemClick(task))
+        underTest.onEvent(DetailEvents.OnEditItemClick(task))
 
         // Then
         verify(repository).update(task)
@@ -71,7 +71,7 @@ class TaskListDetailViewModelTest {
         )
 
         // When
-        underTest.actionCRUD(DetailEvents.OnDeleteItemClick(task))
+        underTest.onEvent(DetailEvents.OnDeleteItemClick(task))
 
         // Then
         verify(repository).delete(task)

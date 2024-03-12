@@ -3,19 +3,21 @@ package com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
-import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
+import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.TaskListViewPagerEvent
 import com.comunidadedevspace.taskbeats.core.util.UiEvent
+import com.comunidadedevspace.taskbeats.tasks.domain.usecase.TaskListUseCase
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class TaskListViewPagerViewModel(
-    private val repository: TaskRepository
+    private val taskListUseCase: TaskListUseCase
 ) : ViewModel() {
 
-    private val listLiveData = repository.getAll()
+    private val listLiveData = taskListUseCase.getAllTasksUseCase()
     private var list = listOf<TaskItem>()
 
     private val _uiEvent = Channel<UiEvent>()
@@ -43,33 +45,15 @@ class TaskListViewPagerViewModel(
     }
 
     private fun showDialog() = viewModelScope.launch {
-        if (list.isEmpty()) {
-            _uiEvent.send(
-                UiEvent.ShowSnackBar(
-                    message = "There is no item to delete!",
-                    action = "Close"
-                )
-            )
-        } else {
-            _uiEvent.send(
-                UiEvent.ShowDialog(
-                    title = "Delete all",
-                    message = "Are you sure you want to delete all tasks?",
-                    positiveText = "Yes",
-                    negativeText = "No"
-                )
-            )
+        taskListUseCase.deleteAllDialogUseCase(list).collect { sendUiEvent ->
+            _uiEvent.send(sendUiEvent)
         }
     }
 
     private fun deleteAllItems() = viewModelScope.launch {
-        repository.deleteAll()
-        _uiEvent.send(
-            UiEvent.ShowSnackBar(
-                message = "You have deleted all items!",
-                action = "Close"
-            )
-        )
+        taskListUseCase.deleteAllTasksUseCase().collect { sendUiEvent ->
+            _uiEvent.send(sendUiEvent)
+        }
     }
 
 }

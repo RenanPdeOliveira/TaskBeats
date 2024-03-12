@@ -1,4 +1,4 @@
-package com.comunidadedevspace.taskbeats.tasks.data
+package com.comunidadedevspace.taskbeats.tasks.data.local
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao
@@ -7,7 +7,6 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
-import com.comunidadedevspace.taskbeats.tasks.data.TaskItem
 
 @Dao
 interface TaskDao {

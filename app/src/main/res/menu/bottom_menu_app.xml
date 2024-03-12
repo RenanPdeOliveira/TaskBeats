@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/listButton"
+        android:id="@+id/taskListViewPagerFragment"
         android:icon="@drawable/ic_list_button"
         android:title="@string/tasks_list" />
 
@@ -11,7 +11,7 @@
         android:title="" />
 
     <item
-        android:id="@+id/newsButton"
+        android:id="@+id/newsListViewPagerFragment"
         android:icon="@drawable/ic_news_button"
         android:title="@string/news_list" />
 </menu>

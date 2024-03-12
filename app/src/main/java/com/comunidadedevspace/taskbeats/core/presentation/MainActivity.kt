@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         defaultFragment(taskListViewPagerFragment)
-        setUpUiEvent()
         setUpBottomNavigationView()
+        setUpUiEvent()
         setUpFab()
     }
 
@@ -51,12 +51,12 @@ class MainActivity : AppCompatActivity() {
             bottomNavigationView.menu.getItem(1).isEnabled = false
             bottomNavigationView.setOnItemSelectedListener { item ->
                 when (item.itemId) {
-                    R.id.listButton -> {
+                    R.id.taskListViewPagerFragment -> {
                         viewModel.onEvent(MainEvents.OnTaskListNavigationClick)
                         true
                     }
 
-                    R.id.newsButton -> {
+                    R.id.newsListViewPagerFragment -> {
                         viewModel.onEvent(MainEvents.OnNewsListNavigationClick)
                         true
                     }
