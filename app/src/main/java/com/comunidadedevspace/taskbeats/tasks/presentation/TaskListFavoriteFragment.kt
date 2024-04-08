@@ -1,12 +1,10 @@
 package com.comunidadedevspace.taskbeats.tasks.presentation
 
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
@@ -21,10 +19,7 @@ import com.comunidadedevspace.taskbeats.core.presentation.viewmodel.ProvideViewM
 import com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel.TaskListViewModel
 import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import kotlinx.coroutines.launch
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class TaskListFavoriteFragment : Fragment() {
 
     private var _binding: FragmentTaskListFavoriteBinding? = null
@@ -101,7 +96,7 @@ class TaskListFavoriteFragment : Fragment() {
                     id = task.id,
                     title = task.title,
                     desc = task.desc,
-                    dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm")),
+                    dateTime = task.dateTime,
                     isDone = task.isDone,
                     isFavorite = !task.isFavorite,
                     drawableResId = if (task.isFavorite) R.drawable.baseline_outline_grade_24 else R.drawable.baseline_grade_24
@@ -117,7 +112,7 @@ class TaskListFavoriteFragment : Fragment() {
                     id = task.id,
                     title = task.title,
                     desc = task.desc,
-                    dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-mm-yyyy HH:mm")),
+                    dateTime = task.dateTime,
                     isDone = !task.isDone,
                     isFavorite = task.isFavorite,
                     drawableResId = task.drawableResId
@@ -129,10 +124,10 @@ class TaskListFavoriteFragment : Fragment() {
     private fun onDeleteTaskClick(task: TaskItem) {
         showAlertDialog(
             context = requireContext(),
-            title = "Delete",
-            message = "Are you sure you want to delete the item ${task.title}?",
-            positiveText = "Yes",
-            negativeText = "No",
+            title = getString(R.string.dialog_title_delete),
+            message = getString(R.string.dialog_title_message) + " ${task.title}?",
+            positiveText = getString(R.string.dialog_title_positive),
+            negativeText = getString(R.string.dialog_title_negative),
             onPositiveClick = { viewModel.onEvent(TaskListEvents.OnDeleteButtonClick(task)) }
         )
     }

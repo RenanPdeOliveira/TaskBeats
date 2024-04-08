@@ -1,12 +1,10 @@
 package com.comunidadedevspace.taskbeats.tasks.presentation
 
-import android.os.Build
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
@@ -21,7 +19,6 @@ import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class TaskListViewPagerFragment : Fragment() {
 
     private var _binding: FragmentTaskListViewPagerBinding? = null

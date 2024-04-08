@@ -8,7 +8,7 @@ import java.util.concurrent.TimeUnit
 import java.util.concurrent.TimeoutException
 
 @VisibleForTesting(otherwise = VisibleForTesting.NONE)
-fun <T> LiveData<T>.getOrAwaitValueTest(
+fun <T> LiveData<T>.getOrAwaitValue(
     time: Long = 2,
     timeUnit: TimeUnit = TimeUnit.SECONDS,
     afterObserve: () -> Unit = {}
@@ -19,7 +19,7 @@ fun <T> LiveData<T>.getOrAwaitValueTest(
         override fun onChanged(o: T) {
             data = o
             latch.countDown()
-            this@getOrAwaitValueTest.removeObserver(this)
+            this@getOrAwaitValue.removeObserver(this)
         }
     }
     this.observeForever(observer)

@@ -1,10 +1,8 @@
 package com.comunidadedevspace.taskbeats.core.presentation
 
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
@@ -18,7 +16,6 @@ import com.comunidadedevspace.taskbeats.tasks.presentation.TaskListViewPagerFrag
 import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import kotlinx.coroutines.launch
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

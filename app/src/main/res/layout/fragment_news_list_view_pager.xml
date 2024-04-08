@@ -16,7 +16,7 @@
             android:layout_height="50dp"
             android:background="@color/pink_300"
             app:title="News"
-            app:titleTextAppearance="@style/title_app_bar" />
+            app:titleTextAppearance="@style/ToolBarTitle" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

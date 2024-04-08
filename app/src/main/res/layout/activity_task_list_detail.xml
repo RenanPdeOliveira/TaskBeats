@@ -19,7 +19,7 @@
             app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/baseline_arrow_back_24"
             app:title="@string/detail_top_bar_title"
-            app:titleTextAppearance="@style/title_app_bar" />
+            app:titleTextAppearance="@style/ToolBarTitle" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -40,22 +40,23 @@
 
             <TextView
                 android:id="@+id/text_View_Title"
-                style="@style/headline4"
+                style="@style/Headline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:text="@string/tv_title" />
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/et_title"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextTitle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:hint="@string/et_title"
                     android:inputType="text"
                     android:maxLines="1" />
 
@@ -63,22 +64,23 @@
 
             <TextView
                 android:id="@+id/text_View_Desc"
-                style="@style/headline4"
+                style="@style/Headline4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="@string/tv_desc" />
 
             <com.google.android.material.textfield.TextInputLayout
+                style="@style/TextInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/et_desc"
                 app:endIconMode="clear_text">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextDesc"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:hint="@string/et_desc"
                     android:inputType="text"
                     android:maxLines="3" />
 
@@ -88,7 +90,7 @@
 
         <Button
             android:id="@+id/updateButton"
-            style="@style/button"
+            style="@style/ButtonUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="16dp"

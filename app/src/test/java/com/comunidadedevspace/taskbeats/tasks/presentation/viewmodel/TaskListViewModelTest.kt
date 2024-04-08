@@ -1,4 +1,4 @@
-package com.comunidadedevspace.taskbeats
+package com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel
 
 class TaskListViewModelTest {
 

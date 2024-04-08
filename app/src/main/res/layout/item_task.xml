@@ -9,10 +9,9 @@
     android:orientation="vertical">
 
     <com.google.android.material.card.MaterialCardView
+        style="@style/CardViewTaskItem"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="8dp">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,7 +28,7 @@
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textViewTitle"
-                style="@style/headline3"
+                style="@style/Headline3"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
@@ -40,7 +39,7 @@
 
             <TextView
                 android:id="@+id/textViewDesc"
-                style="@style/body1"
+                style="@style/Body1"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -52,7 +51,7 @@
 
             <TextView
                 android:id="@+id/textViewDate"
-                style="@style/body2"
+                style="@style/Body2"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
@@ -85,7 +84,7 @@
                 android:layout_marginEnd="8dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:clickable="true"
-                android:contentDescription="@string/favorite_button_description"
+                android:contentDescription="@string/delete_button_description"
                 android:focusable="true"
                 android:src="@drawable/baseline_delete_24"
                 android:visibility="visible"

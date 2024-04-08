@@ -8,7 +8,6 @@ import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.tasks.presentation.TaskListDetailActivity
 import com.google.android.material.snackbar.Snackbar
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 fun showSnackBar(
     activity: Activity,
     message: String,

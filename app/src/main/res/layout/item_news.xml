@@ -24,6 +24,7 @@
                 android:id="@+id/imageViewNews"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
+                android:contentDescription="@string/news_image"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -31,7 +32,7 @@
 
             <TextView
                 android:id="@+id/textViewNews"
-                style="@style/headline4"
+                style="@style/Headline4"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="8dp"
@@ -45,6 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="?attr/selectableItemBackgroundBorderless"
+                android:contentDescription="@string/favorite_button_description"
                 android:src="@drawable/baseline_favorite_border_24"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"

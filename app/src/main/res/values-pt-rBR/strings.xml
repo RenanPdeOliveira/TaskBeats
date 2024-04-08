@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">TaskBeats</string>
+
+    // Main Activity
+    <string name="fab_description">fab adicionar</string>
+
+    // Detail Activity
+    <string name="detail_top_bar_title">TaskBeats</string>
+    <string name="tv_title">Título:</string>
+    <string name="tv_desc">Descrição:</string>
+    <string name="et_title">Adicione um título para sua tarefa</string>
+    <string name="et_desc">Adicione uma descrição para sua tarefa</string>
+    <string name="save_button">Salvar</string>
+
+    // Tasks
+    <string name="tasks_top_bar_title">Tarefas</string>
+    <string name="tv_empty_state">Ainda não há nenhuma tarefa!</string>
+    <string name="tv_empty_state_favorite">Ainda não há nenhuma tarefa favorita!</string>
+    <string name="empty_state_description">estado vazio</string>
+    <string name="favorite_button_description">botão favorito</string>
+    <string name="delete_button_description">botão deletar</string>
+
+    // News
+    <string name="news_empty_state_image">Imagem de notícia estado vazio</string>
+    <string name="news_not_found">Notícia não encontradas</string>
+    <string name="news_favorite_list_empty">Ainda não há nenhuma notícia favorita na lista!</string>
+    <string name="news_image">imagem notícia</string>
+
+    <string name="tasks_list">Tarefas</string>
+    <string name="news_list">Notícia</string>
+    <string name="delete_button">Deletar</string>
+    <string name="delete_all_button">Deletar todos</string>
+    <string name="item_date_time">Última atualização: </string>
+    <string name="hello_blank_fragment">Ola fragment vazio</string>
+
+    // Dialog Delete Item
+    <string name="dialog_title_delete">Deletar</string>
+    <string name="dialog_title_message">Tem certeza de que deseja excluir o item</string>
+    <string name="dialog_title_positive">Sim</string>
+    <string name="dialog_title_negative">Não</string>
+
+    // SnackBar
+    <string name="snackbar_add_message">Você adicionou a tarefa</string>
+    <string name="snackbar_delete_message">Você deletou a tarefa</string>
+    <string name="snackbar_update_message">Você atualizou a tarefa</string>
+    <string name="snackbar_fill_fields_message">Preencha todos os campos</string>
+    <string name="snackbar_action_close">Fechar</string>
+    <string name="snackbar_no_item">Não tem nenhum item para deletar!</string>
+</resources>

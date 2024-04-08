@@ -14,43 +14,65 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="headline3" parent="Widget.AppCompat.TextView">
+    <style name="Headline3" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/rubik_regular</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/brown_900</item>
     </style>
 
-    <style name="headline4" parent="Widget.AppCompat.TextView">
+    <style name="Headline4" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/rubik_regular</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/brown_900</item>
     </style>
 
-    <style name="body1" parent="Widget.AppCompat.TextView">
+    <style name="Body1" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/rubik_medium</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textColor">@color/brown_700</item>
     </style>
 
-    <style name="body2" parent="Widget.AppCompat.TextView">
+    <style name="Body2" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/rubik_regular</item>
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">@color/brown_700</item>
     </style>
 
-    <style name="title_app_bar" parent="Widget.AppCompat.TextView">
+    <style name="ToolBarTitle" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/rubik_medium</item>
         <item name="android:textSize">22sp</item>
         <item name="android:textColor">@color/brown_700</item>
     </style>
 
-    <style name="button" parent="Widget.Material3.Button">
+    <style name="ButtonUpdate" parent="Widget.Material3.Button">
         <item name="android:textColor">@color/brown_700</item>
         <item name="android:fontFamily">@font/rubik_regular</item>
         <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:padding">10dp</item>
+    </style>
+
+    <style name="TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="hintEnabled">false</item>
+    </style>
+
+    <style name="CardViewTaskItem" parent="Widget.Material3.CardView.Elevated">
+        <item name="cardElevation">4dp</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="strokeColor">@color/brown_700</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="TabLayout" parent="Widget.Material3.TabLayout">
+        <item name="android:background">@color/pink_300</item>
+        <item name="tabIndicatorColor">@color/brown_900</item>
+        <item name="tabSelectedTextColor">@color/brown_900</item>
+        <item name="tabTextColor">@color/brown_700</item>
+    </style>
+
+    <style name="BottomNavigationViewIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
+        <item name="android:color">@color/white</item>
     </style>
 </resources>

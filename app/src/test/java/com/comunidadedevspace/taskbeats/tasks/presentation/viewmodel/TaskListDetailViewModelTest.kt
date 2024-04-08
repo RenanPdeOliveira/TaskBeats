@@ -1,77 +1,101 @@
-package com.comunidadedevspace.taskbeats
+package com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel
 
+import com.comunidadedevspace.taskbeats.MainDispatcherRule
 import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
+import com.comunidadedevspace.taskbeats.tasks.domain.usecase.TaskListUseCase
 import com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel.TaskListDetailViewModel
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.DetailEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
+import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.mockito.Mock
+import org.mockito.junit.MockitoJUnitRunner
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
 @OptIn(ExperimentalCoroutinesApi::class)
+@RunWith(MockitoJUnitRunner::class)
 class TaskListDetailViewModelTest {
 
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val repository: TaskRepository = mock()
+    @Mock
+    private lateinit var repository: TaskRepository
 
-    private val underTest: TaskListDetailViewModel by lazy {
+    /*private val underTest: TaskListDetailViewModel by lazy {
         TaskListDetailViewModel(repository)
+    }*/
+
+    @Mock
+    private lateinit var taskListUseCase: TaskListUseCase
+
+    private lateinit var viewModel: TaskListDetailViewModel
+
+    @Before
+    fun setup() {
+        viewModel = TaskListDetailViewModel(taskListUseCase)
     }
 
     @Test
-    fun insert() = runTest {
+    fun `insert task item`() = runTest {
         // Given
         val task = TaskItem(
             1,
             "Buy",
             "Banana",
+            "01-01-2024",
             false,
-            R.drawable.baseline_outline_grade_24
+            false,
+            0
         )
 
         // When
-        underTest.onEvent(DetailEvents.OnAddItemClick(task))
+        viewModel.onEvent(DetailEvents.OnAddItemClick(task))
 
         // Then
-        verify(repository).insert(task)
+        verify(taskListUseCase.insertTaskUseCase).invoke(task)
     }
 
     @Test
-    fun update() = runTest {
+    fun `update task item`() = runTest {
         // Given
         val task = TaskItem(
             2,
             "Study",
             "Math",
+            "01-01-2024",
             false,
-            R.drawable.baseline_outline_grade_24
+            false,
+            0
         )
 
         // When
-        underTest.onEvent(DetailEvents.OnEditItemClick(task))
+        viewModel.onEvent(DetailEvents.OnEditItemClick(task))
 
         // Then
         verify(repository).update(task)
     }
 
     @Test
-    fun delete() = runTest {
+    fun `delete task item`() = runTest {
         // Given
         val task = TaskItem(
             3,
             "Work",
             "Create an app",
+            "01-01-2024",
             false,
-            R.drawable.baseline_outline_grade_24
+            false,
+            0
         )
 
         // When
-        underTest.onEvent(DetailEvents.OnDeleteItemClick(task))
+        viewModel.onEvent(DetailEvents.OnDeleteItemClick(task))
 
         // Then
         verify(repository).delete(task)

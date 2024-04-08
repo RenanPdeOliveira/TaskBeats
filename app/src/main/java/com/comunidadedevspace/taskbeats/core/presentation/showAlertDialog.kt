@@ -3,6 +3,7 @@ package com.comunidadedevspace.taskbeats.core.presentation
 import android.content.Context
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 fun showAlertDialog(
     context: Context,
@@ -13,7 +14,7 @@ fun showAlertDialog(
     view: View? = null,
     onPositiveClick: () -> Unit
 ) {
-    AlertDialog.Builder(context)
+    MaterialAlertDialogBuilder(context)
         .setTitle(title)
         .setMessage(message)
         .setView(view)
@@ -21,6 +22,5 @@ fun showAlertDialog(
             onPositiveClick()
         }.setNegativeButton(negativeText) { dialog, _ ->
             dialog.dismiss()
-        }.create()
-        .show()
+        }.show()
 }

@@ -1,8 +1,10 @@
 package com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel
 
+import android.content.Context
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.TaskListEvents
@@ -12,7 +14,8 @@ import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
 class TaskListViewModel(
-    private val repository: TaskRepository
+    private val repository: TaskRepository,
+    private val context: Context
 ) : ViewModel() {
 
     val taskList: LiveData<List<TaskItem>> = repository.getAll()
@@ -48,7 +51,6 @@ class TaskListViewModel(
 
     private fun deleteTask(task: TaskItem) = viewModelScope.launch {
         repository.delete(task)
-        _uiEvent.send(UiEvent.ShowSnackBar(message = "You have deleted ${task.title}"))
+        _uiEvent.send(UiEvent.ShowSnackBar(message = context.getString(R.string.snackbar_delete_message) + " ${task.title}"))
     }
-
 }

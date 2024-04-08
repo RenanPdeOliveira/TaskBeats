@@ -2,11 +2,9 @@ package com.comunidadedevspace.taskbeats.tasks.presentation
 
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import androidx.annotation.RequiresApi
 import androidx.lifecycle.lifecycleScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.core.presentation.showAlertDialog
@@ -21,7 +19,6 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 class TaskListDetailActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityTaskListDetailBinding
