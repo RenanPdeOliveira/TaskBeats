@@ -5,19 +5,20 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.core.view.isVisible
 import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.core.util.UiText
 import com.comunidadedevspace.taskbeats.tasks.presentation.TaskListDetailActivity
 import com.google.android.material.snackbar.Snackbar
 
 fun showSnackBar(
     activity: Activity,
-    message: String,
+    message: UiText.StringResource,
     action: String? = null
 ) {
     val snackBar = when (activity) {
         is MainActivity -> {
             Snackbar.make(
                 activity.findViewById(R.id.fabAdd),
-                message,
+                message.asString(activity.applicationContext),
                 Snackbar.LENGTH_LONG
             ).setAnchorView(activity.findViewById(R.id.bottomNavigationView))
         }
@@ -25,7 +26,7 @@ fun showSnackBar(
         is TaskListDetailActivity -> {
             Snackbar.make(
                 activity.findViewById(R.id.updateButton),
-                message,
+                message.asString(activity.applicationContext),
                 Snackbar.LENGTH_LONG
             ).setAnchorView(activity.findViewById(R.id.updateButton))
         }
@@ -33,14 +34,14 @@ fun showSnackBar(
         else -> {
             Snackbar.make(
                 activity.findViewById(R.id.fabAdd),
-                message,
+                message.asString(activity.applicationContext),
                 Snackbar.LENGTH_LONG
             ).setAnchorView(activity.findViewById(R.id.bottomNavigationView))
         }
     }
 
     when (action) {
-        "Close" -> {
+         "Close" -> {
             snackBar.setAction(action) {
                 it.isVisible = false
             }.show()

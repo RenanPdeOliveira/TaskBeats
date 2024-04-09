@@ -2,8 +2,9 @@ package com.comunidadedevspace.taskbeats.news.presentation.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.core.util.UiText
 import com.comunidadedevspace.taskbeats.news.data.local.NewsItem
-import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.core.domain.util.Resource
 import com.comunidadedevspace.taskbeats.news.presentation.NewsState
 import com.comunidadedevspace.taskbeats.news.presentation.events.NewsListEvents
@@ -12,7 +13,6 @@ import com.comunidadedevspace.taskbeats.news.domain.usecase.NewsListUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
@@ -61,7 +61,7 @@ class NewsListViewModel(
             }
 
             is Resource.Error -> {
-                _uiEvent.send(UiEvent.ShowSnackBar(message = "Top news not found!"))
+                _uiEvent.send(UiEvent.ShowSnackBar(message = UiText.StringResource(R.string.snackbar_top_news_not_found)))
             }
         }
         when (val result = newsListUseCase.getTopNewsUseCase()) {
@@ -72,11 +72,11 @@ class NewsListViewModel(
                         isLoading = false
                     )
                 }
-                _uiEvent.send(UiEvent.ShowSnackBar(message = "All and Top news found!"))
+                _uiEvent.send(UiEvent.ShowSnackBar(message = UiText.StringResource(R.string.snackbar_all_top_news_not_found)))
             }
 
             is Resource.Error -> {
-                _uiEvent.send(UiEvent.ShowSnackBar(message = "All news not found!"))
+                _uiEvent.send(UiEvent.ShowSnackBar(UiText.StringResource(R.string.snackbar_all_news_not_found)))
                 _newsState.update { it.copy(isLoading = false) }
             }
         }

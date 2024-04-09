@@ -1,4 +1,4 @@
-package com.comunidadedevspace.taskbeats.tasks.domain.usecase
+package com.comunidadedevspace.taskbeats.tasks.domain.use_case
 
 data class TaskListUseCase(
     val insertTaskUseCase: InsertTaskUseCase,

@@ -3,8 +3,7 @@ package com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel
 import com.comunidadedevspace.taskbeats.MainDispatcherRule
 import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
-import com.comunidadedevspace.taskbeats.tasks.domain.usecase.TaskListUseCase
-import com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel.TaskListDetailViewModel
+import com.comunidadedevspace.taskbeats.tasks.domain.use_case.TaskListUseCase
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.DetailEvents
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -14,7 +13,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
 
 @OptIn(ExperimentalCoroutinesApi::class)

@@ -1,10 +1,9 @@
-package com.comunidadedevspace.taskbeats.tasks.domain.usecase
+package com.comunidadedevspace.taskbeats.tasks.domain.use_case
 
-import android.content.Context
 import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
 import kotlinx.coroutines.flow.Flow
 
 interface UpdateTaskUseCase {
-    suspend operator fun invoke(task: TaskItem, context: Context): Flow<UiEvent>
+    suspend operator fun invoke(task: TaskItem): Flow<UiEvent>
 }

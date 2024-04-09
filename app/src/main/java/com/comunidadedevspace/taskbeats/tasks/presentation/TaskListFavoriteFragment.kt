@@ -18,6 +18,7 @@ import com.comunidadedevspace.taskbeats.tasks.presentation.events.TaskListEvents
 import com.comunidadedevspace.taskbeats.core.presentation.viewmodel.ProvideViewModelFactory
 import com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel.TaskListViewModel
 import com.comunidadedevspace.taskbeats.core.util.UiEvent
+import com.comunidadedevspace.taskbeats.core.util.UiText
 import kotlinx.coroutines.launch
 
 class TaskListFavoriteFragment : Fragment() {
@@ -75,7 +76,11 @@ class TaskListFavoriteFragment : Fragment() {
                     }
 
                     is UiEvent.ShowSnackBar -> {
-                        showSnackBar(requireActivity(), event.message, event.action)
+                        showSnackBar(
+                            requireActivity(),
+                            event.message,
+                            event.action?.asString(requireActivity().applicationContext)
+                        )
                     }
 
                     else -> Unit
@@ -124,10 +129,10 @@ class TaskListFavoriteFragment : Fragment() {
     private fun onDeleteTaskClick(task: TaskItem) {
         showAlertDialog(
             context = requireContext(),
-            title = getString(R.string.dialog_title_delete),
-            message = getString(R.string.dialog_title_message) + " ${task.title}?",
-            positiveText = getString(R.string.dialog_title_positive),
-            negativeText = getString(R.string.dialog_title_negative),
+            title = UiText.StringResource(R.string.dialog_title_delete),
+            message = UiText.StringResource(R.string.dialog_title_message, task.title),
+            positiveText = UiText.StringResource(R.string.dialog_title_positive),
+            negativeText = UiText.StringResource(R.string.dialog_title_negative),
             onPositiveClick = { viewModel.onEvent(TaskListEvents.OnDeleteButtonClick(task)) }
         )
     }

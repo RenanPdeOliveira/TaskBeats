@@ -4,12 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.asFlow
 import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
-import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.tasks.presentation.events.TaskListViewPagerEvent
 import com.comunidadedevspace.taskbeats.core.util.UiEvent
-import com.comunidadedevspace.taskbeats.tasks.domain.usecase.TaskListUseCase
+import com.comunidadedevspace.taskbeats.tasks.domain.use_case.TaskListUseCase
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
@@ -55,5 +53,4 @@ class TaskListViewPagerViewModel(
             _uiEvent.send(sendUiEvent)
         }
     }
-
 }

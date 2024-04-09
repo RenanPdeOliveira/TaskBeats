@@ -88,7 +88,11 @@ class TaskListViewPagerFragment : Fragment() {
             viewModel.uiEvent.collect { event ->
                 when (event) {
                     is UiEvent.ShowSnackBar -> {
-                        showSnackBar(requireActivity(), event.message, event.action)
+                        showSnackBar(
+                            requireActivity(),
+                            event.message,
+                            event.action?.asString(requireActivity().applicationContext)
+                        )
                     }
 
                     is UiEvent.ShowDialog -> {

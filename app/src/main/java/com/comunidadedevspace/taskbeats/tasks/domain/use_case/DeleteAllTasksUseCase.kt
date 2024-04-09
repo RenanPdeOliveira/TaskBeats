@@ -1,5 +1,7 @@
-package com.comunidadedevspace.taskbeats.tasks.domain.usecase
+package com.comunidadedevspace.taskbeats.tasks.domain.use_case
 
+import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.core.util.UiText
 import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.core.util.UiEvent
 import kotlinx.coroutines.flow.Flow
@@ -13,8 +15,8 @@ class DeleteAllTasksUseCase(
             repository.deleteAll()
             emit(
                 UiEvent.ShowSnackBar(
-                    message = "You have deleted all items!",
-                    action = "Close"
+                    message = UiText.StringResource(R.string.snackbar_delete_all_message),
+                    action = UiText.StringResource(R.string.snackbar_action_close)
                 )
             )
         }

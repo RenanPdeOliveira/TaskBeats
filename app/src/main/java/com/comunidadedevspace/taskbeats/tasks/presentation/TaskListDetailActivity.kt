@@ -30,7 +30,7 @@ class TaskListDetailActivity : AppCompatActivity() {
     }
 
     companion object {
-        const val detailTask = "DETAIL_EXTRA"
+        private const val detailTask = "DETAIL_EXTRA"
 
         fun start(context: Context, task: TaskItem?): Intent {
             val intent = Intent(context, TaskListDetailActivity::class.java)
@@ -127,7 +127,11 @@ class TaskListDetailActivity : AppCompatActivity() {
                     }
 
                     is UiEvent.ShowSnackBar -> {
-                        showSnackBar(this@TaskListDetailActivity, event.message, event.action)
+                        showSnackBar(
+                            this@TaskListDetailActivity,
+                            event.message,
+                            event.action?.asString(applicationContext)
+                        )
                     }
 
                     is UiEvent.ShowDialog -> {

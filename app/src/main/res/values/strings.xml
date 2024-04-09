@@ -35,15 +35,21 @@
 
     // Dialog Delete Item
     <string name="dialog_title_delete">Delete</string>
-    <string name="dialog_title_message">Are you sure you want to delete the item</string>
+    <string name="dialog_title_message">Are you sure you want to delete the item %1$s?</string>
+    <string name="dialog_title_delete_all">Delete all</string>
+    <string name="dialog_title_message_all">Are you sure you want to delete all tasks?</string>
     <string name="dialog_title_positive">Yes</string>
     <string name="dialog_title_negative">No</string>
 
     // SnackBar
-    <string name="snackbar_add_message">You have added a new task</string>
-    <string name="snackbar_delete_message">You have deleted the task</string>
-    <string name="snackbar_update_message">You have updated the task</string>
+    <string name="snackbar_add_message">You have added a new task %1$s</string>
+    <string name="snackbar_update_message">You have updated the task %1$s</string>
+    <string name="snackbar_delete_message">You have deleted the task %1$s</string>
+    <string name="snackbar_delete_all_message">You have deleted all tasks</string>
     <string name="snackbar_fill_fields_message">Fill in all fields</string>
     <string name="snackbar_action_close">Close</string>
     <string name="snackbar_no_item">There is no item to delete!</string>
+    <string name="snackbar_top_news_not_found">Top news not found!</string>
+    <string name="snackbar_all_news_not_found">All news not found!</string>
+    <string name="snackbar_all_top_news_not_found">All and Top news found!</string>
 </resources>

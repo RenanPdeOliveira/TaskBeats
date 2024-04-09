@@ -36,15 +36,21 @@
 
     // Dialog Delete Item
     <string name="dialog_title_delete">Deletar</string>
-    <string name="dialog_title_message">Tem certeza de que deseja excluir o item</string>
+    <string name="dialog_title_message">Tem certeza de que deseja excluir o item %1$s?</string>
+    <string name="dialog_title_delete_all">Deletar todos</string>
+    <string name="dialog_title_message_all">Tem certeza de que deseja excluir todas as tarefas?</string>
     <string name="dialog_title_positive">Sim</string>
     <string name="dialog_title_negative">Não</string>
 
     // SnackBar
-    <string name="snackbar_add_message">Você adicionou a tarefa</string>
-    <string name="snackbar_delete_message">Você deletou a tarefa</string>
-    <string name="snackbar_update_message">Você atualizou a tarefa</string>
+    <string name="snackbar_add_message">Você adicionou a tarefa %1$s</string>
+    <string name="snackbar_update_message">Você atualizou a tarefa %1$s</string>
+    <string name="snackbar_delete_message">Você deletou a tarefa %1$s</string>
+    <string name="snackbar_delete_all_message">Você deletou todas as tarefa</string>
     <string name="snackbar_fill_fields_message">Preencha todos os campos</string>
     <string name="snackbar_action_close">Fechar</string>
     <string name="snackbar_no_item">Não tem nenhum item para deletar!</string>
+    <string name="snackbar_top_news_not_found">Notícia top não encontradas!</string>
+    <string name="snackbar_all_news_not_found">Notícia all não encontradas!</string>
+    <string name="snackbar_all_top_news_not_found">Notícia top e all não encontradas!</string>
 </resources>
