@@ -2,9 +2,10 @@ package com.comunidadedevspace.taskbeats.tasks.presentation.viewmodel
 
 import com.comunidadedevspace.taskbeats.MainDispatcherRule
 import com.comunidadedevspace.taskbeats.tasks.data.local.TaskItem
-import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
+import com.comunidadedevspace.taskbeats.tasks.domain.repository.TaskRepository
 import com.comunidadedevspace.taskbeats.tasks.domain.use_case.TaskListUseCase
-import com.comunidadedevspace.taskbeats.tasks.presentation.events.DetailEvents
+import com.comunidadedevspace.taskbeats.tasks.presentation.task_list_detail.DetailEvents
+import com.comunidadedevspace.taskbeats.tasks.presentation.task_list_detail.TaskListDetailViewModel
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.Before

@@ -1,0 +1,119 @@
+package com.comunidadedevspace.taskbeats.news.presentation.news_list
+
+import android.os.Bundle
+import androidx.fragment.app.Fragment
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import androidx.core.view.isVisible
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.comunidadedevspace.taskbeats.R
+import com.comunidadedevspace.taskbeats.core.data.network.NetworkConnectivityObserver
+import com.comunidadedevspace.taskbeats.core.domain.network.ConnectivityObserver
+import com.comunidadedevspace.taskbeats.databinding.FragmentNewsListBinding
+import com.comunidadedevspace.taskbeats.news.presentation.adapter.NewsListAdapter
+import com.comunidadedevspace.taskbeats.core.presentation.view_model_factory.ProvideViewModelFactory
+import com.comunidadedevspace.taskbeats.news.domain.model.NewsDomain
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
+class NewsListFragment : Fragment() {
+
+    private var _binding: FragmentNewsListBinding? = null
+    private val binding get() = _binding!!
+
+    private val adapter = NewsListAdapter(::onFavoriteButtonClick)
+
+    private val viewModel by viewModels<NewsListViewModel> {
+        ProvideViewModelFactory(requireActivity().application)
+    }
+
+    private lateinit var connectivityObserver: ConnectivityObserver
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentNewsListBinding.inflate(inflater, container, false)
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        connectivityObserver = NetworkConnectivityObserver(requireActivity().applicationContext)
+        setUpRecyclerViewAdapter()
+        collectDataFromViewModel()
+    }
+
+    private fun setUpRecyclerViewAdapter() {
+        binding.recyclerViewNews.adapter = adapter
+    }
+
+    private fun collectDataFromViewModel() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                adapter.submitList(emptyList())
+                viewModel.getNewsList()
+                viewModel.newsState.collect { state ->
+                    if (connectivityObserver.isConnected()) {
+                        adapter.submitList(state.topNews)
+                        withContext(Dispatchers.Main) {
+                            binding.progressBarNewsList.isVisible = state.isLoading
+                            binding.newsStateEmpty.isVisible =
+                                state.topNews.isNullOrEmpty() && !binding.progressBarNewsList.isVisible
+                        }
+                    } else {
+                        withContext(Dispatchers.Main) {
+                            binding.progressBarNewsList.isVisible = state.isLoading
+                            binding.newsStateEmpty.isVisible =
+                                state.topNews.isNullOrEmpty() && !binding.progressBarNewsList.isVisible
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun onFavoriteButtonClick(news: NewsDomain) {
+        if (!news.isFavorite) {
+            viewModel.onEvent(
+                NewsListEvents.OnAddFavorite(
+                    NewsDomain(
+                        id = news.id,
+                        title = news.title,
+                        imageUrl = news.imageUrl,
+                        isFavorite = true,
+                        drawableResId = R.drawable.baseline_favorite_24
+                    )
+                )
+            )
+        } else {
+            viewModel.onEvent(
+                NewsListEvents.OnDeleteFavorite(
+                    NewsDomain(
+                        id = news.id,
+                        title = news.title,
+                        imageUrl = news.imageUrl,
+                        isFavorite = false,
+                        drawableResId = R.drawable.baseline_favorite_border_24
+                    )
+                )
+            )
+        }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        _binding = null
+    }
+
+    companion object {
+        @JvmStatic
+        fun newInstance() = NewsListFragment()
+    }
+}

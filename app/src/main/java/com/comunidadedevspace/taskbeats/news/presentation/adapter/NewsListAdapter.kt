@@ -9,10 +9,11 @@ import coil.load
 import coil.transform.RoundedCornersTransformation
 import com.comunidadedevspace.taskbeats.news.data.local.NewsItem
 import com.comunidadedevspace.taskbeats.databinding.ItemNewsBinding
+import com.comunidadedevspace.taskbeats.news.domain.model.NewsDomain
 
 class NewsListAdapter(
-    private val onFavoriteClick: (news: NewsItem) -> Unit
-) : ListAdapter<NewsItem, NewsListViewHolder>(NewsListAdapter) {
+    private val onFavoriteClick: (news: NewsDomain) -> Unit
+) : ListAdapter<NewsDomain, NewsListViewHolder>(NewsListAdapter) {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NewsListViewHolder {
         val binding = ItemNewsBinding.inflate(LayoutInflater.from(parent.context), parent, false)
@@ -24,13 +25,13 @@ class NewsListAdapter(
         holder.bind(item, onFavoriteClick)
     }
 
-    companion object : DiffUtil.ItemCallback<NewsItem>() {
+    companion object : DiffUtil.ItemCallback<NewsDomain>() {
 
-        override fun areItemsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
+        override fun areItemsTheSame(oldItem: NewsDomain, newItem: NewsDomain): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: NewsItem, newItem: NewsItem): Boolean {
+        override fun areContentsTheSame(oldItem: NewsDomain, newItem: NewsDomain): Boolean {
             return oldItem.title == newItem.title &&
                     oldItem.imageUrl == newItem.imageUrl
         }
@@ -42,8 +43,8 @@ class NewsListAdapter(
 class NewsListViewHolder(private val binding: ItemNewsBinding) :
     RecyclerView.ViewHolder(binding.root) {
     fun bind(
-        item: NewsItem,
-        onFavoriteClick: (news: NewsItem) -> Unit
+        item: NewsDomain,
+        onFavoriteClick: (news: NewsDomain) -> Unit
     ) {
         with(binding) {
             textViewNews.text = item.title

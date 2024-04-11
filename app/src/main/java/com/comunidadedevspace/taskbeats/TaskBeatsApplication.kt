@@ -4,8 +4,10 @@ import android.app.Application
 import androidx.room.Room
 import com.comunidadedevspace.taskbeats.core.data.local.TaskDataBase
 import com.comunidadedevspace.taskbeats.news.data.remote.RetrofitModule
-import com.comunidadedevspace.taskbeats.core.data.repository.TaskRepositoryImpl
-import com.comunidadedevspace.taskbeats.core.domain.repository.TaskRepository
+import com.comunidadedevspace.taskbeats.news.data.repository.NewsRepositoryImpl
+import com.comunidadedevspace.taskbeats.news.domain.repository.NewsRepository
+import com.comunidadedevspace.taskbeats.tasks.data.repository.TaskRepositoryImpl
+import com.comunidadedevspace.taskbeats.tasks.domain.repository.TaskRepository
 
 class TaskBeatsApplication : Application() {
 
@@ -19,8 +21,11 @@ class TaskBeatsApplication : Application() {
         ).fallbackToDestructiveMigration().build()
     }
 
-    fun getRepository(): TaskRepository {
-        return TaskRepositoryImpl(db.taskDao(), db.newsDao(), RetrofitModule.createNewsService())
+    fun getTaskRepository(): TaskRepository {
+        return TaskRepositoryImpl(db.taskDao())
     }
 
+    fun getNewsRepository(): NewsRepository {
+        return NewsRepositoryImpl(db.newsDao(), RetrofitModule.createNewsService())
+    }
 }

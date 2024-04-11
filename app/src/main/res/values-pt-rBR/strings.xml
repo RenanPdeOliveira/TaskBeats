@@ -53,4 +53,7 @@
     <string name="snackbar_top_news_not_found">Notícia top não encontradas!</string>
     <string name="snackbar_all_news_not_found">Notícia all não encontradas!</string>
     <string name="snackbar_all_top_news_not_found">Notícia top e all não encontradas!</string>
+    <string name="snackbar_internet_available">Internet disponível</string>
+    <string name="snackbar_internet_unavailable">Internet não disponível</string>
+    <string name="snackbar_internet_lost">Internet perdida</string>
 </resources>

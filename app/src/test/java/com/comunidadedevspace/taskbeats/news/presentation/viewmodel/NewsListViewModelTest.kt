@@ -2,23 +2,17 @@ package com.comunidadedevspace.taskbeats.news.presentation.viewmodel
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.comunidadedevspace.taskbeats.MainDispatcherRule
-import com.comunidadedevspace.taskbeats.news.data.mappers.toNewsItem
 import com.comunidadedevspace.taskbeats.news.data.remote.NewsDto
-import com.comunidadedevspace.taskbeats.news.data.remote.NewsResponse
-import com.comunidadedevspace.taskbeats.news.data.remote.NewsService
-import com.comunidadedevspace.taskbeats.news.domain.usecase.NewsListUseCase
-import com.comunidadedevspace.taskbeats.news.presentation.events.NewsListEvents
+import com.comunidadedevspace.taskbeats.news.domain.use_case.NewsListUseCase
+import com.comunidadedevspace.taskbeats.news.presentation.news_list.NewsListViewModel
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.junit.MockitoJUnitRunner
-import org.mockito.kotlin.mock
-import org.mockito.kotlin.whenever
 
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(MockitoJUnitRunner::class)
@@ -78,7 +72,7 @@ class NewsListViewModelTest {
 
             // WHEN
             underTest = NewsListViewModel(newsListUseCase)
-            val result = underTest.newsState.value.list
+            val result = underTest.newsState.value.topNews
 
             // THEN
             assertThat(result).isEqualTo(list1)
