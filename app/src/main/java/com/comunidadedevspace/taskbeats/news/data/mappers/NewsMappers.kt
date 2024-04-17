@@ -5,7 +5,7 @@ import com.comunidadedevspace.taskbeats.news.data.local.NewsItem
 import com.comunidadedevspace.taskbeats.news.data.remote.NewsDto
 import com.comunidadedevspace.taskbeats.news.domain.model.NewsDomain
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 fun List<NewsDto>.toNewsDomain(): List<NewsDomain> {
     return map { dto ->
@@ -20,17 +20,15 @@ fun List<NewsDto>.toNewsDomain(): List<NewsDomain> {
 }
 
 fun Flow<List<NewsItem>>.toNewsDomain(): Flow<List<NewsDomain>> {
-    return flow {
-        collect {
-            it.map { domain ->
-                NewsDomain(
-                    id = domain.id,
-                    title = domain.title,
-                    imageUrl = domain.imageUrl,
-                    isFavorite = domain.isFavorite,
-                    drawableResId = domain.drawableResId
-                )
-            }
+    return map { list ->
+        list.map { domain ->
+            NewsDomain(
+                id = domain.id,
+                title = domain.title,
+                imageUrl = domain.imageUrl,
+                isFavorite = domain.isFavorite,
+                drawableResId = domain.drawableResId
+            )
         }
     }
 }

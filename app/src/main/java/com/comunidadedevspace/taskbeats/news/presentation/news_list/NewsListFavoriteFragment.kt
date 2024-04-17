@@ -1,7 +1,6 @@
 package com.comunidadedevspace.taskbeats.news.presentation.news_list
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -52,11 +51,9 @@ class NewsListFavoriteFragment : Fragment() {
 
     private fun collectDataFromViewModel() {
         viewLifecycleOwner.lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.CREATED) {
-                Log.d("list", "listsize")
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
                 viewModel.newsListFavorite.collect { newsList ->
                     val newList = newsList.filter { it.isFavorite }
-                    Log.d("list", "${newList.size}")
                     adapter.submitList(newList)
                     withContext(Dispatchers.Main) {
                         binding.newsStateEmptyFavorite.isVisible = newList.isEmpty()

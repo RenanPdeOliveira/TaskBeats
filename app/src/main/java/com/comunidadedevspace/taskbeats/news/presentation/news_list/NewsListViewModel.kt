@@ -1,12 +1,10 @@
 package com.comunidadedevspace.taskbeats.news.presentation.news_list
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.comunidadedevspace.taskbeats.R
 import com.comunidadedevspace.taskbeats.core.domain.util.DataError
 import com.comunidadedevspace.taskbeats.core.util.UiText
-import com.comunidadedevspace.taskbeats.core.domain.util.Resource
 import com.comunidadedevspace.taskbeats.core.domain.util.Result
 import com.comunidadedevspace.taskbeats.news.presentation.state.NewsState
 import com.comunidadedevspace.taskbeats.core.util.UiEvent
