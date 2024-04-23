@@ -73,12 +73,12 @@ class NewsListViewModel(
                 when (topNews.error) {
                     DataError.Network.TOP_NEWS_NOTY_FOUND_EXCEPTION -> {
                         _newsState.update { it.copy(isLoading = false) }
-                        _uiEvent.send(UiEvent.ShowSnackBar(UiText.StringResource(R.string.snackbar_all_news_not_found)))
+                        _uiEvent.send(UiEvent.ShowSnackBar(UiText.StringResource(R.string.snack_bar_all_news_not_found)))
                     }
 
                     DataError.Network.TOP_NEWS_NOTY_FOUND_HTTP_EXCEPTION -> {
                         _newsState.update { it.copy(isLoading = false) }
-                        _uiEvent.send(UiEvent.ShowSnackBar(UiText.StringResource(R.string.snackbar_all_news_not_found)))
+                        _uiEvent.send(UiEvent.ShowSnackBar(UiText.StringResource(R.string.snack_bar_all_news_not_found)))
                     }
 
                     else -> Unit
@@ -92,7 +92,7 @@ class NewsListViewModel(
                         isLoading = false
                     )
                 }
-                _uiEvent.send(UiEvent.ShowSnackBar(message = UiText.StringResource(R.string.snackbar_all_top_news_not_found)))
+                _uiEvent.send(UiEvent.ShowSnackBar(message = UiText.StringResource(R.string.snack_bar_all_top_news_not_found)))
             }
         }
     }

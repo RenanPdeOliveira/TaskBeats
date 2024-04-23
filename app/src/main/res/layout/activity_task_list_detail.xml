@@ -13,13 +13,12 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/detailToolBar"
+            style="@style/ToolBar"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
-            android:background="@color/pink_300"
             app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/baseline_arrow_back_24"
-            app:title="@string/detail_top_bar_title"
-            app:titleTextAppearance="@style/ToolBarTitle" />
+            app:title="@string/detail_top_bar_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -49,16 +48,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:endIconMode="clear_text">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextTitle"
+                    style="@style/TextInputEditTextTitle"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/et_title"
-                    android:inputType="text"
-                    android:maxLines="1" />
+                    android:layout_height="match_parent" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,16 +69,13 @@
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/TextInputLayout"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:endIconMode="clear_text">
+                android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/editTextDesc"
+                    style="@style/TextInputEditTextDescription"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:hint="@string/et_desc"
-                    android:inputType="text"
-                    android:maxLines="3" />
+                    android:layout_height="match_parent" />
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -93,7 +86,6 @@
             style="@style/ButtonUpdate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="16dp"
             android:text="@string/save_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

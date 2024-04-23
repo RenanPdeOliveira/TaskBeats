@@ -1,7 +1,6 @@
 package com.comunidadedevspace.taskbeats.news.data.repository
 
 import com.comunidadedevspace.taskbeats.core.domain.util.DataError
-import com.comunidadedevspace.taskbeats.core.domain.util.Resource
 import com.comunidadedevspace.taskbeats.core.domain.util.Result
 import com.comunidadedevspace.taskbeats.news.data.local.NewsDao
 import com.comunidadedevspace.taskbeats.news.data.mappers.toNewsDomain
@@ -30,13 +29,16 @@ class NewsRepositoryImpl(
         }
     }
 
-    override suspend fun fetchAllNews(): Resource<List<NewsDomain>> {
+    override suspend fun fetchAllNews(): Result<List<NewsDomain>, DataError.Network> {
         return try {
-            Resource.Success(data = api.fetchAllNews().data.toNewsDomain())
+            Result.Success(data = api.fetchAllNews().data.toNewsDomain())
         } catch (e: Exception) {
             if (e is CancellationException) throw e
             e.printStackTrace()
-            Resource.Error(message = e.message ?: "All news failed request")
+            Result.Error(error = DataError.Network.ALL_NEWS_NOTY_FOUND_EXCEPTION)
+        } catch (e: HttpException) {
+            e.printStackTrace()
+            Result.Error(error = DataError.Network.ALL_NEWS_NOTY_FOUND_HTTP_EXCEPTION)
         }
     }
 

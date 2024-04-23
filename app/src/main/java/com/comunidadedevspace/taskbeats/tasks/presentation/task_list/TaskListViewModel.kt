@@ -49,6 +49,6 @@ class TaskListViewModel(
 
     private fun deleteTask(task: TaskItem) = viewModelScope.launch {
         repository.delete(task)
-        _uiEvent.send(UiEvent.ShowSnackBar(message = UiText.StringResource(R.string.snackbar_delete_message, task.title)))
+        _uiEvent.send(UiEvent.ShowSnackBar(message = UiText.StringResource(R.string.snack_bar_delete_message, task.title)))
     }
 }

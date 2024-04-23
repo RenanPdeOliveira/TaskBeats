@@ -12,12 +12,11 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/tasksToolBar"
+            style="@style/ToolBar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/pink_300"
             app:menu="@menu/tasks_top_app_bar"
-            app:title="@string/tasks_top_bar_title"
-            app:titleTextAppearance="@style/ToolBarTitle" />
+            app:title="@string/tasks_top_bar_title" />
 
     </com.google.android.material.appbar.AppBarLayout>
 

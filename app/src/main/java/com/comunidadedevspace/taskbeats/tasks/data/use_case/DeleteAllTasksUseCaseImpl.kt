@@ -16,8 +16,8 @@ class DeleteAllTasksUseCaseImpl(
             repository.deleteAll()
             emit(
                 UiEvent.ShowSnackBar(
-                    message = UiText.StringResource(R.string.snackbar_delete_all_message),
-                    action = UiText.StringResource(R.string.snackbar_action_close)
+                    message = UiText.StringResource(R.string.snack_bar_delete_all_message),
+                    action = UiText.StringResource(R.string.snack_bar_action_close)
                 )
             )
         }

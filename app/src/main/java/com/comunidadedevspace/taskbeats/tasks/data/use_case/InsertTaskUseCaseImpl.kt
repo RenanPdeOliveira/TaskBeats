@@ -16,16 +16,16 @@ class InsertTaskUseCaseImpl(
         return flow {
             if (task.title.isBlank() || task.desc.isBlank()) {
                 emit(UiEvent.ShowSnackBar(
-                    message = UiText.StringResource(R.string.snackbar_fill_fields_message),
-                    action = UiText.StringResource(R.string.snackbar_action_close)
+                    message = UiText.StringResource(R.string.snack_bar_fill_fields_message),
+                    action = UiText.StringResource(R.string.snack_bar_action_close)
                 ))
                 return@flow
             }
             repository.insert(task)
             emit(UiEvent.Navigate("main_screen"))
             emit(UiEvent.ShowSnackBar(
-                message = UiText.StringResource(R.string.snackbar_add_message, task.title),
-                action = UiText.StringResource(R.string.snackbar_action_close)
+                message = UiText.StringResource(R.string.snack_bar_add_message, task.title),
+                action = UiText.StringResource(R.string.snack_bar_action_close)
             ))
         }
     }

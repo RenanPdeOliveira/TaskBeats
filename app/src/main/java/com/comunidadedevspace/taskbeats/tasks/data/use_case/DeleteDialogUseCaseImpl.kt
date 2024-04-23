@@ -14,7 +14,7 @@ class DeleteDialogUseCaseImpl : DeleteDialogUseCase {
             if (task == null) {
                 emit(
                     UiEvent.ShowSnackBar(
-                        message = UiText.StringResource(R.string.snackbar_no_item),
+                        message = UiText.StringResource(R.string.snack_bar_no_item),
                         action = null
                     )
                 )

@@ -14,8 +14,8 @@
 
     // Tasks
     <string name="tasks_top_bar_title">Tasks</string>
-    <string name="tv_empty_state">There is no task yet!</string>
-    <string name="tv_empty_state_favorite">There is no favorite task yet!</string>
+    <string name="empty_state">There is no task yet!</string>
+    <string name="empty_state_favorite">There is no favorite task yet!</string>
     <string name="empty_state_description">empty state</string>
     <string name="favorite_button_description">favorite button</string>
     <string name="delete_button_description">delete button</string>
@@ -42,17 +42,17 @@
     <string name="dialog_title_negative">No</string>
 
     // SnackBar
-    <string name="snackbar_add_message">You have added a new task %1$s</string>
-    <string name="snackbar_update_message">You have updated the task %1$s</string>
-    <string name="snackbar_delete_message">You have deleted the task %1$s</string>
-    <string name="snackbar_delete_all_message">You have deleted all tasks</string>
-    <string name="snackbar_fill_fields_message">Fill in all fields</string>
-    <string name="snackbar_action_close">Close</string>
-    <string name="snackbar_no_item">There is no item to delete!</string>
-    <string name="snackbar_top_news_not_found">Top news not found!</string>
-    <string name="snackbar_all_news_not_found">All news not found!</string>
-    <string name="snackbar_all_top_news_not_found">All and Top news found!</string>
-    <string name="snackbar_internet_available">Internet available</string>
-    <string name="snackbar_internet_unavailable">Internet unavailable</string>
-    <string name="snackbar_internet_lost">Internet lost</string>
+    <string name="snack_bar_add_message">You have added a new task %1$s</string>
+    <string name="snack_bar_update_message">You have updated the task %1$s</string>
+    <string name="snack_bar_delete_message">You have deleted the task %1$s</string>
+    <string name="snack_bar_delete_all_message">You have deleted all tasks</string>
+    <string name="snack_bar_fill_fields_message">Fill in all fields</string>
+    <string name="snack_bar_action_close">Close</string>
+    <string name="snack_bar_no_item">There is no item to delete!</string>
+    <string name="snack_bar_top_news_not_found">Top news not found!</string>
+    <string name="snack_bar_all_news_not_found">All news not found!</string>
+    <string name="snack_bar_all_top_news_not_found">All and Top news found!</string>
+    <string name="snack_bar_internet_available">Internet available</string>
+    <string name="snack_bar_internet_unavailable">Internet unavailable</string>
+    <string name="snack_bar_internet_lost">Internet lost</string>
 </resources>

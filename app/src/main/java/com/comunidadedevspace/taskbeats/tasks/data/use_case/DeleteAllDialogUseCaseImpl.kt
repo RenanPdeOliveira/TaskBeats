@@ -14,8 +14,8 @@ class DeleteAllDialogUseCaseImpl: DeleteAllDialogUseCase {
             if (list.isEmpty()) {
                 emit(
                     UiEvent.ShowSnackBar(
-                        message = UiText.StringResource(R.string.snackbar_no_item),
-                        action = UiText.StringResource(R.string.snackbar_action_close)
+                        message = UiText.StringResource(R.string.snack_bar_no_item),
+                        action = UiText.StringResource(R.string.snack_bar_action_close)
                     )
                 )
             } else {

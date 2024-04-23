@@ -12,11 +12,10 @@
 
         <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/newsToolBar"
+            style="@style/ToolBar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="@color/pink_300"
-            app:title="News"
-            app:titleTextAppearance="@style/ToolBarTitle" />
+            app:title="News" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -27,15 +26,12 @@
 
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/newsTabLayout"
+            style="@style/TabLayout"
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="@color/pink_300"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tabIndicatorColor="@color/brown_900"
-            app:tabSelectedTextColor="@color/brown_900"
-            app:tabTextColor="@color/brown_700" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/newsViewPager"

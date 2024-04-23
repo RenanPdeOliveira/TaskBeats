@@ -14,6 +14,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    // Headline
+
     <style name="Headline3" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/rubik_regular</item>
         <item name="android:textSize">22sp</item>
@@ -23,10 +25,12 @@
 
     <style name="Headline4" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/rubik_regular</item>
-        <item name="android:textSize">20sp</item>
+        <item name="android:textSize">18sp</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/brown_900</item>
     </style>
+
+    // Body
 
     <style name="Body1" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/rubik_medium</item>
@@ -40,23 +44,13 @@
         <item name="android:textColor">@color/brown_700</item>
     </style>
 
-    <style name="ToolBarTitle" parent="Widget.AppCompat.TextView">
-        <item name="android:fontFamily">@font/rubik_medium</item>
-        <item name="android:textSize">22sp</item>
-        <item name="android:textColor">@color/brown_700</item>
-    </style>
-
-    <style name="ButtonUpdate" parent="Widget.Material3.Button">
-        <item name="android:textColor">@color/brown_700</item>
+    <style name="Body3" parent="Widget.AppCompat.TextView">
         <item name="android:fontFamily">@font/rubik_regular</item>
-        <item name="android:textSize">18sp</item>
-        <item name="android:textStyle">bold</item>
-        <item name="android:padding">10dp</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/pink_500</item>
     </style>
 
-    <style name="TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
-        <item name="hintEnabled">false</item>
-    </style>
+    // Card View
 
     <style name="CardViewTaskItem" parent="Widget.Material3.CardView.Elevated">
         <item name="cardElevation">4dp</item>
@@ -65,6 +59,8 @@
         <item name="strokeWidth">1dp</item>
     </style>
 
+    // Tab Layout
+
     <style name="TabLayout" parent="Widget.Material3.TabLayout">
         <item name="android:background">@color/pink_300</item>
         <item name="tabIndicatorColor">@color/brown_900</item>
@@ -72,7 +68,78 @@
         <item name="tabTextColor">@color/brown_700</item>
     </style>
 
+    // Tool Bar
+
+    <style name="ToolBar" parent="Widget.Material3.Toolbar">
+        <item name="titleTextAppearance">@style/ToolBarTitle</item>
+        <item name="android:background">@color/pink_300</item>
+    </style>
+
+    <style name="ToolBarTitle" parent="Widget.AppCompat.TextView">
+        <item name="android:fontFamily">@font/rubik_medium</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:textColor">@color/brown_700</item>
+    </style>
+
+    // Button
+
+    <style name="ButtonUpdate" parent="Widget.Material3.Button">
+        <item name="android:textColor">@color/brown_700</item>
+        <item name="android:fontFamily">@font/rubik_regular</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:padding">10dp</item>
+        <item name="android:layout_margin">16dp</item>
+    </style>
+
+    // Text Input Layout
+
+    <style name="TextInputLayout" parent="Widget.Material3.TextInputLayout.OutlinedBox">
+        <item name="hintEnabled">false</item>
+        <item name="endIconMode">clear_text</item>
+    </style>
+
+    <style name="TextInputEditTextTitle" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:hint">@string/et_title</item>
+    </style>
+
+    <style name="TextInputEditTextDescription" parent="Widget.Material3.TextInputEditText.OutlinedBox">
+        <item name="android:inputType">text</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:hint">@string/et_desc</item>
+    </style>
+
+    // Bottom Navigation View
+
+    <style name="BottomAppBar" parent="Widget.Material3.BottomAppBar">
+        <item name="android:backgroundTint">@color/pink_500</item>
+        <item name="fabAlignmentMode">center</item>
+        <item name="fabAnchorMode">cradle</item>
+        <item name="fabCradleMargin">12dp</item>
+        <item name="fabCradleRoundedCornerRadius">8dp</item>
+        <item name="fabCradleVerticalOffset">8dp</item>
+    </style>
+
+    <style name="BottomNavigationView" parent="Widget.Material3.BottomNavigationView">
+        <item name="itemActiveIndicatorStyle">@style/BottomNavigationViewIndicator</item>
+        <item name="background">@android:color/transparent</item>
+        <item name="itemBackground">@android:color/transparent</item>
+        <item name="android:layout_marginHorizontal">24dp</item>
+        <item name="elevation">0dp</item>
+        <item name="itemIconTint">@color/bottom_nav_icon_color_light</item>
+        <item name="itemTextColor">@color/bottom_nav_text_color</item>
+    </style>
+
     <style name="BottomNavigationViewIndicator" parent="Widget.Material3.BottomNavigationView.ActiveIndicator">
         <item name="android:color">@color/white</item>
+    </style>
+
+    // Fab
+
+    <style name="FabAdd" parent="ShapeAppearanceOverlay.Material3.FloatingActionButton">
+        <item name="android:backgroundTint">@color/pink_500</item>
+        <item name="tint">@color/white</item>
     </style>
 </resources>

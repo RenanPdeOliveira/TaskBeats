@@ -18,8 +18,8 @@ class DeleteTaskUseCaseImpl(
             emit(UiEvent.Navigate("main_screen"))
             emit(
                 UiEvent.ShowSnackBar(
-                    message = UiText.StringResource(R.string.snackbar_delete_message, task.title),
-                    action = UiText.StringResource(R.string.snackbar_action_close)
+                    message = UiText.StringResource(R.string.snack_bar_delete_message, task.title),
+                    action = UiText.StringResource(R.string.snack_bar_action_close)
                 )
             )
         }
